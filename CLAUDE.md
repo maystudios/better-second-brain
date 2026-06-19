@@ -105,7 +105,10 @@ Touching < 3 pages means you missed connections. Writing any page **is** an inge
 ### §3.2 Query
 Read `index.md` first → read candidate pages in full (not frontmatter alone) → answer with `[[…]]` citations → offer
 to file substantive answers as a `synthesis` page so they compound → log one line. Use graphify/qmd for multi-hop or
-fuzzy lookups, index + wikilinks for specific ones. Never fabricate — name the gap and suggest sources to ingest.
+fuzzy lookups, index + wikilinks for specific ones. **Scale read-depth to task breadth:** for broad/design questions,
+query the graph per sub-topic and use `graphify explain`/`path` to pull each concept's *exemplar* pages, then a
+completeness check before answering — don't over-prune (`docs/graphify-integration.md`). Never fabricate — name the
+gap and suggest sources to ingest.
 
 ### §3.3 Lint
 Report a checklist; fix on confirmation. **Structural** (often): broken links, orphans, frontmatter drift, missing

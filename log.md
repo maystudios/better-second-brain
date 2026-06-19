@@ -88,3 +88,15 @@ autonomy level 2 (source-confirmed, recorded visibly on each page): graphify (RE
 now, more input types, Karpathy/raw + #514 qualified), qmd (model size ~1.1GB, +status MCP tool), obsidian-bases
 (+summaries syntax). Full record: `wiki/syntheses/heal-2026-06-19.md`. Added a `lint-*`/`heal-*` gate exclusion to
 `lint_sources.py` so operational reports aren't graded as reference content.
+
+## [2026-06-19] query | Validated BSB on an existing vanilla brain (Game-Dev, 368 pages) + fixed broad-task query depth
+
+Applied the BSB method to a COPY of the real Game-Dev vault (368 pages, untouched, not pushed). graphify built a
+382-node / 2161-edge / 9-community graph (works at real scale). A/B'd 7 grounded questions, answering with vs without
+the graph (same model/effort).
+- Token: graph arm −23% real tokens (291,961 vs 378,720) / −56% read-footprint (2.29×; 72,707 vs 166,821) — the win
+  comes from skipping the index.md re-read (~68k tok) + less over-reading.
+- Quality: equal full marks on 6/7; the broadest synthesis task (imp-1) initially under-read.
+- FIX: "scale read-depth to task breadth + traverse-to-exemplar (graphify explain/path) + completeness check" lifted
+  imp-1 to normal parity at −38% tokens (24,354 vs 39,285). Encoded into CLAUDE.md §3.2 + docs/graphify-integration.md.
+- Also surfaced judge variance — score arms head-to-head with one judge. Full local report: bsb-gamedev-test/COMPARISON.md.

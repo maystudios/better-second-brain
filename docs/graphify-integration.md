@@ -89,6 +89,31 @@ graphify-out/*
 !graphify-out/GRAPH_REPORT.md
 ```
 
+## Query depth — scale read-depth to task breadth (validated 2026-06-19)
+
+The graph makes querying far cheaper by pointing straight at the answer-bearing pages and eliminating the `index.md`
+re-read. But on a **broad, "use everything" synthesis task** (e.g. "design a full spec citing every relevant page"),
+a single keyword `graphify query` + reading the top few hits **under-reads** and misses required citations. Measured
+on a real 368-page vault: a naive graph query reached only partial coverage on the broadest task; the strategy below
+lifted it to parity with reading the whole corpus — at ~38% fewer tokens and without ever reading `index.md`.
+
+Use it for any broad / comprehensive / design question:
+
+1. **Query per sub-topic, not once.** Decompose the question into its parts and run one `graphify query "<part>"` per
+   part, so each part's relevant concept pages surface.
+2. **Traverse from concept to exemplar.** A concept page alone is not enough — every principle should be backed by a
+   concrete example the wiki documents. For each key concept, run `graphify explain "<Concept>"` (or
+   `graphify path "<Concept>" "<Example>"`) to list its **direct neighbours**, and read + cite the specific
+   case-study page that exemplifies it (the game, the source, the failure case), not just the abstraction.
+3. **Completeness check before answering.** For each required part of the question confirm: a grounded page, a
+   concrete example, and the documented failure mode it guards against. Re-query / `explain` for anything still
+   missing, and read those pages.
+4. **Don't over-prune.** A narrow read budget is for narrow questions. A graph that lets you read 12 pages instead of
+   23 is only a win if those 12 still cover the answer.
+
+Narrow/single-fact and standard multi-hop questions do **not** need this — one or two queries + the named pages is
+both cheaper and complete. Reserve the per-sub-topic + `explain` + completeness-check pass for genuinely broad tasks.
+
 ## Sources
 
 - graphify repository — https://github.com/safishamsi/graphify
