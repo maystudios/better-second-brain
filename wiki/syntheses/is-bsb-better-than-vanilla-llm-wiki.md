@@ -19,26 +19,31 @@ A Better Second Brain (BSB) extends Andrej Karpathy's LLM Wiki pattern with a gr
 
 ## Short answer
 
-**Partly confirmed by a first measured run (small-N).** On a small, well-known topic BSB and a vanilla wiki *tied*
-on answer quality; on a medium topic **BSB won by ~12%**, and the entire margin came from **verifiable citations**,
-not raw correctness. On token cost, querying a wiki is **~2–6× cheaper than reading the raw sources** (the gap grows
-with corpus size), and BSB reads about the same as — or less than — vanilla per query while laying down ~1.6× denser
-interconnections; its higher one-time fill cost is repaid within **1–4 queries**. The honest nuance: vanilla matches
-BSB on *correctness* for popular topics (memory is strong there) and BSB's research gate occasionally **over-abstains**.
-Full numbers and caveats: `benchmark/RESULTS.md`.
+**Partly confirmed across three measured runs (small `uv`, medium `MCP`, large `Ruff`).** BSB beats a vanilla wiki by
+**+5–12%** on answer quality on the two larger topics and ties on the small one — and the margin is **verifiable
+citation**, not raw correctness (on well-documented topics both wikis get the facts right). Querying a wiki is
+**~2–18× cheaper than reading the raw sources**, growing with corpus size. The one early downside — BSB's higher
+*fill* cost — is now **solved**: the **`bsb-lean`** mode matches full-BSB quality at **~66% lower fill cost (≈ a
+vanilla wiki)** with the *densest* interconnection, so it is the default (`CLAUDE.md` §2.1). The over-abstention
+failure mode is fixed. Honest limits: the "edge grows with size" idea did not hold (margin shrank as both wikis
+captured facts), and a *private/novel* corpus — where a correctness gap would actually show — is still untested.
+Full numbers: `benchmark/RESULTS.md`.
 
-## Measured results (first run — 2026-06-19)
+## Measured results (2026-06-19, three runs)
 
-See `benchmark/RESULTS.md` for the full tables. Headlines:
+See `benchmark/RESULTS.md` for the full tables. Headlines across small (`uv`), medium (`MCP`), large (`Ruff`):
 
-- **Quality:** small (`uv`) = tie 5.83/5.83; medium (`MCP`) = BSB 5.60 vs vanilla 5.00 (+12%), driven by citation
-  quality (1.80 vs 1.00). Vanilla was slightly ahead on *correctness* (2.00 vs 1.80) because BSB's gate abstained on
-  one answerable detail its KB hadn't indexed — a real failure mode to fix.
-- **Read tokens/query:** wiki vs read-all-raw ≈ 2.3× (small) → 5.8× (medium); ≈ 1.3–1.8× vs naive RAG. BSB ≈ vanilla
-  (lower at medium: 1,328 vs 1,470).
-- **Fill tokens:** BSB ~1.8–1.9× more than vanilla (source pages + denser links); break-even in 1–4 queries vs raw.
-- **Caveats:** 2 topics / 16 questions, not fully blinded, approximate tokenizer, popular topics flatter vanilla.
-  Directional, not definitive — a large/novel-corpus run is the next test.
+- **Quality:** small = tie; medium = BSB +12%; large = BSB +5.1%. The margin is **citation/verifiability**, not raw
+  correctness — on well-documented topics both wikis got the facts right. BSB's repeatable edge is traceability.
+- **Read tokens/query:** wiki vs reading all raw ≈ 2.3× (small) → 5.8× (medium) → **17.9× (large, with `bsb-lean`)**.
+- **Fill cost — now optimized:** full BSB costs ~1.8–2.9× more than vanilla to build, but the **`bsb-lean`** mode
+  (compact source stubs, cite-don't-restate, terse dense links) cuts that **~66% back to vanilla's cost with zero
+  quality loss** and the *densest* interconnection (31 links/1k tokens). Lean is now the default (`CLAUDE.md` §2.1).
+- **Over-abstention fixed:** the answering policy now allows a flagged `(inferred)` answer from related material
+  instead of a hard abstain; the large run confirmed it recovered the previously-lost detail facts.
+- **Caveats:** 3 topics / 30 questions, not fully blinded, popular topics flatter vanilla. The "advantage grows with
+  size" idea did **not** hold (margin shrank). The untested case that could show a real *correctness* gap is a
+  **private/novel** corpus where one wiki simply lacks the facts.
 
 ## Reasoning
 

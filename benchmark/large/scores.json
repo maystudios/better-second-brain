@@ -1,0 +1,31 @@
+{
+  "topic": "Ruff — the Astral Python linter & formatter",
+  "n_questions": 14,
+  "dimensions": ["correctness", "citation", "faithfulness"],
+  "scale": "0-2 per dimension, total 0-6",
+  "per_question": [
+    {"id": 1,  "type": "recall",      "vanilla": [2,1,2], "bsb": [2,2,2], "bsb_lean": [2,2,2]},
+    {"id": 2,  "type": "recall",      "vanilla": [2,1,2], "bsb": [2,2,2], "bsb_lean": [2,2,2]},
+    {"id": 3,  "type": "detail",      "vanilla": [2,1,2], "bsb": [2,2,2], "bsb_lean": [2,2,2]},
+    {"id": 4,  "type": "detail",      "vanilla": [2,1,2], "bsb": [2,2,2], "bsb_lean": [2,2,2]},
+    {"id": 5,  "type": "detail",      "vanilla": [2,2,2], "bsb": [2,1,2], "bsb_lean": [2,1,2]},
+    {"id": 6,  "type": "detail",      "vanilla": [2,2,2], "bsb": [2,2,2], "bsb_lean": [2,2,2]},
+    {"id": 7,  "type": "detail",      "vanilla": [2,2,2], "bsb": [2,2,2], "bsb_lean": [2,2,2]},
+    {"id": 8,  "type": "detail",      "vanilla": [2,2,2], "bsb": [2,2,2], "bsb_lean": [2,2,2]},
+    {"id": 9,  "type": "detail",      "vanilla": [2,2,2], "bsb": [2,2,2], "bsb_lean": [2,2,2]},
+    {"id": 10, "type": "detail",      "vanilla": [2,2,2], "bsb": [2,2,2], "bsb_lean": [2,2,2]},
+    {"id": 11, "type": "freshness",   "vanilla": [2,2,2], "bsb": [2,2,2], "bsb_lean": [2,2,2]},
+    {"id": 12, "type": "freshness",   "vanilla": [2,2,2], "bsb": [2,2,2], "bsb_lean": [2,2,2]},
+    {"id": 13, "type": "freshness",   "vanilla": [2,2,2], "bsb": [2,2,2], "bsb_lean": [2,2,2]},
+    {"id": 14, "type": "unsupported", "vanilla": [2,1,2], "bsb": [2,2,2], "bsb_lean": [2,2,2]}
+  ],
+  "averages": {
+    "vanilla":  {"correctness": 2.0, "citation": 1.643, "faithfulness": 2.0, "total": 5.643},
+    "bsb":      {"correctness": 2.0, "citation": 1.929, "faithfulness": 2.0, "total": 5.929},
+    "bsb_lean": {"correctness": 2.0, "citation": 1.929, "faithfulness": 2.0, "total": 5.929}
+  },
+  "winner": "tie",
+  "winner_detail": "bsb and bsb_lean tie at 5.929; both beat vanilla 5.643",
+  "bsb_vs_vanilla_pct": 5.1,
+  "lean_vs_bsb_quality_delta": 0.0
+}

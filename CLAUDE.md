@@ -155,6 +155,27 @@ merge if shorter). See `templates/cheatsheet.md`.
 - **Graph health:** every new page must (a) link to ≥ 1 `[[wiki/moc/…]]` hub and (b) have ≥ 1 outgoing link.
   Tag genuinely unlinkable pages `#needs-link` so the graph color group surfaces them.
 
+### §2.1 — Lean fill: keep population token-cheap (the default)
+
+**Measured (`benchmark/RESULTS.md`, large run):** writing pages *lean* cut fill cost by **~66%** (down to a vanilla
+wiki's cost) with **zero quality loss** — identical correctness and citation scores to the verbose form — while
+producing the **densest interconnections** and the **lowest per-query read cost** of any arm. So lean is the
+**default** way to populate this brain, not an afterthought. Three rules:
+
+1. **Compact source pages.** A `wiki/sources/` page exists for traceability + pairing, not prose. Frontmatter + a
+   `## Key claims` list of 3–6 terse factual bullets. Add a single quote only if it is load-bearing. No restated
+   paragraphs — the source itself is one click away.
+2. **Cite, don't restate.** Concept / entity / cheatsheet pages give a one-line definition + bullet claims, each
+   ending with an inline `([[wiki/sources/slug]])`. Do **not** reproduce source prose; point to it. Duplicating the
+   source doubles tokens and invites drift.
+3. **Interconnect cheaply.** Keep links **dense but terse** — a compact `## Links` / `## Related` line of related
+   `[[…]]` beats weaving dozens of links through paragraphs. graphify and an auto-generated link block can add more
+   at ~zero token cost. **Density is the goal; prose is the cost.**
+
+Lean does **not** relax the research-discipline gate (§1.5): every claim is still grounded and cited, ≥ 3 sources per
+reference page. It only removes prose padding. Reserve fuller prose for `synthesis` pages, where the argument *is*
+the value.
+
 ---
 
 ## §3 — Operations
@@ -170,8 +191,9 @@ page (writing a page **is** an ingest — there is no write-without-ingesting pa
 1. **Get the source into `raw/`** (download/clip if it's a URL; `graphify add <url>` also saves to `raw/`).
 2. **Read it in full.** For articles with images, read the text first, then view referenced images as needed.
 3. **Discuss before filing.** Surface 3–5 key takeaways; ask what to emphasize. Don't dump a wall of text.
-4. **Create the source page** at `wiki/sources/<slug>.md` (mandatory) — citation, summary, key claims, notable
-   quotes, and a Connections section (Reinforces / Contradicts / Extends).
+4. **Create the source page** at `wiki/sources/<slug>.md` (mandatory) — keep it **lean** (§2.1): citation + a
+   `## Key claims` bullet list, one quote only if load-bearing, and a short Connections line (Reinforces /
+   Contradicts / Extends). The source page is for traceability, not retelling.
 5. **Update affected pages.** Walk every concept, entity, cheatsheet, synthesis the source touches; update or
    stub them; add the source to each page's `sources:` and `## Sources` section.
 6. **Flag contradictions** — never silently overwrite. Add `## Open questions` / `## Contradictions` noting both

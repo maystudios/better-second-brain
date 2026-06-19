@@ -13,10 +13,10 @@ Items: `- [ ] **<Type>**: <slug> — <reason>`. Types: Ingest · Cheatsheet · C
 
 - [ ] **Tooling**: install graphify (`uv tool install graphifyy`) and run the first `/graphify .` build;
       wire `scripts/graphify_sync.py` into the lint loop (§3.4)
-- [ ] **Heal/Schema**: fix the benchmark-revealed **over-abstention** failure mode — when a fact isn't in the KB,
-      allow a flagged low-confidence answer instead of a hard "the wiki does not say" abstain (MCP -32002 case)
-- [ ] **Benchmark**: run a **large / novel-corpus** example (the read-efficiency gap and citation edge both grew
-      small→medium; test whether they keep growing where memory is unreliable). Add `tiktoken` for exact token counts.
+- [ ] **Benchmark**: run a genuinely **private / novel** corpus (where one wiki simply *lacks* the facts) — the only
+      remaining way to test for a real *correctness* gap; the large public-corpus run showed correctness parity.
+- [ ] **Cleanup**: retro-fit the **lean fill mode** (§2.1) onto the 21 verbose bootstrap seed pages to shrink them
+      (optional; they pass lint as-is).
       from `docs/benchmark.md` and a first scored run
 - [ ] **Improve**: run the `auto-research` skill against `CLAUDE.md` once content exists, to validate the
       self-improvement loop end-to-end (§3.5)
@@ -44,3 +44,4 @@ Items: `- [ ] **<Type>**: <slug> — <reason>`. Types: Ingest · Cheatsheet · C
 - 2026-06-19 — verified: `verify_wikilinks` 0 broken, `find_orphans` 0 wiki orphans, `lint_sources --strict-min-tier A` passes (cheatsheet + synthesis at Tier A).
 - 2026-06-19 — **published** public repo maystudios/better-second-brain + README badges + star-history graph.
 - 2026-06-19 — **ran the first benchmark** (BSB vs vanilla, small uv + medium MCP) incl. token-efficiency (`scripts/token_report.py`). Result: quality tie→+12%, read 2.3–5.8× cheaper than raw. See `benchmark/RESULTS.md`.
+- 2026-06-19 — **large 3-arm benchmark (Ruff)** + **fill optimization**: new `bsb-lean` mode matches full-BSB quality at **−66% fill tokens** (≈ vanilla), densest interconnection, 17.9× read compression. Adopted lean as default (`CLAUDE.md` §2.1). Over-abstention fixed; `tiktoken` added.

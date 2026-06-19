@@ -1,0 +1,75 @@
+{
+  "topic": "Ruff — the Astral Python linter & formatter",
+  "questions": [
+    {
+      "id": 1,
+      "q": "What is Ruff, what language is it implemented in, and which company maintains it?",
+      "type": "recall"
+    },
+    {
+      "id": 2,
+      "q": "Which standalone Python tools does Ruff aim to replace/consolidate?",
+      "type": "recall"
+    },
+    {
+      "id": 3,
+      "q": "What is Ruff's default value for lint.select (the rule codes enabled by default)?",
+      "type": "detail"
+    },
+    {
+      "id": 4,
+      "q": "What are Ruff's default line-length and indent-width values?",
+      "type": "detail"
+    },
+    {
+      "id": 5,
+      "q": "In the lint config, what is the difference between `select`/`ignore` and `extend-select`/`extend-ignore`?",
+      "type": "detail"
+    },
+    {
+      "id": 6,
+      "q": "What are Ruff's three config file formats, and what is their precedence when multiple exist in the same directory?",
+      "type": "detail"
+    },
+    {
+      "id": 7,
+      "q": "By default, does `ruff check --fix` apply unsafe fixes, and how do you enable unsafe fixes?",
+      "type": "detail"
+    },
+    {
+      "id": 8,
+      "q": "For the formatter, what are the default quote-style and indent-style, and how close is Ruff to Black on real-world code?",
+      "type": "detail"
+    },
+    {
+      "id": 9,
+      "q": "How do you enable docstring code formatting in Ruff, and what does docstring-code-line-length default to?",
+      "type": "detail"
+    },
+    {
+      "id": 10,
+      "q": "What source plugin do each of these Ruff rule prefixes come from: F, E/W, I, UP, B, SIM, S, and RUF?",
+      "type": "detail"
+    },
+    {
+      "id": 11,
+      "q": "How does Ruff's versioning policy work — does it follow standard SemVer, and what do minor vs patch version bumps mean?",
+      "type": "freshness"
+    },
+    {
+      "id": 12,
+      "q": "How is a preview-only lint rule (say HYP001) activated, and does selecting it explicitly or via `select = [\"ALL\"]` enable it without preview mode?",
+      "type": "freshness"
+    },
+    {
+      "id": 13,
+      "q": "What command runs Ruff's built-in language server, in which Ruff versions did it reach beta and stable, and what is the official VS Code extension ID?",
+      "type": "freshness"
+    },
+    {
+      "id": 14,
+      "q": "According to these docs, is Ruff a type checker that can replace mypy/pyright?",
+      "type": "unsupported"
+    }
+  ]
+}

@@ -1,0 +1,121 @@
+{
+  "topic": "Ruff — the Astral Python linter & formatter",
+  "sources_used": [
+    "https://github.com/astral-sh/ruff",
+    "https://docs.astral.sh/ruff/",
+    "https://docs.astral.sh/ruff/installation/",
+    "https://docs.astral.sh/ruff/tutorial/",
+    "https://docs.astral.sh/ruff/linter/",
+    "https://docs.astral.sh/ruff/formatter/",
+    "https://docs.astral.sh/ruff/configuration/",
+    "https://docs.astral.sh/ruff/settings/",
+    "https://docs.astral.sh/ruff/rules/",
+    "https://docs.astral.sh/ruff/preview/",
+    "https://docs.astral.sh/ruff/faq/",
+    "https://docs.astral.sh/ruff/editors/",
+    "https://docs.astral.sh/ruff/editors/setup/",
+    "https://docs.astral.sh/ruff/versioning/",
+    "https://docs.astral.sh/ruff/integrations/",
+    "https://docs.astral.sh/ruff/linter/#rule-selection"
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "type": "recall",
+      "q": "What is Ruff, what language is it implemented in, and which company maintains it?",
+      "gold": "Ruff is an extremely fast Python linter and code formatter, implemented in Rust. It is maintained by Astral (the company behind the uv package manager).",
+      "source": "https://docs.astral.sh/ruff/"
+    },
+    {
+      "id": 2,
+      "type": "recall",
+      "q": "Which standalone Python tools does Ruff aim to replace/consolidate?",
+      "gold": "Flake8 (plus dozens of plugins), Black, isort, pydocstyle, pyupgrade, and autoflake.",
+      "source": "https://docs.astral.sh/ruff/"
+    },
+    {
+      "id": 3,
+      "type": "detail",
+      "q": "What is Ruff's default value for lint.select (the rule codes enabled by default)?",
+      "gold": "select = [\"E4\", \"E7\", \"E9\", \"F\"] — i.e. Pyflakes (F) plus a subset of pycodestyle (E) rules.",
+      "source": "https://docs.astral.sh/ruff/settings/"
+    },
+    {
+      "id": 4,
+      "type": "detail",
+      "q": "What are Ruff's default line-length and indent-width values?",
+      "gold": "line-length defaults to 88; indent-width defaults to 4.",
+      "source": "https://docs.astral.sh/ruff/settings/"
+    },
+    {
+      "id": 5,
+      "type": "detail",
+      "q": "In the lint config, what is the difference between `select`/`ignore` and `extend-select`/`extend-ignore`?",
+      "gold": "select enables specific rules and ignore disables them; extend-select adds rules to an inherited/existing set and extend-ignore removes (ignores) rules from an inherited set, rather than replacing it.",
+      "source": "https://docs.astral.sh/ruff/linter/#rule-selection"
+    },
+    {
+      "id": 6,
+      "type": "detail",
+      "q": "What are Ruff's three config file formats, and what is their precedence when multiple exist in the same directory?",
+      "gold": "pyproject.toml (under [tool.ruff]), ruff.toml, and .ruff.toml. Precedence in the same directory: .ruff.toml > ruff.toml > pyproject.toml.",
+      "source": "https://docs.astral.sh/ruff/configuration/"
+    },
+    {
+      "id": 7,
+      "type": "detail",
+      "q": "By default, does `ruff check --fix` apply unsafe fixes, and how do you enable unsafe fixes?",
+      "gold": "No — by default only 'safe' fixes are applied. Unsafe fixes are enabled with the --unsafe-fixes CLI flag (e.g. `ruff check --fix --unsafe-fixes`) or `unsafe-fixes = true` in config.",
+      "source": "https://docs.astral.sh/ruff/linter/"
+    },
+    {
+      "id": 8,
+      "type": "detail",
+      "q": "For the formatter, what are the default quote-style and indent-style, and how close is Ruff to Black on real-world code?",
+      "gold": "Default quote-style is \"double\" and indent-style is \"space\". Ruff is a drop-in Black replacement, formatting >99.9% of lines identically on large Black-formatted projects (e.g. Django, Zulip).",
+      "source": "https://docs.astral.sh/ruff/formatter/"
+    },
+    {
+      "id": 9,
+      "type": "detail",
+      "q": "How do you enable docstring code formatting in Ruff, and what does docstring-code-line-length default to?",
+      "gold": "Set format.docstring-code-format = true (it defaults to false). docstring-code-line-length defaults to \"dynamic\", which respects the surrounding code's line-length limit.",
+      "source": "https://docs.astral.sh/ruff/settings/"
+    },
+    {
+      "id": 10,
+      "type": "detail",
+      "q": "What source plugin do each of these Ruff rule prefixes come from: F, E/W, I, UP, B, SIM, S, and RUF?",
+      "gold": "F = Pyflakes; E and W = pycodestyle; I = isort; UP = pyupgrade; B = flake8-bugbear; SIM = flake8-simplify; S = flake8-bandit; RUF = Ruff-specific.",
+      "source": "https://docs.astral.sh/ruff/rules/"
+    },
+    {
+      "id": 11,
+      "type": "freshness",
+      "q": "How does Ruff's versioning policy work — does it follow standard SemVer, and what do minor vs patch version bumps mean?",
+      "gold": "It uses a custom (non-SemVer) scheme: the minor version is bumped for breaking changes and the patch version for bug fixes. While pre-1.0 (0.x) the API is unstable; standard SemVer would apply once a stable API is reached.",
+      "source": "https://docs.astral.sh/ruff/versioning/"
+    },
+    {
+      "id": 12,
+      "type": "freshness",
+      "q": "How is a preview-only lint rule (say HYP001) activated, and does selecting it explicitly or via `select = [\"ALL\"]` enable it without preview mode?",
+      "gold": "No. Preview rules require preview mode to be on (--preview or preview = true). Without preview mode they are NOT enabled even by extend-select = [\"HYP001\"], extend-select = [\"HYP\"], or select = [\"ALL\"]; preview mode must be enabled alongside the selection.",
+      "source": "https://docs.astral.sh/ruff/preview/"
+    },
+    {
+      "id": 13,
+      "type": "freshness",
+      "q": "What command runs Ruff's built-in language server, in which Ruff versions did it reach beta and stable, and what is the official VS Code extension ID?",
+      "gold": "Run it with `ruff server` (the native Rust LSP, a replacement for ruff-lsp). It was beta in Ruff v0.4.5 and stabilized in v0.5.3. The official VS Code extension ID is charliermarsh.ruff.",
+      "source": "https://docs.astral.sh/ruff/editors/setup/"
+    },
+    {
+      "id": 14,
+      "type": "unsupported",
+      "q": "According to these docs, is Ruff a type checker that can replace mypy/pyright?",
+      "gold": "No. The FAQ explicitly states 'Ruff is a linter, not a type checker.' It does not replace a type checker; type checkers (Mypy, Pyright, Pyre) catch type errors Ruff misses and are complementary. (Astral's separate type checker is ty, not Ruff.)",
+      "source": "https://docs.astral.sh/ruff/faq/"
+    }
+  ]
+}

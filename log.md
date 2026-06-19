@@ -42,3 +42,21 @@ an objective judge, plus a deterministic token report (`scripts/token_report.py`
 - Tokens: read/query 2.3× (small) → 5.8× (medium) cheaper than reading raw, ~1.3–1.8× vs naive RAG; BSB read ≈
   vanilla (lower at medium); BSB fill ~1.8× costlier but break-even in 1–4 queries; ~1.6× denser interconnections.
 - Evidence committed under `benchmark/` (RESULTS.md + per-arm wikis, gold sets, scores, token JSON).
+
+## [2026-06-19] query | Large benchmark (Ruff) + fill-cost optimization (bsb-lean) + over-abstention fix
+
+Large/novel run: 15 sources, 14 detail/freshness-heavy questions, THREE arms (vanilla, bsb, **bsb-lean**), exact
+tokenizer (`tiktoken`, now installed). Added `scripts/token_report.py` auto-discovery of arms.
+- Quality: vanilla 5.64, bsb 5.93, **bsb-lean 5.93** (bsb-lean ties full bsb, Δ=0). All arms perfect correctness +
+  faithfulness; spread is citation quality (BSB cites exact URLs, vanilla bare filenames). BSB +5.1% over vanilla.
+- **Fill optimization works:** bsb-lean = 7,648 fill tokens vs full bsb 22,366 (**−66%**, ≈ vanilla's 7,485) with
+  NO quality loss, the DENSEST interconnection (31.0 links/1k vs 20.8 vs 12.0) and LOWEST read cost (442 tok/query,
+  17.9× vs raw). Break-even 1 query. → adopted **lean fill as the default** in `CLAUDE.md` §2.1.
+- Over-abstention fix worked (BSB arms now answer detail facts + nailed the unsupported trap). One residual hedge (Q5).
+- Honest: the "advantage grows with size" hypothesis did NOT hold — margin shrank (both wikis captured facts);
+  BSB's repeatable edge is verifiability. Next open test: a private/novel corpus where one wiki lacks the facts.
+
+## [2026-06-19] schema | Lean fill mode is now the default (§2.1)
+
+Encoded the benchmark-validated lean fill discipline into `CLAUDE.md`: compact source pages, cite-don't-restate,
+terse dense `## Links`. Updated §3.1 ingest step 4. Rationale + numbers in `benchmark/RESULTS.md`.

@@ -123,11 +123,15 @@ def build_report(example_dir: Path, rag_k: int) -> dict:
     count, tok_name = make_tokenizer()
     raw = measure_corpus(example_dir / "raw", count)
 
+    # Auto-discover every arm-<name>/wiki directory (vanilla, bsb, bsb-lean, ...).
     arms: dict[str, dict] = {}
-    for arm in ("vanilla", "bsb"):
-        m = measure_arm(example_dir / f"arm-{arm}" / "wiki", count)
+    for armdir in sorted(example_dir.glob("arm-*")):
+        if not armdir.is_dir():
+            continue
+        name = armdir.name[len("arm-"):]
+        m = measure_arm(armdir / "wiki", count)
         if m is not None:
-            arms[arm] = m
+            arms[name] = m
 
     qpath = example_dir / "questions.json"
     n_queries = None

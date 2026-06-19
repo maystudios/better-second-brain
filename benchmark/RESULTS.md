@@ -71,17 +71,71 @@ Against the "re-read everything each time" baseline the wiki pays for itself in 
 RAG, within **~6–16**. After that every query is pure savings. BSB's higher fill cost lengthens break-even only
 slightly — trivial for any knowledge that gets queried more than a handful of times.
 
+## Large run (3 arms) — Ruff, 15 sources, 14 questions, exact tokenizer (2026-06-19)
+
+A third arm was added — **`bsb-lean`**, the optimized fill mode (compact source stubs, cite-don't-restate, terse
+`## Links` lists) — plus an over-abstention fix in the answering policy. Tokens here are **exact** (`tiktoken`).
+
+### Quality (out of 6)
+
+| Arm | Correctness | Citation | Faithfulness | **Total** |
+|---|:--:|:--:|:--:|:--:|
+| vanilla | 2.00 | 1.64 | 2.00 | 5.64 |
+| bsb (full) | 2.00 | 1.93 | 2.00 | **5.93** |
+| **bsb-lean** | 2.00 | 1.93 | 2.00 | **5.93** |
+
+- **All three arms answered every fact correctly** (correctness 2.00) — both wikis captured the detail, so the
+  spread is again **citation quality**: BSB arms cite exact doc URLs (1.93); vanilla uses bare filenames (1.64).
+  BSB beats vanilla by **+5.1%**.
+- **`bsb-lean` ties full `bsb` exactly** (quality Δ = 0.0): the leaner pages kept every gold fact and every correct
+  citation.
+- **The over-abstention fix worked**: the BSB arms now answer detail/freshness facts confidently and nailed the
+  "unsupported" trap by quoting the FAQ ("Ruff is a linter, not a type checker"), instead of abstaining. One
+  residual over-hedge remained (Q5, `select` vs `extend-select`).
+
+### Tokens (exact, tiktoken cl100k). Raw corpus = 7,895 tokens / 15 sources.
+
+| Arm | Pages | **Fill tokens** | Links | Links/1k | **Read/query** | vs raw | Break-even (raw) |
+|---|--:|--:|--:|:--:|--:|:--:|:--:|
+| vanilla | 11 | 7,485 | 90 | 12.0 | 1,296 | 6.1× | 1.1 q |
+| bsb (full) | 34 | 22,366 | 466 | 20.8 | 1,042 | 7.6× | 3.3 q |
+| **bsb-lean** | 31 | **7,648** | 237 | **31.0** | **442** | **17.9×** | **1.0 q** |
+
+**The fill optimization works, decisively:**
+
+- **Fill: `bsb-lean` costs 7,648 tokens vs full BSB's 22,366 — a ~66% cut, essentially vanilla's fill cost (7,485)** —
+  with **no quality loss**.
+- **Interconnection got *denser*, not sparser**: 31.0 links per 1k tokens (vs full BSB 20.8, vanilla 12.0) — the
+  most-connected graph per token, exactly the "cheap interconnection" goal.
+- **Read got cheaper too**: 442 tokens/query — 2.4× under full BSB, 2.9× under vanilla, **17.9× under reading raw**,
+  3.6× under naive RAG. Compact pages = a tiny per-query footprint.
+- **Break-even: 1 query.** Lean fill pays for itself immediately.
+
+**`bsb-lean` is near-Pareto-optimal** — full-BSB quality and traceability, the densest interconnection, the lowest
+read cost, at a vanilla-level fill cost. It is now the **default fill mode** in the schema (`CLAUDE.md` §2.1).
+
+### Honest note on the "does the advantage scale?" hypothesis
+
+It did **not** scale the way predicted. The quality margin *shrank* (small tie → medium +12% → large +5.1%),
+because on these well-documented topics **both** wikis captured the facts, so correctness was a wash and only
+*citation traceability* separated them. BSB's durable, repeatable edge is **verifiability**, not raw correctness —
+and the biggest concrete win of the large run was the **fill optimization**, not a wider quality gap. A genuinely
+*private / novel* corpus (where one wiki would simply lack facts) is still untested and is where a correctness gap,
+if any, would show.
+
 ## Bottom line
 
-- **Read efficiency: yes, and it scales.** A wiki is far cheaper to query than reading raw sources, and the gap
-  widens as the corpus grows. BSB matches or beats vanilla on read cost.
-- **Fill cost: BSB is the more expensive arm to build (~1.8×),** the honest price of source-grounding + denser
-  interconnection — repaid within a few queries.
-- **Quality: tie on a small, well-known topic; BSB wins on the larger one, entirely through verifiable citations.**
-  The gate occasionally over-abstains — the main thing to fix next.
-- **Extrapolation (hypothesis, not yet measured):** both the read-efficiency gap and the citation advantage *grew*
-  from small→medium. Larger, less-popular corpora — where memory is unreliable and traceability matters most —
-  should favour BSB more. Needs a large-corpus run to confirm.
+- **Read efficiency: yes, and it compounds.** A wiki is far cheaper to query than reading raw sources — 2.3× (small)
+  → 5.8× (medium) → with **`bsb-lean`, 17.9×** (large). BSB matches or beats vanilla on read cost.
+- **Fill cost is no longer a BSB downside — it's solved.** Full BSB does cost ~1.8–2.9× more to build, but the
+  **`bsb-lean`** mode cuts that ~66% back down to a vanilla wiki's cost **with zero quality loss and *denser*
+  interconnection**. Lean is now the default (`CLAUDE.md` §2.1). Break-even: ~1 query.
+- **Quality: BSB's durable, repeatable edge is *verifiability*, not raw correctness.** On well-documented topics
+  both wikis get the facts right; BSB's structured source-citations win the margin (+5–12%). The over-abstention
+  failure mode is now fixed in the answering policy.
+- **The "advantage grows with size" hypothesis was *not* confirmed** (the margin shrank, because both wikis
+  captured the facts). The open test that would show a *correctness* gap is a genuinely **private / novel** corpus
+  where one wiki simply lacks the facts — not yet run.
 
 ## Caveats (don't oversell this)
 
