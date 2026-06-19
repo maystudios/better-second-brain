@@ -24,6 +24,36 @@ OpenCode, …) maintains a trustworthy, browsable, version-controlled knowledge 
 
 ---
 
+## ⚡ Install — paste this into your agent
+
+Open an **empty folder** in Claude Code, Codex, or any coding agent and paste the prompt below. It clones BSB into
+that folder and stands up a brand-new brain for *your* topic — nothing else to set up:
+
+```text
+Set up a "Better Second Brain" (BSB) in the CURRENT folder, following these steps exactly:
+
+1. Clone the template into this folder:
+   git clone https://github.com/maystudios/better-second-brain .
+   (If this folder is NOT empty, instead run:
+    git clone https://github.com/maystudios/better-second-brain bsb && cd bsb)
+2. Read CLAUDE.md — that file is now your operating schema; follow it for everything below.
+3. Ask me for my DOMAIN (what this brain is about) and a one-line LITMUS test, then initialize a fresh, empty brain:
+   python scripts/init_brain.py --domain "<MY DOMAIN>" --litmus "<MY LITMUS>" --fresh --yes
+4. Verify it is clean:
+   python scripts/verify_wikilinks.py   and   python scripts/lint_sources.py --summary
+5. Tell me the brain is ready and ask for my first source (a URL or file) to ingest into raw/.
+
+You are now the maintainer of this brain. Never write a wiki page from your own memory — every page must be
+grounded in at least 3 real, fetched sources (CLAUDE.md §1.5), and populate pages "lean" (§2.1). I curate the
+sources and ask the questions; you read, verify, summarize, file, and cross-reference.
+```
+
+**Already cloned it?** Run the shipped slash command **`/bsb-init`** in Claude Code, or
+`python scripts/init_brain.py --domain "…" --litmus "…" --fresh --yes`. Then open the folder as a vault in
+**Obsidian** (the human reader) next to your agent. Manual / Obsidian-first setup: [`docs/install.md`](./docs/install.md).
+
+---
+
 ## Why this exists
 
 The LLM Wiki pattern (Karpathy, April 2026 — [X post](https://x.com/karpathy/status/2039805659525644595),

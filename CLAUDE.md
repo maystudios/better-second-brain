@@ -333,8 +333,9 @@ before proceeding. Then wait for the user to direct the operation — don't rest
 
 - **Obsidian** is the human's reader: graph view, backlinks, **Bases** (core; query frontmatter), Properties.
   Attachment path is set to `raw/assets/`. The `.obsidian/` baseline is committed so the vault opens consistently.
-- **`scripts/`** (Python, idempotent, self-healing): `find_orphans.py`, `verify_wikilinks.py`, `lint_sources.py`,
-  `graphify_sync.py`, `new_page.py`. Run `python scripts/<tool>.py --help`.
+- **`scripts/`** (Python, idempotent, self-healing): `init_brain.py` (scaffold a fresh brain), `new_page.py`
+  (scaffold a page), `find_orphans.py`, `verify_wikilinks.py`, `lint_sources.py`, `graphify_sync.py`,
+  `token_report.py` (token-efficiency report). Run `python scripts/<tool>.py --help`.
 - **graphify** (§3.4) — the graph layer. **qmd** (`github.com/tobi/qmd`) is the optional retrieval layer: local
   hybrid BM25+vector+rerank search over `raw/`+`wiki/`, exposed over MCP. Add it when the brain passes ~100 sources
   and `index.md` alone stops being enough. Pattern: qmd finds the notes → wiki gives the curated answer →
@@ -357,6 +358,8 @@ adding new ones — keep it tight. The `auto-research` loop (§3.5) is the autom
 
 BSB is meant to be cloned and repurposed. If you're starting fresh:
 
+0. **Fastest:** run the `/bsb-init` slash command (or `python scripts/init_brain.py --domain "…" --litmus "…"
+   --fresh --yes`) — it does steps 2–3 below for you. Or paste the agentic install prompt from `README.md`.
 1. Read `README.md` and `docs/install.md`.
 2. Edit **§0** (domain + litmus) and `bsb.config.md` for your topic.
 3. Delete or replace the seed pages under `wiki/` (they document BSB's own bootstrap domain).

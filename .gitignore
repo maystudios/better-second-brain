@@ -14,8 +14,13 @@ Thumbs.db
 .obsidian/plugins/*/cache/
 .obsidian-git-data
 
-# --- Claude Code / agent session state ---
-.claude/
+# --- Claude Code: ship project commands/skills, ignore volatile session state ---
+.claude/*
+!.claude/commands/
+!.claude/commands/**
+!.claude/skills/
+!.claude/skills/**
+.claude/settings.local.json
 
 # --- graphify: keep graph.json + GRAPH_REPORT.md, ignore the rest ---
 graphify-out/*
