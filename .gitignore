@@ -42,3 +42,7 @@ venv/
 .env
 *.pem
 *.key
+
+# auto-research scratch workspace
+.auto-research/
+FIRST-RUN.md

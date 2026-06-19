@@ -60,3 +60,12 @@ tokenizer (`tiktoken`, now installed). Added `scripts/token_report.py` auto-disc
 
 Encoded the benchmark-validated lean fill discipline into `CLAUDE.md`: compact source pages, cite-don't-restate,
 terse dense `## Links`. Updated §3.1 ingest step 4. Rationale + numbers in `benchmark/RESULTS.md`.
+
+## [2026-06-19] schema | auto-research applied to CLAUDE.md (369 → 180 lines)
+
+Ran the §3.5 Improve loop (the `auto-research` skill) ON BSB's own schema. 10 cited specialist agents (108 sources);
+headline finding (Anthropic official docs): CLAUDE.md should be <200 lines — "bloated files cause Claude to ignore
+your actual instructions." Condensed 369→180: hoisted the two inviolable rules (§1.5 gate + §2.1 lean) to a top
+block with NEVER/MUST modals; moved detailed runbooks/command catalogs to `docs/` (progressive disclosure); added
+the Two-Strikes rule (§7) and a graphify corpus-size gate (§3.4). All 17 §-headings preserved; §1.5/§2.1 strengthened,
+not weakened. Format-validation PASS. Workspace + findings + diff: `.auto-research/CLAUDE/` (gitignored).
