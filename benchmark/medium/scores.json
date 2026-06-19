@@ -1,0 +1,23 @@
+{
+  "topic": "Model Context Protocol (MCP)",
+  "set": "medium",
+  "n_questions": 10,
+  "dimensions": ["correctness", "citation", "faithfulness"],
+  "scale": "0-2 per dimension per question; total = sum of three averages (0-6)",
+  "per_question": [
+    { "id": 1, "type": "recall", "vanilla": { "correctness": 2, "citation": 1, "faithfulness": 2 }, "bsb": { "correctness": 2, "citation": 2, "faithfulness": 2 } },
+    { "id": 2, "type": "recall", "vanilla": { "correctness": 2, "citation": 1, "faithfulness": 2 }, "bsb": { "correctness": 2, "citation": 2, "faithfulness": 2 } },
+    { "id": 3, "type": "detail", "vanilla": { "correctness": 2, "citation": 1, "faithfulness": 2 }, "bsb": { "correctness": 2, "citation": 2, "faithfulness": 2 } },
+    { "id": 4, "type": "detail", "vanilla": { "correctness": 2, "citation": 1, "faithfulness": 2 }, "bsb": { "correctness": 0, "citation": 0, "faithfulness": 2 } },
+    { "id": 5, "type": "detail", "vanilla": { "correctness": 2, "citation": 1, "faithfulness": 2 }, "bsb": { "correctness": 2, "citation": 2, "faithfulness": 2 } },
+    { "id": 6, "type": "detail", "vanilla": { "correctness": 2, "citation": 1, "faithfulness": 2 }, "bsb": { "correctness": 2, "citation": 2, "faithfulness": 2 } },
+    { "id": 7, "type": "detail", "vanilla": { "correctness": 2, "citation": 1, "faithfulness": 2 }, "bsb": { "correctness": 2, "citation": 2, "faithfulness": 2 } },
+    { "id": 8, "type": "freshness", "vanilla": { "correctness": 2, "citation": 1, "faithfulness": 2 }, "bsb": { "correctness": 2, "citation": 2, "faithfulness": 2 } },
+    { "id": 9, "type": "freshness", "vanilla": { "correctness": 2, "citation": 1, "faithfulness": 2 }, "bsb": { "correctness": 2, "citation": 2, "faithfulness": 2 } },
+    { "id": 10, "type": "unsupported", "vanilla": { "correctness": 2, "citation": 1, "faithfulness": 2 }, "bsb": { "correctness": 2, "citation": 2, "faithfulness": 2 } }
+  ],
+  "vanilla": { "correctness": 2.0, "citation": 1.0, "faithfulness": 2.0, "total": 5.0 },
+  "bsb": { "correctness": 1.8, "citation": 1.8, "faithfulness": 2.0, "total": 5.6 },
+  "winner": "bsb",
+  "margin_pct": 12.0
+}

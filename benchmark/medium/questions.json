@@ -1,0 +1,87 @@
+{
+  "topic": "Model Context Protocol (MCP)",
+  "sources_used": [
+    "https://modelcontextprotocol.io/introduction",
+    "https://modelcontextprotocol.io/docs/concepts/architecture",
+    "https://modelcontextprotocol.io/docs/concepts/resources",
+    "https://modelcontextprotocol.io/docs/concepts/tools",
+    "https://modelcontextprotocol.io/docs/concepts/prompts",
+    "https://modelcontextprotocol.io/docs/concepts/transports",
+    "https://github.com/modelcontextprotocol/modelcontextprotocol",
+    "https://github.com/modelcontextprotocol/servers",
+    "https://github.com/modelcontextprotocol/python-sdk",
+    "https://github.com/modelcontextprotocol/typescript-sdk"
+  ],
+  "questions": [
+    {
+      "id": 1,
+      "type": "recall",
+      "q": "What everyday hardware analogy does the MCP introduction use to describe how MCP connects AI applications to external systems?",
+      "gold": "A USB-C port for AI applications — just as USB-C is a standardized way to connect electronic devices, MCP is a standardized way to connect AI applications to external systems.",
+      "source": "https://modelcontextprotocol.io/introduction"
+    },
+    {
+      "id": 2,
+      "type": "recall",
+      "q": "What are the three core primitives that MCP servers can expose, and what is each used for?",
+      "gold": "Tools (executable functions the AI can invoke to perform actions), Resources (data sources providing contextual information), and Prompts (reusable templates that structure interactions with language models).",
+      "source": "https://modelcontextprotocol.io/docs/concepts/architecture"
+    },
+    {
+      "id": 3,
+      "type": "detail",
+      "q": "Which underlying RPC protocol and version does the MCP data layer use to encode messages?",
+      "gold": "JSON-RPC 2.0 (and JSON-RPC messages must be UTF-8 encoded).",
+      "source": "https://modelcontextprotocol.io/docs/concepts/architecture"
+    },
+    {
+      "id": 4,
+      "type": "detail",
+      "q": "What JSON-RPC error code do MCP resource servers return when a resource is not found?",
+      "gold": "-32002 (Resource not found). Internal errors use -32603.",
+      "source": "https://modelcontextprotocol.io/docs/concepts/resources"
+    },
+    {
+      "id": 5,
+      "type": "detail",
+      "q": "In the Streamable HTTP transport, which HTTP header carries the session identifier, and what status code must a client treat as a signal to start a new session?",
+      "gold": "The Mcp-Session-Id header carries the session ID. An HTTP 404 Not Found response to a request containing an Mcp-Session-Id means the client must start a new session by sending a new InitializeRequest without a session ID.",
+      "source": "https://modelcontextprotocol.io/docs/concepts/transports"
+    },
+    {
+      "id": 6,
+      "type": "detail",
+      "q": "If a server using HTTP receives no MCP-Protocol-Version header and cannot otherwise identify the version, which protocol version should it assume?",
+      "gold": "Protocol version 2025-03-26.",
+      "source": "https://modelcontextprotocol.io/docs/concepts/transports"
+    },
+    {
+      "id": 7,
+      "type": "detail",
+      "q": "What is the PyPI package name for the official MCP Python SDK, and what is the recommended install command including the CLI extra?",
+      "gold": "The package is `mcp`. Recommended install: `uv add \"mcp[cli]\"` (or `pip install \"mcp[cli]\"`).",
+      "source": "https://github.com/modelcontextprotocol/python-sdk"
+    },
+    {
+      "id": 8,
+      "type": "freshness",
+      "q": "As of the latest published spec, what is the most recent MCP specification version number and when was it released?",
+      "gold": "Version 2025-11-25, released November 25, 2025.",
+      "source": "https://github.com/modelcontextprotocol/modelcontextprotocol"
+    },
+    {
+      "id": 9,
+      "type": "freshness",
+      "q": "What is the current status of the v2 TypeScript SDK on the main branch, and which version is recommended for production use?",
+      "gold": "The main branch contains v2, which is in development and pre-alpha. v1.x remains the recommended version for production (and v1.x gets bug/security fixes for at least 6 months after v2 ships).",
+      "source": "https://github.com/modelcontextprotocol/typescript-sdk"
+    },
+    {
+      "id": 10,
+      "type": "unsupported",
+      "q": "According to the MCP reference servers repository, which official reference server provides built-in Slack messaging and Brave web search as actively maintained servers?",
+      "gold": "Unsupported premise. There is no actively maintained reference server providing those. Slack and Brave Search are listed as archived/legacy servers moved to the servers-archived repository; the actively maintained reference servers are Everything, Fetch, Filesystem, Git, Memory, Sequential Thinking, and Time.",
+      "source": "https://github.com/modelcontextprotocol/servers"
+    }
+  ]
+}

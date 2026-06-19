@@ -1,0 +1,55 @@
+{
+  "topic": "Model Context Protocol (MCP)",
+  "questions": [
+    {
+      "id": 1,
+      "q": "What everyday hardware analogy does the MCP introduction use to describe how MCP connects AI applications to external systems?",
+      "type": "recall"
+    },
+    {
+      "id": 2,
+      "q": "What are the three core primitives that MCP servers can expose, and what is each used for?",
+      "type": "recall"
+    },
+    {
+      "id": 3,
+      "q": "Which underlying RPC protocol and version does the MCP data layer use to encode messages?",
+      "type": "detail"
+    },
+    {
+      "id": 4,
+      "q": "What JSON-RPC error code do MCP resource servers return when a resource is not found?",
+      "type": "detail"
+    },
+    {
+      "id": 5,
+      "q": "In the Streamable HTTP transport, which HTTP header carries the session identifier, and what status code must a client treat as a signal to start a new session?",
+      "type": "detail"
+    },
+    {
+      "id": 6,
+      "q": "If a server using HTTP receives no MCP-Protocol-Version header and cannot otherwise identify the version, which protocol version should it assume?",
+      "type": "detail"
+    },
+    {
+      "id": 7,
+      "q": "What is the PyPI package name for the official MCP Python SDK, and what is the recommended install command including the CLI extra?",
+      "type": "detail"
+    },
+    {
+      "id": 8,
+      "q": "As of the latest published spec, what is the most recent MCP specification version number and when was it released?",
+      "type": "freshness"
+    },
+    {
+      "id": 9,
+      "q": "What is the current status of the v2 TypeScript SDK on the main branch, and which version is recommended for production use?",
+      "type": "freshness"
+    },
+    {
+      "id": 10,
+      "q": "According to the MCP reference servers repository, which official reference server provides built-in Slack messaging and Brave web search as actively maintained servers?",
+      "type": "unsupported"
+    }
+  ]
+}

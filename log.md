@@ -25,3 +25,20 @@ a research-discipline gate (no page from training memory; ≥3 fetched sources).
   and prior art (Memex, Zettelkasten, PARA) — all grounded in verified primary sources (see each page's `## Sources`).
 
 Next: see `roadmap.md`.
+
+## [2026-06-19] publish | Public GitHub repo + README badges
+
+Published to https://github.com/maystudios/better-second-brain (public, MIT, 10 topics). Added shields.io badges
+(stars / forks / issues / last-commit / license + "built on Karpathy LLM Wiki" / Obsidian / graphify) and a
+star-history graph to the README.
+
+## [2026-06-19] query | Benchmark — BSB vs vanilla LLM-wiki (uv small, MCP medium)
+
+Ran a controlled A/B: same fetched sources, two arms (vanilla Karpathy vs BSB research-gated), a gold question set,
+an objective judge, plus a deterministic token report (`scripts/token_report.py`, new this run).
+- Quality: small (uv) = tie 5.83/5.83; medium (MCP) = BSB 5.60 vs vanilla 5.00 (+12%) — margin entirely from
+  citation quality (1.80 vs 1.00). Vanilla slightly ahead on correctness (memory is strong on popular topics);
+  BSB's gate over-abstained once (MCP -32002) — a real failure mode logged for follow-up.
+- Tokens: read/query 2.3× (small) → 5.8× (medium) cheaper than reading raw, ~1.3–1.8× vs naive RAG; BSB read ≈
+  vanilla (lower at medium); BSB fill ~1.8× costlier but break-even in 1–4 queries; ~1.6× denser interconnections.
+- Evidence committed under `benchmark/` (RESULTS.md + per-arm wikis, gold sets, scores, token JSON).

@@ -1,0 +1,35 @@
+{
+  "topic": "uv — the Astral Python package & project manager",
+  "questions": [
+    {
+      "id": 1,
+      "q": "What programming language is uv written in, and what does Astral describe uv as?",
+      "type": "recall"
+    },
+    {
+      "id": 2,
+      "q": "What is the exact command shown to install uv on Windows using the standalone installer?",
+      "type": "detail"
+    },
+    {
+      "id": 3,
+      "q": "In uv's tools guide, the uvx command is documented as being exactly equivalent to which uv subcommand?",
+      "type": "detail"
+    },
+    {
+      "id": 4,
+      "q": "According to the docs, which existing Python tools does uv aim to replace, and what speed improvement over pip is claimed?",
+      "type": "recall"
+    },
+    {
+      "id": 5,
+      "q": "What specific uv version is used in the installation page's example for installing a pinned/specific version via the standalone installer?",
+      "type": "freshness"
+    },
+    {
+      "id": 6,
+      "q": "Which built-in cloud deployment command does uv provide to push a project directly to AWS Lambda or Heroku?",
+      "type": "unsupported"
+    }
+  ]
+}

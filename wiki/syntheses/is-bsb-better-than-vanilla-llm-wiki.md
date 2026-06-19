@@ -19,7 +19,26 @@ A Better Second Brain (BSB) extends Andrej Karpathy's LLM Wiki pattern with a gr
 
 ## Short answer
 
-Unproven until benchmarked. BSB is a superset of the [[wiki/concepts/llm-wiki-pattern|LLM Wiki pattern]]: anything the vanilla wiki can do, BSB can also do, plus traversal ([[wiki/concepts/knowledge-graph-graphrag|knowledge graph / GraphRAG]]), local hybrid search, and a discipline gate. That makes BSB plausibly better on *trust* and *multi-hop* questions, but the additional machinery adds setup and maintenance cost, and none of the quality gains are measured yet. The honest position: here is the hypothesis and here is how we test it (see `docs/benchmark.md`).
+**Partly confirmed by a first measured run (small-N).** On a small, well-known topic BSB and a vanilla wiki *tied*
+on answer quality; on a medium topic **BSB won by ~12%**, and the entire margin came from **verifiable citations**,
+not raw correctness. On token cost, querying a wiki is **~2–6× cheaper than reading the raw sources** (the gap grows
+with corpus size), and BSB reads about the same as — or less than — vanilla per query while laying down ~1.6× denser
+interconnections; its higher one-time fill cost is repaid within **1–4 queries**. The honest nuance: vanilla matches
+BSB on *correctness* for popular topics (memory is strong there) and BSB's research gate occasionally **over-abstains**.
+Full numbers and caveats: `benchmark/RESULTS.md`.
+
+## Measured results (first run — 2026-06-19)
+
+See `benchmark/RESULTS.md` for the full tables. Headlines:
+
+- **Quality:** small (`uv`) = tie 5.83/5.83; medium (`MCP`) = BSB 5.60 vs vanilla 5.00 (+12%), driven by citation
+  quality (1.80 vs 1.00). Vanilla was slightly ahead on *correctness* (2.00 vs 1.80) because BSB's gate abstained on
+  one answerable detail its KB hadn't indexed — a real failure mode to fix.
+- **Read tokens/query:** wiki vs read-all-raw ≈ 2.3× (small) → 5.8× (medium); ≈ 1.3–1.8× vs naive RAG. BSB ≈ vanilla
+  (lower at medium: 1,328 vs 1,470).
+- **Fill tokens:** BSB ~1.8–1.9× more than vanilla (source pages + denser links); break-even in 1–4 queries vs raw.
+- **Caveats:** 2 topics / 16 questions, not fully blinded, approximate tokenizer, popular topics flatter vanilla.
+  Directional, not definitive — a large/novel-corpus run is the next test.
 
 ## Reasoning
 
@@ -62,4 +81,5 @@ And outcomes that would refute it:
 - [[wiki/sources/obsidian-bases]] — DB-like views over note frontmatter. https://obsidian.md/help/bases
 - Atlan, "LLM Wiki vs RAG Knowledge Base" — scale, freshness, access-control limits. https://atlan.com/know/llm-wiki-vs-rag-knowledge-base/
 - Benchmark procedure (relative): `docs/benchmark.md`
+- Measured results, first run (relative): `benchmark/RESULTS.md`
 - Architecture hub: [[wiki/moc/bsb-architecture]]

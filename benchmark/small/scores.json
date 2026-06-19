@@ -1,0 +1,63 @@
+{
+  "topic": "uv — the Astral Python package & project manager",
+  "n_questions": 6,
+  "scale": "0-2 per dimension; total per arm = sum of three averages (0-6)",
+  "per_question": [
+    {
+      "id": 1,
+      "type": "recall",
+      "vanilla": { "correctness": 2, "citation": 2, "faithfulness": 2, "sum": 6 },
+      "bsb": { "correctness": 2, "citation": 2, "faithfulness": 2, "sum": 6 },
+      "note": "Both correct: Rust + exact tagline. Vanilla cites github/docs by name; BSB cites specific source notes [[sources/...]] with URLs. BSB's quote slightly rephrases ('...written in Rust') but stays faithful."
+    },
+    {
+      "id": 2,
+      "type": "detail",
+      "vanilla": { "correctness": 2, "citation": 2, "faithfulness": 2, "sum": 6 },
+      "bsb": { "correctness": 2, "citation": 2, "faithfulness": 2, "sum": 6 },
+      "note": "Both reproduce the exact PowerShell standalone-installer command. Both cite installation source. BSB cites the precise installation page slug."
+    },
+    {
+      "id": 3,
+      "type": "detail",
+      "vanilla": { "correctness": 2, "citation": 2, "faithfulness": 2, "sum": 6 },
+      "bsb": { "correctness": 2, "citation": 2, "faithfulness": 2, "sum": 6 },
+      "note": "Both correctly state uvx == 'uv tool run' and cite the tools guide."
+    },
+    {
+      "id": 4,
+      "type": "recall",
+      "vanilla": { "correctness": 2, "citation": 2, "faithfulness": 2, "sum": 6 },
+      "bsb": { "correctness": 2, "citation": 2, "faithfulness": 2, "sum": 6 },
+      "note": "Both list all 7 tools (pip, pip-tools, pipx, poetry, pyenv, twine, virtualenv) and the 10-100x claim. BSB adds a faithful paraphrase about 'additional package management tools' from the docs landing page."
+    },
+    {
+      "id": 5,
+      "type": "freshness",
+      "vanilla": { "correctness": 2, "citation": 2, "faithfulness": 2, "sum": 6 },
+      "bsb": { "correctness": 2, "citation": 2, "faithfulness": 2, "sum": 6 },
+      "note": "Both give the pinned version 0.11.22 with a correct example URL. This is a fresh/2026-specific detail; vanilla happened to have it right too. Both cite the installation page."
+    },
+    {
+      "id": 6,
+      "type": "unsupported",
+      "vanilla": { "correctness": 2, "citation": 1, "faithfulness": 2, "sum": 5 },
+      "bsb": { "correctness": 2, "citation": 1, "faithfulness": 2, "sum": 5 },
+      "note": "Both correctly abstain ('the wiki does not say') instead of hallucinating an AWS Lambda/Heroku deploy command — full correctness and faithfulness. Neither cites a specific source it consulted to establish the absence, so citation capped at 1. No BSB gate over-abstention; BSB did not wrongly abstain on anything vanilla got right."
+    }
+  ],
+  "vanilla": {
+    "correctness": 2.0,
+    "citation": 1.8333333333333333,
+    "faithfulness": 2.0,
+    "total": 5.833333333333333
+  },
+  "bsb": {
+    "correctness": 2.0,
+    "citation": 1.8333333333333333,
+    "faithfulness": 2.0,
+    "total": 5.833333333333333
+  },
+  "winner": "tie",
+  "margin_pct": 0.0
+}

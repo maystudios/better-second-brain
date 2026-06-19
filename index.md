@@ -54,5 +54,6 @@ graphify / qmd / Obsidian extend it, and the prior art it stands on. Start at th
 
 - Pages: 21 wiki (5 sources · 7 concepts · 5 entities · 1 cheatsheet · 1 synthesis · 2 MOCs)
 - Bootstrap commit: 2026-06-19 — all pages grounded in verified primary sources (see each page's `## Sources`).
-- Last lint: pending (run `python scripts/verify_wikilinks.py` + `python scripts/lint_sources.py --summary`).
+- Last lint (2026-06-19): `verify_wikilinks` 0 broken · `find_orphans` 0 wiki orphans · `lint_sources` gated pages Tier A.
+- Benchmark (2026-06-19): first BSB-vs-vanilla run — quality tie→+12%, reads 2.3–5.8× cheaper than raw. See `benchmark/RESULTS.md`.
 - Graph: not yet built (run the `/graphify` skill; see `docs/graphify-integration.md`).
