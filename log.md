@@ -100,3 +100,14 @@ the graph (same model/effort).
 - FIX: "scale read-depth to task breadth + traverse-to-exemplar (graphify explain/path) + completeness check" lifted
   imp-1 to normal parity at −38% tokens (24,354 vs 39,285). Encoded into CLAUDE.md §3.2 + docs/graphify-integration.md.
 - Also surfaced judge variance — score arms head-to-head with one judge. Full local report: bsb-gamedev-test/COMPARISON.md.
+
+## [2026-06-19] schema | Launch polish — cold-start audit + first-impression pass
+
+Ran a fresh-user cold-start audit (clone → init → verify in an isolated dir) before promoting the repo. Fixed two
+real bugs it surfaced: (1) `init_brain.py` silently failed to update `CLAUDE.md §0` — its regex matched only the
+`bsb.config.md` `DOMAIN:` form, not §0's `**Domain:**` prose — so the agent kept the old domain; now updates both
+forms and warns if nothing matches. (2) `verify_wikilinks.py` false-flagged example links inside HTML / frontmatter
+comments on freshly-scaffolded pages; now strips them. Both verified on a throwaway copy.
+Also: unified the clone URL + added a Python ≥3.10 note (README + docs/install), added CONTRIBUTING.md,
+benchmark/REAL-BRAIN.md (sanitized validation on a real 368-page brain), a proof-led repo description, and 5
+good-first-issues. First impression is now on point.

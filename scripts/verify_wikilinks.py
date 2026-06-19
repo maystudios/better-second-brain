@@ -42,14 +42,21 @@ EXCLUDE_DIRS = {".git", ".obsidian", "node_modules", "__pycache__", ".trash"}
 WIKILINK_RE = re.compile(r"\[\[([^\]]+?)\]\]")
 FENCED_RE = re.compile(r"```.*?```|~~~.*?~~~", re.DOTALL)
 INLINE_CODE_RE = re.compile(r"`[^`\n]*`")
+HTML_COMMENT_RE = re.compile(r"<!--.*?-->", re.DOTALL)
 
 
 def strip_code(text: str) -> str:
-    """Remove fenced code blocks and inline code spans.
-
-    Documentation (especially CLAUDE.md) shows example wikilinks inside
-    backticks; those are not real links and must not be verified.
+    """Remove anything that may hold *example* wikilinks rather than real ones:
+    fenced code blocks, inline code spans, HTML comments, and YAML-frontmatter
+    ``#`` comments. Template scaffolds (e.g. ``new_page.py`` output) carry example
+    links inside comments — those must not be reported as broken.
     """
+    # Strip `#` comments inside the leading YAML frontmatter block only.
+    if text.startswith("---"):
+        end = text.find("\n---", 3)
+        if end != -1:
+            text = re.sub(r"(?m)#.*$", "", text[:end]) + text[end:]
+    text = HTML_COMMENT_RE.sub("", text)
     text = FENCED_RE.sub("", text)
     text = INLINE_CODE_RE.sub("", text)
     return text

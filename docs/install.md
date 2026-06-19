@@ -4,8 +4,10 @@ This page gets BSB (Second Brain) running on your machine: clone the repo, open 
 
 ## 1. Clone
 
+Requirements: **Python ≥ 3.10** (the helper scripts use 3.10+ syntax) and git. Obsidian, graphify and qmd are all optional.
+
 ```powershell
-git clone <your-bsb-repo-url> "Second Brain"
+git clone https://github.com/maystudios/better-second-brain "Second Brain"
 cd "Second Brain"
 ```
 
@@ -18,12 +20,14 @@ BSB has two readers, and you open it once for each.
 
 ## 3. Make it yours
 
-Two edits turn the template into your own second brain.
+**Fastest:** run the `/bsb-init` slash command in Claude Code, or `python scripts/init_brain.py --domain "…" --litmus "…" --fresh --yes`. It sets `CLAUDE.md` §0 **and** `bsb.config.md` for you and resets the brain to empty (the two edits below). Or do them by hand:
 
 1. **`CLAUDE.md` §0** — the top-of-file identity block. Set who this brain is for and the topics it covers. This steers every ingest and every page the agent writes.
 2. **`bsb.config.md`** — the project config. Set the things that are mechanical rather than editorial: which layers are enabled, your default folders, and any per-project switches.
 
 Keep both edits small and specific; they are read on every run, so verbosity here costs tokens on every operation.
+
+**What "clean" looks like on a fresh brain:** `index.md` shows 0 pages and 0 sources, and a freshly scaffolded stub will show up as `D`-tier in `lint_sources.py` (and may warn about example links) until you fill it with real, cited content — that is expected, not breakage.
 
 ## 4. First ingest
 

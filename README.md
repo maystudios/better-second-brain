@@ -91,8 +91,10 @@ Full spec: [`CLAUDE.md`](./CLAUDE.md).
 
 ## Quickstart
 
+Requires **Python ≥ 3.10** (for the helper scripts) and git. Obsidian and graphify are optional.
+
 ```bash
-git clone <your-fork-url> "Second Brain" && cd "Second Brain"
+git clone https://github.com/maystudios/better-second-brain "Second Brain" && cd "Second Brain"
 # Open the folder as a vault in Obsidian (optional but recommended — it's the human reader).
 # Open the folder in Claude Code (or Codex/OpenCode) — the agent reads CLAUDE.md automatically.
 ```
@@ -122,6 +124,10 @@ BSB ships a benchmark and **runs it**: the same fetched sources built two/three 
 BSB — answered against a gold question set, scored by an objective judge, with deterministic token accounting
 (`scripts/token_report.py`). Three runs so far (`uv`, `MCP`, `Ruff`). **Full data + caveats:
 [`benchmark/RESULTS.md`](./benchmark/RESULTS.md)** · method & how to run your own: [`docs/benchmark.md`](./docs/benchmark.md).
+
+> **Strongest evidence — applied to a *real, pre-existing* 368-page second brain** (a hand-built game-dev wiki, in a
+> domain BSB knew nothing about): the graph layer answered the same questions at **−23% real tokens / −56%
+> read-footprint**, at equal quality. → [`benchmark/REAL-BRAIN.md`](./benchmark/REAL-BRAIN.md).
 
 **Headline — large run (Ruff, 15 sources, 14 questions, exact `tiktoken` counts):**
 

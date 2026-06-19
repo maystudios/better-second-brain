@@ -50,19 +50,22 @@ class Planner:
             fn()
 
 
-def set_domain_litmus(text: str, domain: str | None, litmus: str | None) -> tuple[str, bool]:
-    changed = False
+def set_domain_litmus(text: str, domain: str | None, litmus: str | None) -> tuple[str, int]:
+    """Update DOMAIN/LITMUS in BOTH the bare config form (``DOMAIN: x``) and the
+    CLAUDE.md §0 prose form (``**Domain (this instance):** x`` / ``**Litmus:** x``).
+    Returns (new_text, n_substitutions) so the caller can warn when nothing matched."""
+    nchg = 0
     if domain is not None:
-        new, n = re.subn(r"(?m)^(\s*DOMAIN:\s*).*$", lambda m: m.group(1) + domain, text)
-        if n:
-            text, changed = new, True
+        for pat in (r"(?m)^(\s*DOMAIN:\s*).*$", r"(?m)^(\*\*Domain[^*\n]*\*\*\s*).*$"):
+            text, n = re.subn(pat, lambda m: m.group(1) + domain, text)
+            nchg += n
     if litmus is not None:
-        # Keep the quotes convention used in the templates.
+        # Keep the quotes convention used in the templates / §0.
         val = litmus if litmus.startswith('"') else f'"{litmus}"'
-        new, n = re.subn(r"(?m)^(\s*LITMUS:\s*).*$", lambda m: m.group(1) + val, text)
-        if n:
-            text, changed = new, True
-    return text, changed
+        for pat in (r"(?m)^(\s*LITMUS:\s*).*$", r"(?m)^(\*\*Litmus:\*\*\s*).*$"):
+            text, n = re.subn(pat, lambda m, val=val: m.group(1) + val, text)
+            nchg += n
+    return text, nchg
 
 
 def set_link_style(text: str, style: str) -> tuple[str, bool]:
@@ -194,10 +197,12 @@ def main(argv: list[str] | None = None) -> int:
             if not p.is_file():
                 continue
             text = p.read_text(encoding="utf-8")
-            new, changed = set_domain_litmus(text, args.domain, args.litmus)
-            if changed:
-                planner.do(f"update DOMAIN/LITMUS in {rel}",
+            new, nchg = set_domain_litmus(text, args.domain, args.litmus)
+            if nchg:
+                planner.do(f"update DOMAIN/LITMUS in {rel} ({nchg} line(s))",
                            lambda p=p, new=new: p.write_text(new, encoding="utf-8"))
+            else:
+                planner.note(f"WARNING: no DOMAIN/LITMUS lines matched in {rel} — set §0 by hand")
     if args.link_style:
         p = root / "bsb.config.md"
         if p.is_file():
