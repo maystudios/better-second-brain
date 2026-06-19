@@ -1,0 +1,10 @@
+{
+  "alwaysUpdateLinks": true,
+  "newLinkFormat": "absolute",
+  "useMarkdownLinks": false,
+  "attachmentFolderPath": "raw/assets",
+  "defaultViewMode": "source",
+  "promptDelete": false,
+  "showFrontmatter": true,
+  "showUnsupportedFiles": true
+}

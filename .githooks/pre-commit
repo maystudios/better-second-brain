@@ -1,0 +1,51 @@
+#!/usr/bin/env sh
+# BSB source-grade pre-commit gate (CLAUDE.md s1.5 / s3.3).
+#
+# Only runs the source lint when staged files touch graded/relevant paths:
+#   wiki/cheatsheets/, wiki/syntheses/, wiki/sources/, or scripts/lint_sources.py
+# Otherwise it exits cheaply (0) so unrelated commits are not slowed down.
+#
+# Environment:
+#   SKIP_SOURCE_LINT=1     -> skip this hook entirely.
+#   SOURCE_LINT_MIN_TIER=A -> override minimum tier (default B).
+#
+# Install once with:  git config core.hooksPath .githooks
+
+if [ "${SKIP_SOURCE_LINT}" = "1" ]; then
+    echo "pre-commit: SKIP_SOURCE_LINT=1 set; skipping source lint."
+    exit 0
+fi
+
+# Staged files (added/copied/modified/renamed), NUL-safe enough for our grep.
+staged=$(git diff --cached --name-only --diff-filter=ACMR)
+
+# Cheap exit if nothing relevant is staged.
+echo "$staged" | grep -Eq '^(wiki/cheatsheets/|wiki/syntheses/|wiki/sources/|scripts/lint_sources\.py)' || {
+    exit 0
+}
+
+# Locate a Python interpreter (python, then python3).
+PY=""
+if command -v python >/dev/null 2>&1; then
+    PY=python
+elif command -v python3 >/dev/null 2>&1; then
+    PY=python3
+fi
+
+if [ -z "$PY" ]; then
+    echo "pre-commit: python not found on PATH; skipping source lint (no-op)."
+    exit 0
+fi
+
+MIN_TIER="${SOURCE_LINT_MIN_TIER:-B}"
+
+echo "pre-commit: running source-grade lint (min tier: ${MIN_TIER})..."
+"$PY" scripts/lint_sources.py --strict --strict-min-tier "${MIN_TIER}" .
+status=$?
+
+if [ "$status" -ne 0 ]; then
+    echo "pre-commit: source lint FAILED. See CLAUDE.md s1.5 (research-discipline gate) and s3.3."
+    echo "pre-commit: to bypass intentionally, commit with SKIP_SOURCE_LINT=1."
+fi
+
+exit "$status"

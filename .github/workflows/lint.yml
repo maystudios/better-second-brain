@@ -1,0 +1,33 @@
+name: wiki-lint
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "wiki/**"
+      - "scripts/**"
+  pull_request:
+    paths:
+      - "wiki/**"
+      - "scripts/**"
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Find orphans (informational)
+        run: python scripts/find_orphans.py --quiet
+
+      - name: Verify wikilinks (broken links fail CI)
+        run: python scripts/verify_wikilinks.py
+
+      - name: Source-grade lint (Tier-A gate)
+        run: python scripts/lint_sources.py --strict --strict-min-tier A --summary

@@ -1,0 +1,39 @@
+# --- OS / editor ---
+.DS_Store
+Thumbs.db
+*.swp
+*.tmp
+
+# --- Obsidian per-device state & caches (commit the rest of .obsidian/) ---
+.obsidian/workspace*
+.obsidian/cache
+.obsidian/updates.json
+.trash/
+.obsidian/plugins/*/node_modules/
+.obsidian/plugins/*/.cache/
+.obsidian/plugins/*/cache/
+.obsidian-git-data
+
+# --- Claude Code / agent session state ---
+.claude/
+
+# --- graphify: keep graph.json + GRAPH_REPORT.md, ignore the rest ---
+graphify-out/*
+!graphify-out/graph.json
+!graphify-out/GRAPH_REPORT.md
+
+# --- large local media (commit the derived summaries, not the binaries) ---
+raw/videos/**/*.mp4
+raw/**/*.part
+*.bin
+
+# --- Python ---
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# --- secrets (defensive; none expected in a knowledge repo) ---
+.env
+*.pem
+*.key

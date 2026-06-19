@@ -1,0 +1,15 @@
+# Normalize all text to LF in the repository (cross-platform consistency).
+* text=auto eol=lf
+
+# Shell hooks MUST stay LF or they will not execute as POSIX sh.
+.githooks/* text eol=lf
+*.sh text eol=lf
+
+# Binary assets — never normalize.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.pdf binary
+*.mp4 binary
+*.mp3 binary
