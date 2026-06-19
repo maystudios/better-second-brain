@@ -1,118 +1,132 @@
 #!/usr/bin/env python3
-"""Generate assets/social-preview.png (1280x640) for the GitHub repo social card.
+"""Generate assets/social-preview.png (1280x640).
 
-Deterministic, dependency-light (Pillow). Re-run after changing copy:
-    python assets/make_social.py
+The background is the REAL knowledge graph of a 368-page second brain (382 nodes,
+2161 edges, 9 communities) laid out force-directed and coloured by community -- the
+genuine "second brain graph" look, not a decorative motif. Node/edge structure is
+the anonymised `assets/graph-sample.json` (degrees + communities + edges, no labels).
+
+Deterministic. Re-run:  python assets/make_social.py
+Deps: Pillow, networkx, numpy (all ship with graphify).
 """
 from __future__ import annotations
-import math
+import json, math
 from pathlib import Path
-from PIL import Image, ImageDraw, ImageFont
+import networkx as nx
+from PIL import Image, ImageDraw, ImageFont, ImageFilter, ImageChops
 
-W, H = 1280, 640
-OUT = Path(__file__).resolve().parent / "social-preview.png"
+HERE = Path(__file__).resolve().parent
+W, H, S = 1280, 640, 2            # final size + supersample factor
 FONTS = "C:/Windows/Fonts"
+BG = (8, 10, 16)                   # near-black, Obsidian-graph dark
+PALETTE = [(122,162,255),(94,234,212),(167,139,250),(96,165,250),(192,132,252),
+           (52,211,153),(240,171,252),(56,189,248),(251,191,36)]
 
 
 def font(name, size):
     return ImageFont.truetype(f"{FONTS}/{name}.ttf", size)
 
 
-def lerp(a, b, t):
-    return tuple(round(a[i] + (b[i] - a[i]) * t) for i in range(3))
+# ---- load real graph + force layout ----
+d = json.loads((HERE / "graph-sample.json").read_text())
+n, comm, deg, edges = d["n"], d["community"], d["degree"], d["edges"]
+G = nx.Graph()
+G.add_nodes_from(range(n))
+G.add_edges_from(edges)
+pos = nx.spring_layout(G, k=1.05 / math.sqrt(n), iterations=90, seed=5)
+xs = [pos[i][0] for i in range(n)]
+ys = [pos[i][1] for i in range(n)]
+x0, x1, y0, y1 = min(xs), max(xs), min(ys), max(ys)
+PAD = 70 * S
+CW, CH = W * S, H * S
 
 
-def text_w(draw, s, f, tracking=0):
-    if tracking == 0:
-        return draw.textlength(s, font=f)
-    return sum(draw.textlength(c, font=f) + tracking for c in s) - tracking
+def P(i):
+    x = PAD + (pos[i][0] - x0) / (x1 - x0) * (CW - 2 * PAD)
+    y = PAD + (pos[i][1] - y0) / (y1 - y0) * (CH - 2 * PAD)
+    return x, y
 
 
-def draw_tracked(draw, xy, s, f, fill, tracking):
-    x, y = xy
-    for c in s:
-        draw.text((x, y), c, font=f, fill=fill)
-        x += draw.textlength(c, font=f) + tracking
+def col(i, a=255):
+    c = PALETTE[comm[i] % len(PALETTE)]
+    return (c[0], c[1], c[2], a)
 
 
-# --- canvas + vertical gradient ---
-img = Image.new("RGB", (W, H))
-top, bot = (9, 13, 26), (15, 26, 52)
-px = img.load()
-for y in range(H):
-    row = lerp(top, bot, y / (H - 1))
-    for x in range(W):
-        px[x, y] = row
-draw = ImageDraw.Draw(img, "RGBA")
+# ---- render background at 2x ----
+base = Image.new("RGB", (CW, CH), BG)
+# subtle vertical sheen
+sh = Image.new("L", (1, CH))
+for y in range(CH):
+    sh.putpixel((0, y), int(10 * (1 - y / CH)))
+base = ImageChops.add(base, Image.merge("RGB", [sh.resize((CW, CH))] * 3))
 
-# --- soft radial glow (top-left, blue) ---
-glow = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+edge_layer = Image.new("RGBA", (CW, CH), (0, 0, 0, 0))
+ed = ImageDraw.Draw(edge_layer)
+for s, t in edges:
+    ed.line([P(s), P(t)], fill=col(s, 30), width=S)
+base = Image.alpha_composite(base.convert("RGBA"), edge_layer).convert("RGB")
+
+# glow layer: every node, brightness ~ degree; blurred + added
+glow = Image.new("RGB", (CW, CH), (0, 0, 0))
 gd = ImageDraw.Draw(glow)
-for r in range(520, 0, -8):
-    a = int(26 * (1 - r / 520))
-    gd.ellipse([180 - r, 60 - r, 180 + r, 60 + r], fill=(80, 150, 255, a))
-img = Image.alpha_composite(img.convert("RGBA"), glow).convert("RGB")
-draw = ImageDraw.Draw(img, "RGBA")
+dmax = max(deg) or 1
+for i in range(n):
+    x, y = P(i)
+    r = (3 + math.sqrt(deg[i]) * 2.4) * S
+    a = 0.30 + 0.70 * (deg[i] / dmax)
+    c = PALETTE[comm[i] % len(PALETTE)]
+    gd.ellipse([x - r, y - r, x + r, y + r], fill=(int(c[0]*a), int(c[1]*a), int(c[2]*a)))
+glow = glow.filter(ImageFilter.GaussianBlur(7 * S))
+base = ImageChops.add(base, glow)
 
-# --- faint knowledge-graph motif (right side) ---
-import random
-random.seed(7)
-nodes = []
-cx, cy = 1000, 330
-for i in range(16):
-    ang = i * (2 * math.pi / 16) + random.uniform(-0.2, 0.2)
-    rad = random.uniform(70, 230)
-    nodes.append((cx + math.cos(ang) * rad, cy + math.sin(ang) * rad * 0.8))
-nodes.append((cx, cy))
-for i, a in enumerate(nodes):
-    for b in nodes[i + 1:]:
-        if math.dist(a, b) < 200:
-            draw.line([a, b], fill=(120, 170, 255, 26), width=2)
-for i, (x, y) in enumerate(nodes):
-    big = i == len(nodes) - 1
-    rr = 9 if big else random.uniform(3, 6)
-    col = (125, 211, 252, 150) if big else (120, 170, 255, 70)
-    draw.ellipse([x - rr, y - rr, x + rr, y + rr], fill=col)
+# crisp nodes on top
+nodes = Image.new("RGBA", (CW, CH), (0, 0, 0, 0))
+nd = ImageDraw.Draw(nodes)
+for i in range(n):
+    x, y = P(i)
+    r = (1.6 + math.sqrt(deg[i]) * 1.25) * S
+    nd.ellipse([x - r, y - r, x + r, y + r], fill=col(i, 255),
+               outline=(*BG, 255), width=max(1, S // 2))
+base = Image.alpha_composite(base.convert("RGBA"), nodes).convert("RGB")
 
-# --- text block (left) ---
-PAD = 84
-SKY = (125, 211, 252)
-WHITE = (245, 248, 255)
-MUTE = (170, 182, 214)
+# ---- downscale for clean anti-aliasing ----
+img = base.resize((W, H), Image.LANCZOS)
 
-f_eyebrow = font("seguisb", 25)
-draw_tracked(draw, (PAD, 120), "OPEN-SOURCE   /   MIT   /   ONE PASTE TO INSTALL", f_eyebrow, SKY, 3)
+# ---- left dark gradient so the title reads over the graph ----
+grad = Image.new("L", (W, 1))
+for x in range(W):
+    t = min(1.0, max(0.0, (x - 60) / (W * 0.62)))
+    grad.putpixel((x, 0), int(238 * (1 - t) ** 1.4))
+mask = grad.resize((W, H))
+overlay = Image.new("RGB", (W, H), BG)
+img = Image.composite(overlay, img, mask)
+# faint overall floor for legibility
+img = Image.composite(Image.new("RGB", (W, H), BG), img, Image.new("L", (W, H), 26))
 
-# Title (fit to width)
-size = 92
-while True:
-    f_title = font("segoeuib", size)
-    if text_w(draw, "Better Second Brain", f_title) <= W - 2 * PAD - 40 or size <= 60:
-        break
+draw = ImageDraw.Draw(img)
+PADX, WHITE, MUTE, ACC = 84, (238, 242, 255), (154, 166, 192), (138, 180, 255)
+
+# title (fit)
+size = 80
+while font("seguisb", size).getlength("Better Second Brain") > W * 0.62 and size > 54:
     size -= 2
-draw.text((PAD, 168), "Better Second Brain", font=f_title, fill=WHITE)
+f_t = font("seguisb", size)
+ty = 232
+draw.text((PADX, ty), "Better Second Brain", font=f_t, fill=WHITE)
+# thin accent rule under title
+draw.rectangle([PADX + 2, ty + size + 14, PADX + 64, ty + size + 18], fill=ACC)
 
-f_sub = font("segoeui", 34)
-draw.text((PAD, 168 + size + 26), "Karpathy's LLM Wiki, batteries-included and measured.", font=f_sub, fill=MUTE)
+f_s = font("segoeui", 31)
+draw.text((PADX, ty + size + 34), "An LLM-maintained knowledge base,", font=f_s, fill=MUTE)
+draw.text((PADX, ty + size + 72), "on Andrej Karpathy's LLM Wiki pattern.", font=f_s, fill=MUTE)
 
-# --- stat chips ---
-chips = ["-56% read tokens", "validated on a real 368-page brain", "graph + self-healing"]
-f_chip = font("seguisb", 24)
-x, y = PAD, 470
-for c in chips:
-    tw = draw.textlength(c, font=f_chip)
-    w = tw + 44
-    draw.rounded_rectangle([x, y, x + w, y + 52], radius=26, fill=(27, 39, 71, 235),
-                           outline=(90, 130, 200, 90), width=1)
-    draw.ellipse([x + 18, y + 22, x + 30, y + 34], fill=(94, 234, 212))
-    draw.text((x + 38, y + 12), c, font=f_chip, fill=(207, 232, 255))
-    x += w + 16
-    if x > W - 320:  # wrap
-        x, y = PAD, y + 66
+f_stat = font("seguisb", 26)
+draw.text((PADX, ty + size + 130),
+          "Measured: -56% tokens per query, on a real 368-page brain.",
+          font=f_stat, fill=ACC)
 
-# --- footer ---
-f_foot = font("consola", 25)
-draw.text((PAD, H - 70), "github.com/maystudios/better-second-brain", font=f_foot, fill=(120, 140, 180))
+f_mark = font("consola", 24)
+draw.text((PADX, H - 66), "github.com/maystudios/better-second-brain", font=f_mark, fill=(96, 110, 138))
 
-img.save(OUT)
-print(f"wrote {OUT}  ({img.size[0]}x{img.size[1]})")
+img.save(HERE / "social-preview.png")
+print(f"wrote social-preview.png  ({W}x{H})  from {n} nodes / {len(edges)} edges")
