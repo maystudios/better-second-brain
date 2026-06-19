@@ -7,14 +7,12 @@ Items: `- [ ] **<Type>**: <slug> — <reason>`. Types: Ingest · Cheatsheet · C
 
 ## In Progress
 
-- [x] **Schema**: bootstrap BSB (CLAUDE.md, meta-docs, .obsidian, packaging) — done 2026-06-19
-- [ ] **Tooling**: finalize `index.md` from the seeded page set
+- (nothing active — bootstrap complete; pick the next High item)
 
 ## Backlog — High
 
 - [ ] **Tooling**: install graphify (`uv tool install graphifyy`) and run the first `/graphify .` build;
-      wire `scripts/graphify_sync.py` into the lint loop (§3.4)
-- [ ] **Tooling**: dry-run `scripts/lint_sources.py` and `find_orphans.py` against the seed pages; fix any orphans
+      wire `scripts/graphify_sync.py` into the lint loop (§3.4) — this is the natural next step
 - [ ] **Synthesis**: flesh out `wiki/syntheses/is-bsb-better-than-vanilla-llm-wiki` with the benchmark protocol
       from `docs/benchmark.md` and a first scored run
 - [ ] **Improve**: run the `auto-research` skill against `CLAUDE.md` once content exists, to validate the
@@ -38,4 +36,6 @@ Items: `- [ ] **<Type>**: <slug> — <reason>`. Types: Ingest · Cheatsheet · C
 
 ## Recently Done
 
-- 2026-06-19 — repo bootstrapped; schema + packaging + Obsidian baseline + seed content scaffolded.
+- 2026-06-19 — repo bootstrapped; schema + packaging + Obsidian baseline + seed content; git initialized (commit on `main`).
+- 2026-06-19 — finalized `index.md` from the 21 seed pages.
+- 2026-06-19 — verified: `verify_wikilinks` 0 broken, `find_orphans` 0 wiki orphans, `lint_sources --strict-min-tier A` passes (cheatsheet + synthesis at Tier A).
