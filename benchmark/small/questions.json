@@ -1,5 +1,5 @@
 {
-  "topic": "uv — the Astral Python package & project manager",
+  "topic": "uv - the Astral Python package & project manager",
   "sources_used": [
     "https://github.com/astral-sh/uv",
     "https://docs.astral.sh/uv/",
@@ -47,7 +47,7 @@
       "id": 6,
       "type": "unsupported",
       "q": "Which built-in cloud deployment command does uv provide to push a project directly to AWS Lambda or Heroku?",
-      "gold": "Unsupported — the sources do not mention any cloud deployment command or AWS Lambda/Heroku integration in uv. uv is a package, project, tool, and Python-version manager; no such deploy feature is described.",
+      "gold": "Unsupported - the sources do not mention any cloud deployment command or AWS Lambda/Heroku integration in uv. uv is a package, project, tool, and Python-version manager; no such deploy feature is described.",
       "source": "https://docs.astral.sh/uv/"
     }
   ]

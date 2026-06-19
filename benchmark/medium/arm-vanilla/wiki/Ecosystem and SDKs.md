@@ -10,7 +10,7 @@ The broader scope of MCP includes the spec, the SDKs, development tools such as 
 
 ## SDKs
 
-Official SDKs exist for many languages — C#, Go, Java, Python, TypeScript, and others — so developers can build both [[Architecture|clients]] and [[Architecture|servers]] without implementing the wire protocol by hand.
+Official SDKs exist for many languages - C#, Go, Java, Python, TypeScript, and others - so developers can build both [[Architecture|clients]] and [[Architecture|servers]] without implementing the wire protocol by hand.
 
 ### Python SDK
 
@@ -52,13 +52,13 @@ It supports tools, resources, and prompts; stdio and HTTP/Streamable HTTP transp
 
 The `modelcontextprotocol/servers` repository, maintained by Anthropic, collects reference implementations that show how LLMs can gain secure, controlled access to tools and data. The actively maintained set includes:
 
-- **Everything** — a comprehensive test server with prompts, resources, and tools
-- **Fetch** — web content retrieval and conversion for LLMs
-- **Filesystem** — file operations with configurable access restrictions
-- **Git** — repository reading, searching, and manipulation
-- **Memory** — a persistent knowledge-graph memory system
-- **Sequential Thinking** — problem-solving through reflective thought sequences
-- **Time** — time and timezone conversion
+- **Everything** - a comprehensive test server with prompts, resources, and tools
+- **Fetch** - web content retrieval and conversion for LLMs
+- **Filesystem** - file operations with configurable access restrictions
+- **Git** - repository reading, searching, and manipulation
+- **Memory** - a persistent knowledge-graph memory system
+- **Sequential Thinking** - problem-solving through reflective thought sequences
+- **Time** - time and timezone conversion
 
 TypeScript servers run via `npx` (e.g. `npx -y @modelcontextprotocol/server-memory`) and Python servers via `uvx` or pip (e.g. `uvx mcp-server-git`). They are wired into clients like Claude Desktop through JSON configuration:
 

@@ -2,7 +2,7 @@
 
 - **Citation / URL:** https://docs.astral.sh/ruff/settings/
 - **Raw file:** `benchmark/large/raw/settings.md`
-- **Type:** Official documentation — settings reference
+- **Type:** Official documentation - settings reference
 
 ## Key claims
 

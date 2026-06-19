@@ -2,7 +2,7 @@
 
 - **Citation / URL:** https://docs.astral.sh/ruff/configuration/
 - **Raw file:** `benchmark/large/raw/configuration.md`
-- **Type:** Official documentation — configuration reference
+- **Type:** Official documentation - configuration reference
 
 ## Key claims
 

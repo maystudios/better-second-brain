@@ -20,4 +20,4 @@ Dropping end-of-life Python version support is classified as a breaking change (
 
 ## Open questions
 
-- There is a tension between the FAQ's stated lint range of **3.7–3.13** ([[sources/faq]]) and the advertised **Python 3.14 compatibility** ([[sources/ruff-overview]]; [[sources/github-astral-sh-ruff]]). The sources do not reconcile whether 3.14 refers to the interpreter Ruff runs under, the code it can analyze, or both — and the FAQ's "3.7 through 3.13" may simply predate the 3.14 claim.
+- There is a tension between the FAQ's stated lint range of **3.7-3.13** ([[sources/faq]]) and the advertised **Python 3.14 compatibility** ([[sources/ruff-overview]]; [[sources/github-astral-sh-ruff]]). The sources do not reconcile whether 3.14 refers to the interpreter Ruff runs under, the code it can analyze, or both - and the FAQ's "3.7 through 3.13" may simply predate the 3.14 claim.

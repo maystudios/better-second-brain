@@ -17,7 +17,7 @@
       "id": 1,
       "type": "recall",
       "q": "What everyday hardware analogy does the MCP introduction use to describe how MCP connects AI applications to external systems?",
-      "gold": "A USB-C port for AI applications — just as USB-C is a standardized way to connect electronic devices, MCP is a standardized way to connect AI applications to external systems.",
+      "gold": "A USB-C port for AI applications - just as USB-C is a standardized way to connect electronic devices, MCP is a standardized way to connect AI applications to external systems.",
       "source": "https://modelcontextprotocol.io/introduction"
     },
     {

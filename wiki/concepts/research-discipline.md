@@ -32,17 +32,17 @@ Concretely, BSB applies the gate as:
 - **Primary vs secondary separation.** Verbatim quotes and figures from primary sources are cited as such; community-attributed numbers or claims are labeled as community claims and never promoted to fact.
 - **Honest absence.** If a claim cannot be supported, it is left out. A short, honest page beats a long, confident, unverifiable one.
 
-The freshness limits noted in the [[wiki/concepts/rag-vs-llm-wiki|RAG comparison]] reinforce this: because a wiki does not auto-propagate when raw sources change, stale or ungrounded pages do not self-correct. Re-derivable "slop" is therefore worse than an empty page — it looks authoritative, persists by default, and must be actively caught and removed during lint. The gate keeps that failure mode out at ingest time.
+The freshness limits noted in the [[wiki/concepts/rag-vs-llm-wiki|RAG comparison]] reinforce this: because a wiki does not auto-propagate when raw sources change, stale or ungrounded pages do not self-correct. Re-derivable "slop" is therefore worse than an empty page - it looks authoritative, persists by default, and must be actively caught and removed during lint. The gate keeps that failure mode out at ingest time.
 
 ## Related concepts
 
-- [[wiki/concepts/llm-wiki-pattern]] — the pattern whose payoff depends on grounded ingest.
-- [[wiki/concepts/rag-vs-llm-wiki]] — the freshness and propagation limits that make ungrounded pages persist.
-- [[wiki/concepts/knowledge-graph-graphrag]] — graphify's EXTRACTED/INFERRED/AMBIGUOUS labels apply the same provenance discipline to a graph.
-- [[wiki/moc/second-brain-pattern]] — the map of content for the pattern family.
+- [[wiki/concepts/llm-wiki-pattern]] - the pattern whose payoff depends on grounded ingest.
+- [[wiki/concepts/rag-vs-llm-wiki]] - the freshness and propagation limits that make ungrounded pages persist.
+- [[wiki/concepts/knowledge-graph-graphrag]] - graphify's EXTRACTED/INFERRED/AMBIGUOUS labels apply the same provenance discipline to a graph.
+- [[wiki/moc/second-brain-pattern]] - the map of content for the pattern family.
 
 ## Sources
 
-- [[wiki/sources/karpathy-llm-wiki]] — Andrej Karpathy, "LLM Wiki" gist. https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f (primary; the "synthesis already reflects everything you've read" / contradictions "already flagged" framing that this gate exists to protect).
+- [[wiki/sources/karpathy-llm-wiki]] - Andrej Karpathy, "LLM Wiki" gist. https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f (primary; the "synthesis already reflects everything you've read" / contradictions "already flagged" framing that this gate exists to protect).
 - Atlan, "LLM Wiki vs RAG Knowledge Base." https://atlan.com/know/llm-wiki-vs-rag-knowledge-base/ (secondary; the no-auto-propagation and manual-freshness limits cited as the reason ungrounded pages persist).
 - The minimum-three-sources bar and the "no page from memory" rule are BSB's own design stance (CLAUDE.md §1.5), stated here as such rather than attributed to the upstream sources.

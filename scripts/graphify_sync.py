@@ -173,7 +173,7 @@ def existing_pages(repo_root: str) -> dict[str, str]:
     """Map every wiki page's filename slug -> its repo-relative wikilink target
     (path without .md), across ALL wiki subfolders (not just concepts/entities).
     A god node "has a page" if its source_file resolves OR its label slug matches
-    one of these — so MOC/source/cheatsheet pages are no longer false 'missing'."""
+    one of these - so MOC/source/cheatsheet pages are no longer false 'missing'."""
     out: dict[str, str] = {}
     wiki = os.path.join(repo_root, "wiki")
     for dirpath, _dirs, files in os.walk(wiki):

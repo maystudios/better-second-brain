@@ -18,7 +18,7 @@
 - MCP is a stateful protocol requiring lifecycle management to negotiate capabilities both client and server support.
 - Three core server primitives: Tools (executable functions), Resources (data sources for context), Prompts (reusable templates). Each has methods for discovery (`*/list`), retrieval (`*/get`), and sometimes execution (`tools/call`).
 - Three client primitives: Sampling (`sampling/createMessage`), Elicitation (`elicitation/create`), Logging.
-- Cross-cutting utility primitive: Tasks (Experimental) — durable execution wrappers enabling deferred result retrieval and status tracking.
+- Cross-cutting utility primitive: Tasks (Experimental) - durable execution wrappers enabling deferred result retrieval and status tracking.
 - Notifications are JSON-RPC 2.0 notification messages sent without expecting a response.
 - Initialization: client sends an `initialize` request to negotiate features, then sends `{ "jsonrpc": "2.0", "method": "notifications/initialized" }`. Example uses `"protocolVersion": "2025-06-18"`.
 - Protocol version negotiation: if no mutually compatible version is negotiated, the connection should be terminated.

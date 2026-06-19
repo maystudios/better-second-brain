@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Token-efficiency report for a BSB benchmark example.
 
-Measures — deterministically and reproducibly — whether a BSB (research-gated)
+Measures - deterministically and reproducibly - whether a BSB (research-gated)
 wiki is more token-efficient than (a) a vanilla Karpathy wiki and (b) reading the
 raw corpus, in the TWO regimes the question is usually asked about:
 
@@ -181,7 +181,7 @@ def build_report(example_dir: Path, rag_k: int) -> dict:
 
 
 def print_human(rep: dict) -> None:
-    print(f"# Token-efficiency report — example '{rep['example']}'  (tokenizer: {rep['tokenizer']})")
+    print(f"# Token-efficiency report - example '{rep['example']}'  (tokenizer: {rep['tokenizer']})")
     c = rep["corpus"]
     print(f"\nCorpus (raw): {c['n_sources']} sources, {c['total_tokens']:,} tokens "
           f"(~{c['per_source_avg']:,}/source). Questions: {rep['n_queries']}")

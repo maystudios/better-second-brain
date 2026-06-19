@@ -1,4 +1,4 @@
-# Source: GitHub — modelcontextprotocol/modelcontextprotocol
+# Source: GitHub - modelcontextprotocol/modelcontextprotocol
 
 - **Raw file:** `benchmark/medium/raw/github-modelcontextprotocol.md`
 - **Citation / URL:** https://github.com/modelcontextprotocol/modelcontextprotocol

@@ -34,5 +34,5 @@ Andrej Karpathy is an AI researcher and educator best known in this knowledge ba
 
 ## Sources
 
-- Karpathy, "LLM Wiki" (gist): https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f — primary, fetchable; quotes confirmed verbatim. See [[wiki/sources/karpathy-llm-wiki]].
-- Karpathy, "LLM Knowledge Bases" (X post, ~2026-04-03): https://x.com/karpathy/status/2039805659525644595 — primary announcement; not directly fetchable (login wall), corroborated via the gist. See [[wiki/sources/karpathy-llm-knowledge-bases]].
+- Karpathy, "LLM Wiki" (gist): https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f - primary, fetchable; quotes confirmed verbatim. See [[wiki/sources/karpathy-llm-wiki]].
+- Karpathy, "LLM Knowledge Bases" (X post, ~2026-04-03): https://x.com/karpathy/status/2039805659525644595 - primary announcement; not directly fetchable (login wall), corroborated via the gist. See [[wiki/sources/karpathy-llm-knowledge-bases]].

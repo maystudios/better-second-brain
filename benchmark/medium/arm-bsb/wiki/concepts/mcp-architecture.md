@@ -1,6 +1,6 @@
 # MCP Architecture
 
-MCP follows a client-server architecture in which an MCP host — an AI application such as Claude Code or Claude Desktop — establishes connections to one or more MCP servers by creating one MCP client per server, with each client maintaining a dedicated connection to its server ([[sources/architecture]]).
+MCP follows a client-server architecture in which an MCP host - an AI application such as Claude Code or Claude Desktop - establishes connections to one or more MCP servers by creating one MCP client per server, with each client maintaining a dedicated connection to its server ([[sources/architecture]]).
 
 ## Participants
 

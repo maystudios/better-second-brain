@@ -1,6 +1,6 @@
 ---
 type: source
-title: "Andrej Karpathy — LLM Wiki (gist)"
+title: "Andrej Karpathy - LLM Wiki (gist)"
 source-url: https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f
 source-kind: gist
 author: Andrej Karpathy
@@ -12,7 +12,7 @@ tags: [llm-wiki, knowledge-management, rag, primary-source, pattern]
 status: verified
 ---
 
-# Andrej Karpathy — LLM Wiki (gist)
+# Andrej Karpathy - LLM Wiki (gist)
 
 Karpathy's gist is the canonical specification of the LLM-wiki pattern: instead of treating an LLM as a retrieval engine that re-derives knowledge from raw documents on every query (RAG), you have the LLM incrementally build and maintain a persistent, interlinked markdown wiki that sits between you and the raw sources. The gist defines a three-layer architecture (raw sources, the wiki, the schema), three operations (ingest, query, lint), and two bookkeeping files (an `index.md` catalog and an append-only `log.md`). It is the direct ancestor of the BSB ("Better Second Brain") pattern documented in this vault.
 
@@ -29,7 +29,7 @@ Karpathy's gist is the canonical specification of the LLM-wiki pattern: instead 
 
 > Most people's experience with LLMs and documents looks like RAG: you upload a collection of files, the LLM retrieves relevant chunks at query time, and generates an answer. This works, but the LLM is rediscovering knowledge from scratch on every question.
 
-> incrementally builds and maintains a persistent wiki — a structured, interlinked collection of markdown files that sits between you and the raw sources.
+> incrementally builds and maintains a persistent wiki - a structured, interlinked collection of markdown files that sits between you and the raw sources.
 
 > The cross-references are already there. The contradictions have already been flagged. The synthesis already reflects everything you've read.
 

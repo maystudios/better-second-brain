@@ -33,5 +33,5 @@ The [[Editors|VS Code extension]] uses its own convention: even minor versions a
 
 ## See also
 
-- [[Preview]] — the channel where features start
-- [[Integrations]] — pinning versions in CI and Docker
+- [[Preview]] - the channel where features start
+- [[Integrations]] - pinning versions in CI and Docker

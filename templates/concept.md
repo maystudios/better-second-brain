@@ -21,7 +21,7 @@ status: stub # stub|active|stable
 ## Related concepts
 
 <!-- Full-path wikilinks to neighbouring concepts. Note the relationship in a few words. -->
-- <!-- [[wiki/concepts/slug]] — how it relates -->
+- <!-- [[wiki/concepts/slug]] - how it relates -->
 
 ## Sources
 

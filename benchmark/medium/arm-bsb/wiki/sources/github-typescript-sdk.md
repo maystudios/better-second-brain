@@ -1,4 +1,4 @@
-# Source: GitHub — modelcontextprotocol/typescript-sdk
+# Source: GitHub - modelcontextprotocol/typescript-sdk
 
 - **Raw file:** `benchmark/medium/raw/github-typescript-sdk.md`
 - **Citation / URL:** https://github.com/modelcontextprotocol/typescript-sdk

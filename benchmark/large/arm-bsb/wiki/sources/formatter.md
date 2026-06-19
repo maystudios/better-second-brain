@@ -2,7 +2,7 @@
 
 - **Citation / URL:** https://docs.astral.sh/ruff/formatter/
 - **Raw file:** `benchmark/large/raw/formatter.md`
-- **Type:** Official documentation — formatter reference
+- **Type:** Official documentation - formatter reference
 
 ## Key claims
 
@@ -69,4 +69,4 @@ docstring-code-line-length = 20
 
 ## Prose summary
 
-The formatter reference governs `ruff format`. Its central promise is Black compatibility — a drop-in replacement reaching >99.9% identical-line output on Django and Zulip — with an explicit, short list of intentional deviations (f-string internals, nested-f-string quotes, and a preview-mode method-chain layout). It documents the format defaults, docstring-code formatting (recognizing doctest, CommonMark, and reST embeddings), suppression comments (`# fmt: …`, plus YAPF compatibility), preview Markdown formatting, a two-mode exit-code contract, the catalog of lint rules that conflict with the formatter, and the explicit caveat that formatting does not sort imports (use `ruff check --select I --fix`).
+The formatter reference governs `ruff format`. Its central promise is Black compatibility - a drop-in replacement reaching >99.9% identical-line output on Django and Zulip - with an explicit, short list of intentional deviations (f-string internals, nested-f-string quotes, and a preview-mode method-chain layout). It documents the format defaults, docstring-code formatting (recognizing doctest, CommonMark, and reST embeddings), suppression comments (`# fmt: …`, plus YAPF compatibility), preview Markdown formatting, a two-mode exit-code contract, the catalog of lint rules that conflict with the formatter, and the explicit caveat that formatting does not sort imports (use `ruff check --select I --fix`).

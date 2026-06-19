@@ -20,13 +20,13 @@ A Better Second Brain (BSB) extends Andrej Karpathy's LLM Wiki pattern with a gr
 ## Short answer
 
 **Partly confirmed across three measured runs (small `uv`, medium `MCP`, large `Ruff`).** BSB beats a vanilla wiki by
-**+5–12%** on answer quality on the two larger topics and ties on the small one — and the margin is **verifiable
+**+5-12%** on answer quality on the two larger topics and ties on the small one - and the margin is **verifiable
 citation**, not raw correctness (on well-documented topics both wikis get the facts right). Querying a wiki is
-**~2–18× cheaper than reading the raw sources**, growing with corpus size. The one early downside — BSB's higher
-*fill* cost — is now **solved**: the **`bsb-lean`** mode matches full-BSB quality at **~66% lower fill cost (≈ a
+**~2-18× cheaper than reading the raw sources**, growing with corpus size. The one early downside - BSB's higher
+*fill* cost - is now **solved**: the **`bsb-lean`** mode matches full-BSB quality at **~66% lower fill cost (≈ a
 vanilla wiki)** with the *densest* interconnection, so it is the default (`CLAUDE.md` §2.1). The over-abstention
 failure mode is fixed. Honest limits: the "edge grows with size" idea did not hold (margin shrank as both wikis
-captured facts), and a *private/novel* corpus — where a correctness gap would actually show — is still untested.
+captured facts), and a *private/novel* corpus - where a correctness gap would actually show - is still untested.
 Full numbers: `benchmark/RESULTS.md`.
 
 ## Measured results (2026-06-19, three runs)
@@ -34,9 +34,9 @@ Full numbers: `benchmark/RESULTS.md`.
 See `benchmark/RESULTS.md` for the full tables. Headlines across small (`uv`), medium (`MCP`), large (`Ruff`):
 
 - **Quality:** small = tie; medium = BSB +12%; large = BSB +5.1%. The margin is **citation/verifiability**, not raw
-  correctness — on well-documented topics both wikis got the facts right. BSB's repeatable edge is traceability.
+  correctness - on well-documented topics both wikis got the facts right. BSB's repeatable edge is traceability.
 - **Read tokens/query:** wiki vs reading all raw ≈ 2.3× (small) → 5.8× (medium) → **17.9× (large, with `bsb-lean`)**.
-- **Fill cost — now optimized:** full BSB costs ~1.8–2.9× more than vanilla to build, but the **`bsb-lean`** mode
+- **Fill cost - now optimized:** full BSB costs ~1.8-2.9× more than vanilla to build, but the **`bsb-lean`** mode
   (compact source stubs, cite-don't-restate, terse dense links) cuts that **~66% back to vanilla's cost with zero
   quality loss** and the *densest* interconnection (31 links/1k tokens). Lean is now the default (`CLAUDE.md` §2.1).
 - **Over-abstention fixed:** the answering policy now allows a flagged `(inferred)` answer from related material
@@ -80,11 +80,11 @@ And outcomes that would refute it:
 
 ## Sources
 
-- [[wiki/sources/karpathy-llm-wiki]] — canonical LLM Wiki pattern (three layers, three ops, RAG critique). https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f
-- [[wiki/sources/safishamsi-graphify]] — folder-to-knowledge-graph; god nodes, Leiden communities, GraphRAG output. https://github.com/safishamsi/graphify
-- [[wiki/sources/tobi-qmd]] — local hybrid markdown search (BM25 + vector + LLM rerank). https://github.com/tobi/qmd
-- [[wiki/sources/obsidian-bases]] — DB-like views over note frontmatter. https://obsidian.md/help/bases
-- Atlan, "LLM Wiki vs RAG Knowledge Base" — scale, freshness, access-control limits. https://atlan.com/know/llm-wiki-vs-rag-knowledge-base/
+- [[wiki/sources/karpathy-llm-wiki]] - canonical LLM Wiki pattern (three layers, three ops, RAG critique). https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f
+- [[wiki/sources/safishamsi-graphify]] - folder-to-knowledge-graph; god nodes, Leiden communities, GraphRAG output. https://github.com/safishamsi/graphify
+- [[wiki/sources/tobi-qmd]] - local hybrid markdown search (BM25 + vector + LLM rerank). https://github.com/tobi/qmd
+- [[wiki/sources/obsidian-bases]] - DB-like views over note frontmatter. https://obsidian.md/help/bases
+- Atlan, "LLM Wiki vs RAG Knowledge Base" - scale, freshness, access-control limits. https://atlan.com/know/llm-wiki-vs-rag-knowledge-base/
 - Benchmark procedure (relative): `docs/benchmark.md`
 - Measured results, first run (relative): `benchmark/RESULTS.md`
 - Architecture hub: [[wiki/moc/bsb-architecture]]

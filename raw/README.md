@@ -1,4 +1,4 @@
-# raw/ — your source material
+# raw/ - your source material
 
 This folder holds the **immutable sources** the brain is built from. The LLM **reads** from here and **never
 writes** here (the one exception: `raw/assets/`, where Obsidian's Web Clipper drops downloaded images).

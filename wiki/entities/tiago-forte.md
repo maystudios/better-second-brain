@@ -18,7 +18,7 @@ Tiago Forte is a productivity author and educator known for the "Building a Seco
 
 - Author of "Building a Second Brain" (2022), which gives the methodology its name. See fortelabs.com.
 - Originator of PARA, an organizing scheme with four top-level categories: Projects, Areas, Resources, Archives.
-- Associated with the concept of Maps of Content (MOC) — index notes that gather and route to related notes — as a navigation layer over a note collection.
+- Associated with the concept of Maps of Content (MOC) - index notes that gather and route to related notes - as a navigation layer over a note collection.
 - Biographical specifics beyond his authorship and frameworks are not asserted here, as they were not grounded in a cited source in this research pass (status reflects verification of the works/frameworks, not a full biography).
 
 ## Relationships
@@ -30,7 +30,7 @@ Tiago Forte is a productivity author and educator known for the "Building a Seco
 
 ## Sources
 
-- Tiago Forte / Forte Labs (Building a Second Brain, PARA): https://fortelabs.com — primary/author site.
-- "Building a Second Brain" (2022) — the book that names the methodology.
-- PARA method overview (Forte Labs): https://fortelabs.com/blog/para/ — author site.
-- Memex lineage, Vannevar Bush, "As We May Think," The Atlantic, July 1945: https://www.theatlantic.com/magazine/archive/1945/07/as-we-may-think/303881/ — primary (secondary to this page).
+- Tiago Forte / Forte Labs (Building a Second Brain, PARA): https://fortelabs.com - primary/author site.
+- "Building a Second Brain" (2022) - the book that names the methodology.
+- PARA method overview (Forte Labs): https://fortelabs.com/blog/para/ - author site.
+- Memex lineage, Vannevar Bush, "As We May Think," The Atlantic, July 1945: https://www.theatlantic.com/magazine/archive/1945/07/as-we-may-think/303881/ - primary (secondary to this page).

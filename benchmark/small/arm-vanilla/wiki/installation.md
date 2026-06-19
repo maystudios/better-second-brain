@@ -1,6 +1,6 @@
 # Installation
 
-Getting [[index|uv]] installed is deliberately easy, and notably it does **not** require Rust or an existing Python — uv ships as a self-contained binary.
+Getting [[index|uv]] installed is deliberately easy, and notably it does **not** require Rust or an existing Python - uv ships as a self-contained binary.
 
 ## Standalone installer (recommended)
 

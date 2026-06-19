@@ -457,7 +457,7 @@ def evaluate_strict(pages: list[Page], min_tier: str) -> list[Page]:
     """Return gated pages that fall below min_tier (worse rank).
 
     Operational report pages (``lint-*`` / ``heal-*`` under ``syntheses/``) are
-    excluded — they are activity records, not source-grounded reference content.
+    excluded - they are activity records, not source-grounded reference content.
     """
     threshold = TIER_RANK[min_tier]
     failing = []

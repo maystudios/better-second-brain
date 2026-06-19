@@ -19,14 +19,14 @@ You can also run `uv init` inside an existing empty directory. Either way, uv sc
 └── pyproject.toml
 ```
 
-The first time you run a project command, uv fills in the rest — creating `.venv/` and writing `uv.lock`.
+The first time you run a project command, uv fills in the rest - creating `.venv/` and writing `uv.lock`.
 
 ## Key files
 
-- **`pyproject.toml`** — project metadata (name, version, description) and the dependency list. This is the file you edit (directly or via `uv add`).
-- **`.python-version`** — the default Python version used when uv creates the project's virtual environment. See [[scripts-and-python]] for more on Python version management.
-- **`.venv/`** — the isolated environment where dependencies are installed.
-- **`uv.lock`** — a cross-platform lockfile with the exact resolved versions of every dependency. It's human-readable TOML but **should not be edited by hand**, and it **should be checked into version control** so installs are reproducible across machines.
+- **`pyproject.toml`** - project metadata (name, version, description) and the dependency list. This is the file you edit (directly or via `uv add`).
+- **`.python-version`** - the default Python version used when uv creates the project's virtual environment. See [[scripts-and-python]] for more on Python version management.
+- **`.venv/`** - the isolated environment where dependencies are installed.
+- **`uv.lock`** - a cross-platform lockfile with the exact resolved versions of every dependency. It's human-readable TOML but **should not be edited by hand**, and it **should be checked into version control** so installs are reproducible across machines.
 
 ## Managing dependencies
 

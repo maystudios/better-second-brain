@@ -15,9 +15,9 @@ npm install @modelcontextprotocol/client
 
 Optional middleware packages:
 
-- `@modelcontextprotocol/node` — Node.js HTTP transport
-- `@modelcontextprotocol/express` — Express integration
-- `@modelcontextprotocol/hono` — Hono integration
+- `@modelcontextprotocol/node` - Node.js HTTP transport
+- `@modelcontextprotocol/express` - Express integration
+- `@modelcontextprotocol/hono` - Hono integration
 
 ## Creating a Server (stdio example)
 

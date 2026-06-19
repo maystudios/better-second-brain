@@ -2,7 +2,7 @@
 
 - **Citation / URL:** https://docs.astral.sh/ruff/editors/setup/
 - **Raw file:** `benchmark/large/raw/editors-setup.md`
-- **Type:** Official documentation — per-editor setup
+- **Type:** Official documentation - per-editor setup
 
 ## Key claims
 
@@ -23,4 +23,4 @@
 
 ## Prose summary
 
-This is the per-editor cookbook. Nearly every modern editor connects to Ruff through the same `ruff server` LSP command — VS Code (via the `charliermarsh.ruff` extension), Neovim (lspconfig or native `vim.lsp.config`, plus conform.nvim/nvim-lint/ALE), Vim, Helix, Kate, Sublime, Zed, and Emacs (Eglot). PyCharm gains native support in 2025.3+ and otherwise relies on an External Tool or third-party plugin. The page repeats the overview's caution to disable the legacy `ruff-lsp` to avoid conflicts.
+This is the per-editor cookbook. Nearly every modern editor connects to Ruff through the same `ruff server` LSP command - VS Code (via the `charliermarsh.ruff` extension), Neovim (lspconfig or native `vim.lsp.config`, plus conform.nvim/nvim-lint/ALE), Vim, Helix, Kate, Sublime, Zed, and Emacs (Eglot). PyCharm gains native support in 2025.3+ and otherwise relies on an External Tool or third-party plugin. The page repeats the overview's caution to disable the legacy `ruff-lsp` to avoid conflicts.

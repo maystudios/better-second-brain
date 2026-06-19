@@ -2,7 +2,7 @@
 
 - **Citation / URL:** https://docs.astral.sh/ruff/editors/
 - **Raw file:** `benchmark/large/raw/editors.md`
-- **Type:** Official documentation — editor integration overview
+- **Type:** Official documentation - editor integration overview
 
 ## Key claims
 

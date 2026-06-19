@@ -1,8 +1,8 @@
 # Ruff
 
-**Ruff** is an extremely fast Python linter and code formatter, written in Rust and maintained by [Astral](https://astral.sh) — the same company behind the `uv` package manager and the `ty` type checker. Its goal is simple: replace a whole drawer of slow, single-purpose Python tools with one unified binary that runs tens to hundreds of times faster.
+**Ruff** is an extremely fast Python linter and code formatter, written in Rust and maintained by [Astral](https://astral.sh) - the same company behind the `uv` package manager and the `ty` type checker. Its goal is simple: replace a whole drawer of slow, single-purpose Python tools with one unified binary that runs tens to hundreds of times faster.
 
-In practice, a single install of Ruff stands in for [[Linter|Flake8 (plus dozens of plugins)]], [[Formatter|Black]], isort, pydocstyle, pyupgrade, and autoflake. One maintainer reported analyzing a 250k-line codebase in 0.4 seconds where Pylint took 2.5 minutes, and the project advertises being 10–100x faster than the legacy tools it replaces (benchmarked against the CPython codebase).
+In practice, a single install of Ruff stands in for [[Linter|Flake8 (plus dozens of plugins)]], [[Formatter|Black]], isort, pydocstyle, pyupgrade, and autoflake. One maintainer reported analyzing a 250k-line codebase in 0.4 seconds where Pylint took 2.5 minutes, and the project advertises being 10-100x faster than the legacy tools it replaces (benchmarked against the CPython codebase).
 
 ## Why people use it
 
@@ -17,8 +17,8 @@ In practice, a single install of Ruff stands in for [[Linter|Flake8 (plus dozens
 
 Ruff is really two tools sharing one binary and one config file:
 
-- **`ruff check`** — the [[Linter]], which finds (and optionally fixes) problems.
-- **`ruff format`** — the [[Formatter]], which rewrites code to a consistent style.
+- **`ruff check`** - the [[Linter]], which finds (and optionally fixes) problems.
+- **`ruff format`** - the [[Formatter]], which rewrites code to a consistent style.
 
 A common workflow runs both: sort imports and fix lint issues, then format.
 
@@ -37,11 +37,11 @@ Ruff is used by FastAPI, Pandas, SciPy, Hugging Face Transformers, Apache Airflo
 
 ## Map of this wiki
 
-- [[Installation]] — every way to get Ruff onto your machine
-- [[Tutorial]] — a guided first run on a real project
-- [[Linter]] — `ruff check`, rule selection, fixes, and suppression
-- [[Formatter]] — `ruff format` and Black compatibility
-- [[Rules]] — the rule catalog and prefix-to-plugin map
-- [[Configuration]] — config files, settings, and hierarchical layouts
-- [[Editors]] — language server and per-editor setup
-- [[Integrations]] — pre-commit, CI, Docker, and [[Versioning]]
+- [[Installation]] - every way to get Ruff onto your machine
+- [[Tutorial]] - a guided first run on a real project
+- [[Linter]] - `ruff check`, rule selection, fixes, and suppression
+- [[Formatter]] - `ruff format` and Black compatibility
+- [[Rules]] - the rule catalog and prefix-to-plugin map
+- [[Configuration]] - config files, settings, and hierarchical layouts
+- [[Editors]] - language server and per-editor setup
+- [[Integrations]] - pre-commit, CI, Docker, and [[Versioning]]

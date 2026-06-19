@@ -16,13 +16,13 @@ Concretely, MCP makes it possible for an agent to read your Google Calendar and 
 
 ## The shape of the system
 
-MCP follows a client–server design. See [[Architecture]] for the full picture, but in short: an [[Architecture|MCP Host]] (the AI application) spins up one [[Architecture|MCP Client]] per connection, and each client talks to one [[Architecture|MCP Server]] that provides context.
+MCP follows a client-server design. See [[Architecture]] for the full picture, but in short: an [[Architecture|MCP Host]] (the AI application) spins up one [[Architecture|MCP Client]] per connection, and each client talks to one [[Architecture|MCP Server]] that provides context.
 
-Servers expose three core building blocks — the [[Primitives]] of MCP:
+Servers expose three core building blocks - the [[Primitives]] of MCP:
 
-- [[Tools]] — executable functions the model can call to do things.
-- [[Resources]] — data the server shares as context.
-- [[Prompts]] — reusable templates for structuring interactions.
+- [[Tools]] - executable functions the model can call to do things.
+- [[Resources]] - data the server shares as context.
+- [[Prompts]] - reusable templates for structuring interactions.
 
 Underneath, messages travel over a chosen [[Transports|transport]] (local stdio or remote Streamable HTTP) and are encoded as JSON-RPC.
 

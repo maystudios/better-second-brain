@@ -22,7 +22,7 @@ status: stub # stub|active|stable
 ## Relationships
 
 <!-- Links to other entities/concepts/sources using full-path wikilinks, with the relationship named. -->
-- <!-- [[wiki/entities/slug]] — relationship -->
+- <!-- [[wiki/entities/slug]] - relationship -->
 
 ## Sources
 

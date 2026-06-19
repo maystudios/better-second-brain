@@ -1,6 +1,6 @@
 # Preview
 
-Preview mode is [[Ruff]]'s opt-in channel for unstable features — new lint rules and fixes, formatter style changes, and interface updates — released early so the community can give feedback before they become stable. It can be turned on independently for the [[Linter]] and the [[Formatter]].
+Preview mode is [[Ruff]]'s opt-in channel for unstable features - new lint rules and fixes, formatter style changes, and interface updates - released early so the community can give feedback before they become stable. It can be turned on independently for the [[Linter]] and the [[Formatter]].
 
 ## Enabling it
 
@@ -21,7 +21,7 @@ preview = true
 
 ## How preview rules are selected
 
-A preview rule only runs when preview mode is active. Simply naming it isn't enough — given a hypothetical preview rule `HYP001`, none of these enable it on their own:
+A preview rule only runs when preview mode is active. Simply naming it isn't enough - given a hypothetical preview rule `HYP001`, none of these enable it on their own:
 
 - `extend-select = ["HYP001"]`
 - `extend-select = ["HYP"]`
@@ -45,5 +45,5 @@ When preview mode is on, deprecated rules are disabled. Explicitly selecting a d
 
 ## See also
 
-- [[Versioning]] — how preview features graduate to stable
-- [[Rules]] — the 🧪 preview marker in the catalog
+- [[Versioning]] - how preview features graduate to stable
+- [[Rules]] - the 🧪 preview marker in the catalog

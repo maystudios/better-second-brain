@@ -20,7 +20,7 @@ To auto-fix during the hook:
     - id: ruff-format
 ```
 
-When `--fix` is on, position `ruff-check` **before** `ruff-format` (and before other formatters) so import sorting and fixes happen before the final layout pass — the same ordering recommended in the [[Linter]] and [[Formatter]] pages.
+When `--fix` is on, position `ruff-check` **before** `ruff-format` (and before other formatters) so import sorting and fixes happen before the final layout pass - the same ordering recommended in the [[Linter]] and [[Formatter]] pages.
 
 ## GitHub Actions
 
@@ -59,5 +59,5 @@ The `mdformat-ruff` plugin formats Python code blocks embedded in Markdown using
 
 ## See also
 
-- [[Preview]] — opting in to experimental rules and styles
-- [[Versioning]] — what a version bump means for your pipeline
+- [[Preview]] - opting in to experimental rules and styles
+- [[Versioning]] - what a version bump means for your pipeline

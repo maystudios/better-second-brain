@@ -1,6 +1,6 @@
 # Tool Replacement & Compatibility
 
-A central premise of [[concepts/ruff]] is that it consolidates many separate Python tools into one. This page records exactly what the sources claim Ruff replaces — and the stated limits of those claims.
+A central premise of [[concepts/ruff]] is that it consolidates many separate Python tools into one. This page records exactly what the sources claim Ruff replaces - and the stated limits of those claims.
 
 ## What Ruff consolidates
 
@@ -22,9 +22,9 @@ Ruff's import sorting targets isort's "black" profile, with documented behaviora
 
 ## What Ruff is NOT
 
-Ruff is **a linter, not a type checker**; type checkers (Mypy, Pyright, Pyre) catch errors Ruff misses and are complementary ([[sources/faq]]). It also does not sort imports as part of formatting — that is a linter (`I`) responsibility ([[sources/formatter]]).
+Ruff is **a linter, not a type checker**; type checkers (Mypy, Pyright, Pyre) catch errors Ruff misses and are complementary ([[sources/faq]]). It also does not sort imports as part of formatting - that is a linter (`I`) responsibility ([[sources/formatter]]).
 
 ## Open questions
 
 - The set of replaced tools is phrased slightly differently in each source (overview vs. README vs. FAQ); the union above is faithful to all three, but the sources do not give a single authoritative list ([[sources/ruff-overview]]; [[sources/github-astral-sh-ruff]]; [[sources/faq]]).
-- "Most pyupgrade rules" ([[sources/faq]]) is not quantified — the sources do not say which pyupgrade behaviors are unsupported.
+- "Most pyupgrade rules" ([[sources/faq]]) is not quantified - the sources do not say which pyupgrade behaviors are unsupported.

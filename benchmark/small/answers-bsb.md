@@ -1,4 +1,4 @@
-# Answers — uv (Astral Python package & project manager)
+# Answers - uv (Astral Python package & project manager)
 
 1. uv is written in **Rust**. Astral describes uv as "an extremely fast Python package and project manager, written in Rust."
    Source: [[sources/github-astral-sh-uv]] (https://github.com/astral-sh/uv); [[sources/docs-astral-sh-uv]] (https://docs.astral.sh/uv/)

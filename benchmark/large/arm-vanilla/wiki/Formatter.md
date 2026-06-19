@@ -15,9 +15,9 @@ ruff format --check /path     # Verify only; non-zero exit if unformatted
 
 Ruff targets Black's stable code style and reports formatting >99.9% of lines identically on large Black-formatted projects like Django and Zulip. A few deliberate deviations exist:
 
-- **F-strings** — unlike Black, Ruff formats expressions inside `{...}`.
-- **Nested f-string quotes** — Ruff alternates quote styles to keep them valid.
-- **Method chains** (preview mode) — breaks before the first attribute in long chains.
+- **F-strings** - unlike Black, Ruff formats expressions inside `{...}`.
+- **Nested f-string quotes** - Ruff alternates quote styles to keep them valid.
+- **Method chains** (preview mode) - breaks before the first attribute in long chains.
 
 ## Defaults and configuration
 
@@ -36,7 +36,7 @@ docstring-code-line-length = 20
 
 ## Docstring code formatting
 
-With `docstring-code-format = true`, Ruff also formats code examples embedded in docstrings — Python doctests, CommonMark fenced blocks (info strings `python`, `py`, `python3`, `py3`), and reStructuredText literal/`code-block` directives. The `docstring-code-line-length` key controls their line limit; the default `"dynamic"` follows the surrounding code's limit. Code that doesn't parse as valid Python is left untouched.
+With `docstring-code-format = true`, Ruff also formats code examples embedded in docstrings - Python doctests, CommonMark fenced blocks (info strings `python`, `py`, `python3`, `py3`), and reStructuredText literal/`code-block` directives. The `docstring-code-line-length` key controls their line limit; the default `"dynamic"` follows the surrounding code's limit. Code that doesn't parse as valid Python is left untouched.
 
 ## Suppressing formatting
 
@@ -54,7 +54,7 @@ In **preview mode**, the formatter can format fenced Python blocks inside Markdo
 
 ## Import sorting
 
-The formatter does **not** sort imports — that's a [[Linter]] job. To do both, run the isort rule first, then format:
+The formatter does **not** sort imports - that's a [[Linter]] job. To do both, run the isort rule first, then format:
 
 ```bash
 ruff check --select I --fix
@@ -67,10 +67,10 @@ For `ruff format` (no `--check`): `0` always means success, `1` only if files we
 
 ## Avoiding lint/format conflicts
 
-Some lint rules fight the formatter. Ruff emits a warning when it detects them; disable them via `lint.ignore`: the quote rules `Q000`–`Q004`, the tab/indent rules `W191`, `E111`, `E114`, `E117`, the comma rules `COM812`/`COM819`, and `D203`, `D206`, `D300`, `ISC002`. Also avoid non-default isort settings like `force-single-line` and `split-on-trailing-comma`. `E501` (line length) can coexist but may still fire.
+Some lint rules fight the formatter. Ruff emits a warning when it detects them; disable them via `lint.ignore`: the quote rules `Q000`-`Q004`, the tab/indent rules `W191`, `E111`, `E114`, `E117`, the comma rules `COM812`/`COM819`, and `D203`, `D206`, `D300`, `ISC002`. Also avoid non-default isort settings like `force-single-line` and `split-on-trailing-comma`. `E501` (line length) can coexist but may still fire.
 
 ## See also
 
-- [[Linter]] — the companion `ruff check` command
-- [[Configuration]] — full format settings and defaults
-- [[Preview]] — how preview-mode style changes are gated
+- [[Linter]] - the companion `ruff check` command
+- [[Configuration]] - full format settings and defaults
+- [[Preview]] - how preview-mode style changes are gated

@@ -21,7 +21,7 @@ Two optional features:
 - `subscribe`: whether the client can subscribe to be notified of changes to individual resources.
 - `listChanged`: whether the server will emit notifications when the list of available resources changes.
 
-Both are optional—servers can support neither, either, or both.
+Both are optional-servers can support neither, either, or both.
 
 ## Protocol Messages
 
@@ -78,10 +78,10 @@ Resources, resource templates and content blocks support optional annotations:
 
 ## Common URI Schemes
 
-- `https://` — a resource available on the web. Use only when the client can fetch directly from the web on its own.
-- `file://` — resources that behave like a filesystem (need not map to an actual physical filesystem). May use XDG MIME types like `inode/directory`.
-- `git://` — Git version control integration.
-- **Custom URI Schemes** — MUST be in accordance with RFC3986.
+- `https://` - a resource available on the web. Use only when the client can fetch directly from the web on its own.
+- `file://` - resources that behave like a filesystem (need not map to an actual physical filesystem). May use XDG MIME types like `inode/directory`.
+- `git://` - Git version control integration.
+- **Custom URI Schemes** - MUST be in accordance with RFC3986.
 
 ## Error Handling
 

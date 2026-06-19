@@ -2,7 +2,7 @@
 type: cheatsheet
 topic: "{{title}}"
 area: ""
-when-to-use: "" # MANDATORY — describe the exact situation this cheatsheet is for
+when-to-use: "" # MANDATORY - describe the exact situation this cheatsheet is for
 related-topics: []
 stack-versions: {} # map of pkg: version, e.g. { react: "19.0.0" }
 sources: [] # list of { raw-path: "", url: "" } pairs
@@ -41,7 +41,7 @@ status: stub # stub|active|stable
 ## Common pitfalls
 
 <!-- MANDATORY. Each pitfall must be grounded in a real issue/changelog with an inline full-path wikilink. -->
-- <!-- Pitfall — cause and fix. ([[wiki/sources/slug]]) -->
+- <!-- Pitfall - cause and fix. ([[wiki/sources/slug]]) -->
 
 ## Integration with the rest of the stack
 

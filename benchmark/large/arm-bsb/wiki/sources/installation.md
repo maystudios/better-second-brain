@@ -2,7 +2,7 @@
 
 - **Citation / URL:** https://docs.astral.sh/ruff/installation/
 - **Raw file:** `benchmark/large/raw/installation.md`
-- **Type:** Official documentation — installation guide
+- **Type:** Official documentation - installation guide
 
 ## Key claims
 

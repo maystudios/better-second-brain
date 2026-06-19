@@ -18,14 +18,14 @@ by hand.**
 - **Track activity** → [[log]] (what happened, newest at the bottom) and [[roadmap]] (what's planned).
 - **Ingest** → drop a file into `raw/`, or tell the agent *"ingest this link: …"*. It writes a source page and
   updates everything the source touches.
-- **Ask** → *"what does the wiki say about X?"* — the agent answers with citations and offers to save good answers
+- **Ask** → *"what does the wiki say about X?"* - the agent answers with citations and offers to save good answers
   as new pages.
 - **Keep healthy** → say *"lint"* now and then. With graphify installed, say *"rebuild the graph"* to surface
   missing hubs and surprising connections.
 
 ## What makes this one "better"
 
-It refuses to write a page from the model's memory — every page is grounded in real, fetched sources (≥ 3 for a
+It refuses to write a page from the model's memory - every page is grounded in real, fetched sources (≥ 3 for a
 reference page). It builds an actual knowledge **graph** over your notes (graphify), it **improves its own rules**
 over time (auto-research), and it **re-checks and fixes itself** when sources change (self-healing). See
 [[README]] and [[CLAUDE]] for the full story.

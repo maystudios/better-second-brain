@@ -13,7 +13,7 @@ uv add --script example.py requests
 uv run example.py
 ```
 
-When you run such a script, uv reads its inline metadata, sets up a temporary environment with exactly those dependencies, and executes it — no manual virtual environment, no leftover state. This makes scripts easy to share: the dependency list travels with the file itself.
+When you run such a script, uv reads its inline metadata, sets up a temporary environment with exactly those dependencies, and executes it - no manual virtual environment, no leftover state. This makes scripts easy to share: the dependency list travels with the file itself.
 
 ## Installing and managing Python versions
 
@@ -29,7 +29,7 @@ Once installed, uv uses these interpreters automatically. Within a [[projects|pr
 uvx --python 3.10 ruff
 ```
 
-To find where uv keeps its managed interpreters, `uv python dir` prints the path (handy when uninstalling — see [[installation]]).
+To find where uv keeps its managed interpreters, `uv python dir` prints the path (handy when uninstalling - see [[installation]]).
 
 ## How it fits together
 

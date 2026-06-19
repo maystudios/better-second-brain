@@ -1,5 +1,5 @@
 {
-  "topic": "Ruff — the Astral Python linter & formatter",
+  "topic": "Ruff - the Astral Python linter & formatter",
   "questions": [
     {
       "id": 1,
@@ -53,7 +53,7 @@
     },
     {
       "id": 11,
-      "q": "How does Ruff's versioning policy work — does it follow standard SemVer, and what do minor vs patch version bumps mean?",
+      "q": "How does Ruff's versioning policy work - does it follow standard SemVer, and what do minor vs patch version bumps mean?",
       "type": "freshness"
     },
     {

@@ -4,9 +4,9 @@ Topic: Model Context Protocol (MCP)
 
 1. A USB-C port for AI applications. Just as USB-C provides one standardized plug for many devices, MCP gives one standardized way to wire an AI application into the outside world. (Source: wiki "Model Context Protocol" page; documentation at modelcontextprotocol.io)
 
-2. The three core server primitives are: Tools — executable functions an AI application can invoke to perform actions (file operations, API calls, database queries); Resources — data sources that provide contextual information (file contents, database records, API responses); and Prompts — reusable templates that help structure interactions with the model (system prompts, few-shot examples). (Source: wiki "Primitives" page)
+2. The three core server primitives are: Tools - executable functions an AI application can invoke to perform actions (file operations, API calls, database queries); Resources - data sources that provide contextual information (file contents, database records, API responses); and Prompts - reusable templates that help structure interactions with the model (system prompts, few-shot examples). (Source: wiki "Primitives" page)
 
-3. JSON-RPC 2.0. (Source: wiki "Architecture" page — the data layer is "a JSON-RPC 2.0 based protocol")
+3. JSON-RPC 2.0. (Source: wiki "Architecture" page - the data layer is "a JSON-RPC 2.0 based protocol")
 
 4. `-32002` ("resource not found"). (Source: wiki "Resources and Prompts" page)
 

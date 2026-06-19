@@ -49,7 +49,7 @@ def strip_code(text: str) -> str:
     """Remove anything that may hold *example* wikilinks rather than real ones:
     fenced code blocks, inline code spans, HTML comments, and YAML-frontmatter
     ``#`` comments. Template scaffolds (e.g. ``new_page.py`` output) carry example
-    links inside comments — those must not be reported as broken.
+    links inside comments - those must not be reported as broken.
     """
     # Strip `#` comments inside the leading YAML frontmatter block only.
     if text.startswith("---"):

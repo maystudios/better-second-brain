@@ -6,9 +6,9 @@ This GitHub repository hosts the specification and documentation for the Model C
 
 ## What this repo contains
 
-1. **MCP Specification** — the formal protocol definition
-2. **Protocol Schema** — available in both TypeScript and JSON Schema formats
-3. **Official Documentation** — built with Mintlify, hosted at modelcontextprotocol.io
+1. **MCP Specification** - the formal protocol definition
+2. **Protocol Schema** - available in both TypeScript and JSON Schema formats
+3. **Official Documentation** - built with Mintlify, hosted at modelcontextprotocol.io
 
 ## Key details
 

@@ -12,7 +12,7 @@ Ruff publishes hooks at `astral-sh/ruff-pre-commit` ([[sources/integrations]]; [
     - id: ruff-check
     - id: ruff-format
 ```
-For auto-fixing, `ruff-check` takes `args: [ --fix ]` ([[sources/integrations]]). A key ordering rule: when using `--fix`, position `ruff-check` before `ruff-format` and other formatting tools ([[sources/integrations]]) — consistent with the [[concepts/import-sorting]] and [[concepts/formatter]] workflow where linting/sorting precedes formatting.
+For auto-fixing, `ruff-check` takes `args: [ --fix ]` ([[sources/integrations]]). A key ordering rule: when using `--fix`, position `ruff-check` before `ruff-format` and other formatting tools ([[sources/integrations]]) - consistent with the [[concepts/import-sorting]] and [[concepts/formatter]] workflow where linting/sorting precedes formatting.
 
 ## GitHub Actions
 

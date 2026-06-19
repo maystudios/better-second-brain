@@ -4,7 +4,7 @@ title: BSB instance config
 updated: 2026-06-19
 ---
 
-# bsb.config.md — per-instance configuration
+# bsb.config.md - per-instance configuration
 
 This file holds the few choices that differ between BSB forks. The schema (`CLAUDE.md`) reads these as the
 authoritative settings for *this* instance. Edit here, not in the schema.
@@ -22,11 +22,11 @@ LITMUS:   "Does this help someone build software, or build/understand a better s
 
 | setting | value | notes |
 |---------|-------|-------|
-| link-style | `full-path` | `[[wiki/concepts/x]]` — unambiguous, survives moves. Alt: `bare-slug`. |
+| link-style | `full-path` | `[[wiki/concepts/x]]` - unambiguous, survives moves. Alt: `bare-slug`. |
 | wiki body language | follows source | frontmatter keys stay English |
 | chat language | follows user | currently German |
 | source floor | `3` | min verified sources per reference/cheatsheet page (§1.5) |
-| cheatsheet length | `150–500` lines | split if longer, merge if shorter |
+| cheatsheet length | `150-500` lines | split if longer, merge if shorter |
 | lint tier gate | `A` (CI) / `B` (local pre-commit) | `scripts/lint_sources.py --strict` |
 | self-heal autonomy | `2` (fix-and-report on approval) | per-area override allowed (§3.6) |
 

@@ -13,13 +13,13 @@ The Model Context Protocol includes the following projects:
 - **MCP Development Tools**: Tools for developing MCP servers and clients, including the MCP Inspector (https://github.com/modelcontextprotocol/inspector)
 - **MCP Reference Server Implementations**: Reference implementations of MCP servers (https://github.com/modelcontextprotocol/servers).
 
-> MCP focuses solely on the protocol for context exchange—it does not dictate how AI applications use LLMs or manage the provided context.
+> MCP focuses solely on the protocol for context exchange-it does not dictate how AI applications use LLMs or manage the provided context.
 
 ## Concepts of MCP
 
 ### Participants
 
-MCP follows a client-server architecture where an MCP host — an AI application like Claude Code or Claude Desktop — establishes connections to one or more MCP servers. The MCP host accomplishes this by creating one MCP client for each MCP server. Each MCP client maintains a dedicated connection with its corresponding MCP server.
+MCP follows a client-server architecture where an MCP host - an AI application like Claude Code or Claude Desktop - establishes connections to one or more MCP servers. The MCP host accomplishes this by creating one MCP client for each MCP server. Each MCP client maintains a dedicated connection with its corresponding MCP server.
 
 Local MCP servers that use the STDIO transport typically serve a single MCP client, whereas remote MCP servers that use the Streamable HTTP transport will typically serve many MCP clients.
 

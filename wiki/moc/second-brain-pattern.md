@@ -13,9 +13,9 @@ This is the navigation hub for the bootstrap domain: how to use an LLM to build 
 
 ## Start here
 
-- [[wiki/concepts/llm-wiki-pattern]] — the core pattern: raw / wiki / schema layers and ingest / query / lint operations.
-- [[wiki/concepts/rag-vs-llm-wiki]] — why a persistent wiki differs from re-running retrieval per query.
-- [[wiki/sources/karpathy-llm-wiki]] — the canonical pattern document.
+- [[wiki/concepts/llm-wiki-pattern]] - the core pattern: raw / wiki / schema layers and ingest / query / lint operations.
+- [[wiki/concepts/rag-vs-llm-wiki]] - why a persistent wiki differs from re-running retrieval per query.
+- [[wiki/sources/karpathy-llm-wiki]] - the canonical pattern document.
 
 ## Sources
 
@@ -49,5 +49,5 @@ This is the navigation hub for the bootstrap domain: how to use an LLM to build 
 
 ## Sources
 
-- [[wiki/sources/karpathy-llm-wiki]] — https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f
-- Tiago Forte, Building a Second Brain (PARA, Maps of Content) — https://fortelabs.com
+- [[wiki/sources/karpathy-llm-wiki]] - https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f
+- Tiago Forte, Building a Second Brain (PARA, Maps of Content) - https://fortelabs.com

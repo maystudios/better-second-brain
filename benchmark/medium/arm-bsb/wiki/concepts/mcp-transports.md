@@ -1,6 +1,6 @@
 # MCP Transports
 
-The transport layer defines the communication mechanisms and channels that enable data exchange between clients and servers, including connection establishment, message framing, and authorization ([[sources/architecture]]). MCP uses JSON-RPC to encode messages, and JSON-RPC messages MUST be UTF-8 encoded ([[sources/transports]]). Two standard transports are defined — stdio and Streamable HTTP — and clients SHOULD support stdio whenever possible ([[sources/transports]]).
+The transport layer defines the communication mechanisms and channels that enable data exchange between clients and servers, including connection establishment, message framing, and authorization ([[sources/architecture]]). MCP uses JSON-RPC to encode messages, and JSON-RPC messages MUST be UTF-8 encoded ([[sources/transports]]). Two standard transports are defined - stdio and Streamable HTTP - and clients SHOULD support stdio whenever possible ([[sources/transports]]).
 
 ## stdio
 
@@ -14,7 +14,7 @@ The client MUST use HTTP POST and MUST include an `Accept` header listing both `
 
 ### Session management
 
-A server MAY assign a session ID at initialization via an `Mcp-Session-Id` header on the `InitializeResult` response; the ID SHOULD be globally unique and cryptographically secure and MUST contain only visible ASCII (0x21–0x7E) ([[sources/transports]]). If returned, clients MUST include `Mcp-Session-Id` on subsequent requests; the server MAY terminate a session at any time (then responding HTTP 404 to that ID), and clients SHOULD send an HTTP DELETE to end a session ([[sources/transports]]).
+A server MAY assign a session ID at initialization via an `Mcp-Session-Id` header on the `InitializeResult` response; the ID SHOULD be globally unique and cryptographically secure and MUST contain only visible ASCII (0x21-0x7E) ([[sources/transports]]). If returned, clients MUST include `Mcp-Session-Id` on subsequent requests; the server MAY terminate a session at any time (then responding HTTP 404 to that ID), and clients SHOULD send an HTTP DELETE to end a session ([[sources/transports]]).
 
 ### Protocol version header
 

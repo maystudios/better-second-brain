@@ -2,7 +2,7 @@
 
 - **Citation / URL:** https://docs.astral.sh/ruff/integrations/
 - **Raw file:** `benchmark/large/raw/integrations.md`
-- **Type:** Official documentation — CI/CD and tooling integrations
+- **Type:** Official documentation - CI/CD and tooling integrations
 
 ## Key claims
 

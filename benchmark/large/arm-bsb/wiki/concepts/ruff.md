@@ -14,7 +14,7 @@ Two capabilities are split into the linter and the formatter:
 
 ## Speed
 
-Ruff's headline claim is being **10–100x faster** than existing linters (Flake8) and formatters (Black), benchmarked on the CPython codebase ([[sources/ruff-overview]]; [[sources/github-astral-sh-ruff]]). See [[concepts/performance]] for the supporting anecdotes, including a maintainer's report of 0.4 seconds versus 2.5 minutes with Pylint on a 250k-line codebase ([[sources/github-astral-sh-ruff]]).
+Ruff's headline claim is being **10-100x faster** than existing linters (Flake8) and formatters (Black), benchmarked on the CPython codebase ([[sources/ruff-overview]]; [[sources/github-astral-sh-ruff]]). See [[concepts/performance]] for the supporting anecdotes, including a maintainer's report of 0.4 seconds versus 2.5 minutes with Pylint on a 250k-line codebase ([[sources/github-astral-sh-ruff]]).
 
 ## Scope and rules
 
@@ -22,7 +22,7 @@ Ruff ships **over 900 built-in rules**, including native implementations of popu
 
 ## Ecosystem position
 
-Ruff is **a linter, not a type checker**; type checkers such as Mypy, Pyright, and Pyre catch type errors Ruff misses and are described as complementary ([[sources/faq]]). It lints code for Python 3.7 through 3.13 and does not support Python 2 ([[sources/faq]]), while advertising **Python 3.14 compatibility** as a feature ([[sources/ruff-overview]]; [[sources/github-astral-sh-ruff]]) — see [[concepts/python-version-support]] for how these two figures relate. Installation options are covered in [[concepts/installation]], configuration in [[concepts/configuration]], CI/editor wiring in [[concepts/integrations]] and [[concepts/editor-integration]], and release policy in [[concepts/versioning]] and [[concepts/preview-mode]].
+Ruff is **a linter, not a type checker**; type checkers such as Mypy, Pyright, and Pyre catch type errors Ruff misses and are described as complementary ([[sources/faq]]). It lints code for Python 3.7 through 3.13 and does not support Python 2 ([[sources/faq]]), while advertising **Python 3.14 compatibility** as a feature ([[sources/ruff-overview]]; [[sources/github-astral-sh-ruff]]) - see [[concepts/python-version-support]] for how these two figures relate. Installation options are covered in [[concepts/installation]], configuration in [[concepts/configuration]], CI/editor wiring in [[concepts/integrations]] and [[concepts/editor-integration]], and release policy in [[concepts/versioning]] and [[concepts/preview-mode]].
 
 ## Adoption
 

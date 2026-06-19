@@ -19,12 +19,12 @@
 2. `LLM Wiki Pattern` - 19 edges
 3. `BSB Architecture (Map of Content)` - 16 edges
 4. `BSB Quickstart` - 14 edges
-5. `Andrej Karpathy — LLM Wiki (gist)` - 13 edges
+5. `Andrej Karpathy - LLM Wiki (gist)` - 13 edges
 6. `Knowledge Graph and GraphRAG` - 12 edges
 7. `RAG vs LLM Wiki` - 11 edges
 8. `graphify` - 11 edges
-9. `graphify — repository and README (safishamsi/graphify)` - 11 edges
-10. `qmd — repository (tobi/qmd)` - 11 edges
+9. `graphify - repository and README (safishamsi/graphify)` - 11 edges
+10. `qmd - repository (tobi/qmd)` - 11 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `Maps of Content` --conceptually_related_to--> `PARA Method`  [INFERRED]
@@ -42,23 +42,23 @@
 - None detected.
 
 ## Hyperedges (group relationships)
-- **BSB tool stack (graphify + qmd + Obsidian over the LLM wiki)** — entities_graphify_graphify, entities_qmd_qmd, entities_obsidian_obsidian, concepts_llm_wiki_pattern_llm_wiki_pattern [EXTRACTED 0.85]
-- **Knowledge-management prior-art lineage feeding the LLM wiki pattern** — concepts_memex_memex, concepts_zettelkasten_zettelkasten, concepts_llm_wiki_pattern_llm_wiki_pattern [INFERRED 0.85]
-- **Compile-time wiki vs query-time RAG trade-off and its grounding gate** — concepts_rag_vs_llm_wiki_rag_vs_llm_wiki, concepts_llm_wiki_pattern_llm_wiki_pattern, concepts_research_discipline_research_discipline, concepts_knowledge_graph_graphrag_knowledge_graph_graphrag [INFERRED 0.75]
+- **BSB tool stack (graphify + qmd + Obsidian over the LLM wiki)** - entities_graphify_graphify, entities_qmd_qmd, entities_obsidian_obsidian, concepts_llm_wiki_pattern_llm_wiki_pattern [EXTRACTED 0.85]
+- **Knowledge-management prior-art lineage feeding the LLM wiki pattern** - concepts_memex_memex, concepts_zettelkasten_zettelkasten, concepts_llm_wiki_pattern_llm_wiki_pattern [INFERRED 0.85]
+- **Compile-time wiki vs query-time RAG trade-off and its grounding gate** - concepts_rag_vs_llm_wiki_rag_vs_llm_wiki, concepts_llm_wiki_pattern_llm_wiki_pattern, concepts_research_discipline_research_discipline, concepts_knowledge_graph_graphrag_knowledge_graph_graphrag [INFERRED 0.75]
 
 ## Communities (4 total, 0 thin omitted)
 
 ### Community 0 - "LLM Wiki & Karpathy Origins"
 Cohesion: 0.90
-Nodes (7): LLM Wiki Pattern, Memex, RAG vs LLM Wiki, Andrej Karpathy, Second Brain Pattern (Map of Content), Andrej Karpathy — LLM Knowledge Bases (X post), Andrej Karpathy — LLM Wiki (gist)
+Nodes (7): LLM Wiki Pattern, Memex, RAG vs LLM Wiki, Andrej Karpathy, Second Brain Pattern (Map of Content), Andrej Karpathy - LLM Knowledge Bases (X post), Andrej Karpathy - LLM Wiki (gist)
 
 ### Community 1 - "Tooling Stack: graphify/qmd/Obsidian"
 Cohesion: 1.00
-Nodes (6): graphify, Obsidian, qmd, BSB Quickstart, Obsidian Bases — documentation, qmd — repository (tobi/qmd)
+Nodes (6): graphify, Obsidian, qmd, BSB Quickstart, Obsidian Bases - documentation, qmd - repository (tobi/qmd)
 
 ### Community 2 - "BSB Architecture & GraphRAG"
 Cohesion: 1.00
-Nodes (5): Knowledge Graph and GraphRAG, Research Discipline, BSB Architecture (Map of Content), graphify — repository and README (safishamsi/graphify), Is a Better Second Brain better than a vanilla LLM Wiki?
+Nodes (5): Knowledge Graph and GraphRAG, Research Discipline, BSB Architecture (Map of Content), graphify - repository and README (safishamsi/graphify), Is a Better Second Brain better than a vanilla LLM Wiki?
 
 ### Community 3 - "PKM Prior Art: PARA & Zettelkasten"
 Cohesion: 0.83

@@ -1,5 +1,5 @@
 {
-  "topic": "Ruff — the Astral Python linter & formatter",
+  "topic": "Ruff - the Astral Python linter & formatter",
   "sources_used": [
     "https://github.com/astral-sh/ruff",
     "https://docs.astral.sh/ruff/",
@@ -37,7 +37,7 @@
       "id": 3,
       "type": "detail",
       "q": "What is Ruff's default value for lint.select (the rule codes enabled by default)?",
-      "gold": "select = [\"E4\", \"E7\", \"E9\", \"F\"] — i.e. Pyflakes (F) plus a subset of pycodestyle (E) rules.",
+      "gold": "select = [\"E4\", \"E7\", \"E9\", \"F\"] - i.e. Pyflakes (F) plus a subset of pycodestyle (E) rules.",
       "source": "https://docs.astral.sh/ruff/settings/"
     },
     {
@@ -65,7 +65,7 @@
       "id": 7,
       "type": "detail",
       "q": "By default, does `ruff check --fix` apply unsafe fixes, and how do you enable unsafe fixes?",
-      "gold": "No — by default only 'safe' fixes are applied. Unsafe fixes are enabled with the --unsafe-fixes CLI flag (e.g. `ruff check --fix --unsafe-fixes`) or `unsafe-fixes = true` in config.",
+      "gold": "No - by default only 'safe' fixes are applied. Unsafe fixes are enabled with the --unsafe-fixes CLI flag (e.g. `ruff check --fix --unsafe-fixes`) or `unsafe-fixes = true` in config.",
       "source": "https://docs.astral.sh/ruff/linter/"
     },
     {
@@ -92,7 +92,7 @@
     {
       "id": 11,
       "type": "freshness",
-      "q": "How does Ruff's versioning policy work — does it follow standard SemVer, and what do minor vs patch version bumps mean?",
+      "q": "How does Ruff's versioning policy work - does it follow standard SemVer, and what do minor vs patch version bumps mean?",
       "gold": "It uses a custom (non-SemVer) scheme: the minor version is bumped for breaking changes and the patch version for bug fixes. While pre-1.0 (0.x) the API is unstable; standard SemVer would apply once a stable API is reached.",
       "source": "https://docs.astral.sh/ruff/versioning/"
     },

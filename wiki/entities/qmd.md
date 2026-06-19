@@ -13,7 +13,7 @@ status: verified
 
 # qmd
 
-qmd is a local command-line search tool for markdown and notes by an author publishing under the handle "tobi." It performs hybrid retrieval — BM25 keyword search (via SQLite FTS5) combined with vector search and an LLM reranking step — running entirely locally through `node-llama-cpp` and local GGUF models, and it ships an MCP server so the same search is callable from agents. In a Second Brain it is the retrieval layer: it answers "which note?" while leaving relationship traversal to a graph tool.
+qmd is a local command-line search tool for markdown and notes by an author publishing under the handle "tobi." It performs hybrid retrieval - BM25 keyword search (via SQLite FTS5) combined with vector search and an LLM reranking step - running entirely locally through `node-llama-cpp` and local GGUF models, and it ships an MCP server so the same search is callable from agents. In a Second Brain it is the retrieval layer: it answers "which note?" while leaving relationship traversal to a graph tool.
 
 ## Facts
 
@@ -32,6 +32,6 @@ qmd is a local command-line search tool for markdown and notes by an author publ
 
 ## Sources
 
-- tobi, qmd (GitHub): https://github.com/tobi/qmd — primary, fetchable.
-- npm package `@tobilu/qmd`: https://www.npmjs.com/package/@tobilu/qmd — primary (install command, package name).
+- tobi, qmd (GitHub): https://github.com/tobi/qmd - primary, fetchable.
+- npm package `@tobilu/qmd`: https://www.npmjs.com/package/@tobilu/qmd - primary (install command, package name).
 - See [[wiki/sources/tobi-qmd]].

@@ -2,7 +2,7 @@
 
 MCP (Model Context Protocol) is an open-source standard for connecting AI applications to external systems ([[sources/introduction]]). It focuses solely on the protocol for context exchange and does not dictate how AI applications use LLMs or manage the provided context ([[sources/architecture]]).
 
-Using MCP, AI applications like Claude or ChatGPT can connect to data sources (e.g. local files, databases), tools (e.g. search engines, calculators), and workflows (e.g. specialized prompts) ([[sources/introduction]]). The introduction analogizes MCP to "a USB-C port for AI applications" — a standardized way to connect AI applications to external systems ([[sources/introduction]]).
+Using MCP, AI applications like Claude or ChatGPT can connect to data sources (e.g. local files, databases), tools (e.g. search engines, calculators), and workflows (e.g. specialized prompts) ([[sources/introduction]]). The introduction analogizes MCP to "a USB-C port for AI applications" - a standardized way to connect AI applications to external systems ([[sources/introduction]]).
 
 ## Why it matters
 
@@ -22,10 +22,10 @@ The `modelcontextprotocol/modelcontextprotocol` repository lists a latest versio
 
 ## Related concepts
 
-- [[concepts/mcp-architecture]] — participants, layers, and lifecycle
-- [[concepts/mcp-primitives]] — tools, resources, prompts, and client primitives
-- [[concepts/mcp-transports]] — stdio and Streamable HTTP
-- [[concepts/mcp-sdks-and-servers]] — SDKs and reference servers
+- [[concepts/mcp-architecture]] - participants, layers, and lifecycle
+- [[concepts/mcp-primitives]] - tools, resources, prompts, and client primitives
+- [[concepts/mcp-transports]] - stdio and Streamable HTTP
+- [[concepts/mcp-sdks-and-servers]] - SDKs and reference servers
 
 ## Open questions
 

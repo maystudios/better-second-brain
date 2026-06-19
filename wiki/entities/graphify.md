@@ -13,14 +13,14 @@ status: verified
 
 # graphify
 
-graphify is an open-source tool by safishamsi that turns a folder of inputs — code, docs, papers, images, video — into a persistent knowledge graph. It identifies "god nodes" (the highest-degree hub nodes), detects communities via the Leiden algorithm, surfaces surprising connections and suggested questions, and keeps an EXTRACTED / INFERRED / AMBIGUOUS audit trail for every claim. It is built on Karpathy's `/raw` folder convention, making it a natural traversal companion to the LLM Wiki pattern.
+graphify is an open-source tool by safishamsi that turns a folder of inputs - code, docs, papers, images, video - into a persistent knowledge graph. It identifies "god nodes" (the highest-degree hub nodes), detects communities via the Leiden algorithm, surfaces surprising connections and suggested questions, and keeps an EXTRACTED / INFERRED / AMBIGUOUS audit trail for every claim. It is built on Karpathy's `/raw` folder convention, making it a natural traversal companion to the LLM Wiki pattern.
 
 ## Facts
 
 - Distributed on PyPI as the package `graphifyy` (note the double "y"), while the command-line entry point is `graphify`. PyPI: https://pypi.org/project/graphifyy/ .
 - Outputs are written to a `graphify-out/` directory: `graph.html` (interactive view), `graph.json` (GraphRAG-compatible), and `GRAPH_REPORT.md` (the written report).
 - Core graph features: god nodes (highest-degree hubs), Leiden community detection, "surprising connections," and suggested questions.
-- Every extracted relationship carries an audit label — EXTRACTED, INFERRED, or AMBIGUOUS — so claims can be traced rather than taken on faith.
+- Every extracted relationship carries an audit label - EXTRACTED, INFERRED, or AMBIGUOUS - so claims can be traced rather than taken on faith.
 - Optional integrations/flags include `--obsidian`, `--wiki`, `--neo4j`, `--falkordb`, `--mcp`, `--watch`, and `--update`; `graphify add <url>` saves a source into `raw/` and updates the graph.
 - Inside Claude Code, the host session itself acts as the LLM, so no API key is required. `GEMINI_API_KEY` / `GOOGLE_API_KEY` are only needed for headless extraction outside the host session.
 - Caveat (issue #514): the bare shell CLI is subcommand-only; the recommended way to drive it interactively is via the `/graphify` skill rather than free-form CLI calls.
@@ -36,7 +36,7 @@ graphify is an open-source tool by safishamsi that turns a folder of inputs — 
 
 ## Sources
 
-- safishamsi, graphify (GitHub): https://github.com/safishamsi/graphify — primary, fetchable.
-- graphify README (raw): https://raw.githubusercontent.com/safishamsi/graphify/main/README.md — primary.
-- PyPI package `graphifyy`: https://pypi.org/project/graphifyy/ — primary (confirms package name vs CLI name).
+- safishamsi, graphify (GitHub): https://github.com/safishamsi/graphify - primary, fetchable.
+- graphify README (raw): https://raw.githubusercontent.com/safishamsi/graphify/main/README.md - primary.
+- PyPI package `graphifyy`: https://pypi.org/project/graphifyy/ - primary (confirms package name vs CLI name).
 - See [[wiki/sources/safishamsi-graphify]].

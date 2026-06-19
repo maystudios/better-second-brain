@@ -11,15 +11,15 @@ The native `ruff server` is a direct replacement for the older standalone `ruff-
 ## Per-editor setup
 
 Most editors connect through the same `ruff server` command ([[sources/editors-setup]]):
-- **VS Code** — the `charliermarsh.ruff` extension (recommended 2024.32.0+), repo `github.com/astral-sh/ruff-vscode` ([[sources/editors-setup]]).
-- **Neovim** — nvim-lspconfig (0.10+) or native `vim.lsp.config` (0.11+); plugin alternatives conform.nvim (`ruff_fix`, `ruff_format`, `ruff_organize_imports`), nvim-lint, and ALE ([[sources/editors-setup]]).
-- **Vim** — vim-lsp ([[sources/editors-setup]]).
+- **VS Code** - the `charliermarsh.ruff` extension (recommended 2024.32.0+), repo `github.com/astral-sh/ruff-vscode` ([[sources/editors-setup]]).
+- **Neovim** - nvim-lspconfig (0.10+) or native `vim.lsp.config` (0.11+); plugin alternatives conform.nvim (`ruff_fix`, `ruff_format`, `ruff_organize_imports`), nvim-lint, and ALE ([[sources/editors-setup]]).
+- **Vim** - vim-lsp ([[sources/editors-setup]]).
 - **Helix**, **Kate**, **Sublime Text** (LSP + LSP-ruff), **Zed** (built-in, no extension), **Emacs** (Eglot, plus flymake-ruff / emacs-ruff-format / Apheleia), and **TextMate** (textmate2-ruff-linter) ([[sources/editors-setup]]).
-- **PyCharm** — built-in via Python | Tools | Ruff in 2025.3+; earlier versions use an External Tool or a third-party plugin ([[sources/editors-setup]]).
+- **PyCharm** - built-in via Python | Tools | Ruff in 2025.3+; earlier versions use an External Tool or a third-party plugin ([[sources/editors-setup]]).
 
 ## Extension versioning
 
-The VS Code extension follows its own scheme — even minor versions are stable, odd minor versions are preview — distinct from the core tool's [[concepts/versioning]] policy ([[sources/versioning]]).
+The VS Code extension follows its own scheme - even minor versions are stable, odd minor versions are preview - distinct from the core tool's [[concepts/versioning]] policy ([[sources/versioning]]).
 
 ## Open questions
 

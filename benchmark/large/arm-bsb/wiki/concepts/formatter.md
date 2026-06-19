@@ -4,10 +4,10 @@ The **formatter** is [[concepts/ruff]]'s second half, invoked with `ruff format`
 
 ## Commands
 
-- `ruff format` — format all files in the current directory ([[sources/formatter]]; [[sources/installation]]).
-- `ruff format path/to/code/` — format a directory and subdirectories ([[sources/formatter]]).
-- `ruff format path/to/file.py` — format a single file ([[sources/formatter]]).
-- `ruff format --check /path` — verify formatting without writing; exits non-zero if files are unformatted ([[sources/formatter]]).
+- `ruff format` - format all files in the current directory ([[sources/formatter]]; [[sources/installation]]).
+- `ruff format path/to/code/` - format a directory and subdirectories ([[sources/formatter]]).
+- `ruff format path/to/file.py` - format a single file ([[sources/formatter]]).
+- `ruff format --check /path` - verify formatting without writing; exits non-zero if files are unformatted ([[sources/formatter]]).
 
 ## Black compatibility
 
@@ -39,14 +39,14 @@ In preview mode the formatter formats fenced code blocks with info strings `pyth
 ## Exit codes
 
 Without `--check` ([[sources/formatter]]):
-- `0` — success regardless of how many files were formatted.
-- `1` — files were formatted and `--exit-non-zero-on-format` was specified.
-- `2` — abnormal termination.
+- `0` - success regardless of how many files were formatted.
+- `1` - files were formatted and `--exit-non-zero-on-format` was specified.
+- `2` - abnormal termination.
 
 With `--check` ([[sources/formatter]]):
-- `0` — no files would be formatted.
-- `1` — files would be formatted.
-- `2` — abnormal termination.
+- `0` - no files would be formatted.
+- `1` - files would be formatted.
+- `2` - abnormal termination.
 
 ## Imports are not sorted
 

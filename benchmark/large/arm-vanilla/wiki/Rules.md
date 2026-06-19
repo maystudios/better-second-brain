@@ -72,13 +72,13 @@ Each rule code is a prefix plus three digits (e.g. `F401`). The prefix tells you
 
 In the rule reference, each rule may carry a marker:
 
-- 🧪 **Preview** — unstable, still in evaluation (requires [[Preview|preview mode]])
-- ⚠️ **Deprecated** — scheduled for removal
-- ❌ **Removed** — no longer active
-- 🛠️ **Automatic fix available** — supports `--fix` (see [[Linter]])
+- 🧪 **Preview** - unstable, still in evaluation (requires [[Preview|preview mode]])
+- ⚠️ **Deprecated** - scheduled for removal
+- ❌ **Removed** - no longer active
+- 🛠️ **Automatic fix available** - supports `--fix` (see [[Linter]])
 
 Rules with no marker are stable and production-ready.
 
 ## The default set
 
-By default Ruff enables Pyflakes' `F` rules plus a curated subset of `E` rules, excluding stylistic rules that overlap with the [[Formatter]]. To turn on more, use prefixes in `select`/`extend-select` — see the [[Tutorial]] and [[Configuration]] for examples.
+By default Ruff enables Pyflakes' `F` rules plus a curated subset of `E` rules, excluding stylistic rules that overlap with the [[Formatter]]. To turn on more, use prefixes in `select`/`extend-select` - see the [[Tutorial]] and [[Configuration]] for examples.

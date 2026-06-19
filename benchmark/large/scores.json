@@ -1,5 +1,5 @@
 {
-  "topic": "Ruff — the Astral Python linter & formatter",
+  "topic": "Ruff - the Astral Python linter & formatter",
   "n_questions": 14,
   "dimensions": ["correctness", "citation", "faithfulness"],
   "scale": "0-2 per dimension, total 0-6",

@@ -4,7 +4,7 @@ Source: https://modelcontextprotocol.io/introduction
 
 MCP (Model Context Protocol) is an open-source standard for connecting AI applications to external systems.
 
-Using MCP, AI applications like Claude or ChatGPT can connect to data sources (e.g. local files, databases), tools (e.g. search engines, calculators) and workflows (e.g. specialized prompts)—enabling them to access key information and perform tasks.
+Using MCP, AI applications like Claude or ChatGPT can connect to data sources (e.g. local files, databases), tools (e.g. search engines, calculators) and workflows (e.g. specialized prompts)-enabling them to access key information and perform tasks.
 
 Think of MCP like a USB-C port for AI applications. Just as USB-C provides a standardized way to connect electronic devices, MCP provides a standardized way to connect AI applications to external systems.
 
@@ -25,7 +25,7 @@ Depending on where you sit in the ecosystem, MCP can have a range of benefits.
 
 ## Broad ecosystem support
 
-MCP is an open protocol supported across a wide range of clients and servers. AI assistants like Claude and ChatGPT, development tools like Visual Studio Code, Cursor, MCPJam, and many others all support MCP — making it easy to build once and integrate everywhere.
+MCP is an open protocol supported across a wide range of clients and servers. AI assistants like Claude and ChatGPT, development tools like Visual Studio Code, Cursor, MCPJam, and many others all support MCP - making it easy to build once and integrate everywhere.
 
 ## Start Building
 

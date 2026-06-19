@@ -2,7 +2,7 @@
 
 - **Citation / URL:** https://docs.astral.sh/ruff/preview/
 - **Raw file:** `benchmark/large/raw/preview.md`
-- **Type:** Official documentation — preview mode
+- **Type:** Official documentation - preview mode
 
 ## Key claims
 
@@ -20,4 +20,4 @@
 
 ## Prose summary
 
-Preview mode is Ruff's opt-in channel for unstable features (new rules/fixes, formatter style changes, interface updates) gathered for community feedback ahead of stabilization. It can be enabled per-tool (lint vs. format) via flag or config. The page clarifies a subtle gating rule: simply selecting a preview rule's code or prefix — even via `ALL` — does not enable it; preview mode itself must be on. The stricter `explicit-preview-rules` setting demands each preview rule be named individually. When preview is on, deprecated rules are disabled, and explicitly selecting one errors.
+Preview mode is Ruff's opt-in channel for unstable features (new rules/fixes, formatter style changes, interface updates) gathered for community feedback ahead of stabilization. It can be enabled per-tool (lint vs. format) via flag or config. The page clarifies a subtle gating rule: simply selecting a preview rule's code or prefix - even via `ALL` - does not enable it; preview mode itself must be on. The stricter `explicit-preview-rules` setting demands each preview rule be named individually. When preview is on, deprecated rules are disabled, and explicitly selecting one errors.

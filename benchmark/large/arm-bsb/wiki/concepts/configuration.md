@@ -13,7 +13,7 @@ When more than one exists in the **same directory**, precedence is `.ruff.toml` 
 
 ## Discovery and hierarchy
 
-Ruff searches for configuration starting from the target file's directory and moving up through parent directories ([[sources/tutorial]]). It uses a "closest-configuration-first" approach similar to ESLint, where the closest config file applies to each file — but **unlike ESLint, Ruff does NOT merge settings across config files** ([[sources/configuration]]). This hierarchical model is what makes Ruff "monorepo-friendly" ([[sources/ruff-overview]]; [[sources/github-astral-sh-ruff]]).
+Ruff searches for configuration starting from the target file's directory and moving up through parent directories ([[sources/tutorial]]). It uses a "closest-configuration-first" approach similar to ESLint, where the closest config file applies to each file - but **unlike ESLint, Ruff does NOT merge settings across config files** ([[sources/configuration]]). This hierarchical model is what makes Ruff "monorepo-friendly" ([[sources/ruff-overview]]; [[sources/github-astral-sh-ruff]]).
 
 Additional discovery rules ([[sources/configuration]]):
 - `pyproject.toml` files without a `[tool.ruff]` section are ignored.

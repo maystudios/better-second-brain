@@ -20,7 +20,7 @@ It can be configured independently for linting and formatting ([[sources/preview
 
 ## Gating of preview rules
 
-Selecting a preview rule's code or prefix is not sufficient to enable it — preview mode itself must be active. A preview rule `HYP001` would NOT be enabled by `extend-select = ["HYP001"]`, `extend-select = ["HYP"]`, or `select = ["ALL"]` alone; enabling preview mode alongside any of these WOULD activate it ([[sources/preview]]).
+Selecting a preview rule's code or prefix is not sufficient to enable it - preview mode itself must be active. A preview rule `HYP001` would NOT be enabled by `extend-select = ["HYP001"]`, `extend-select = ["HYP"]`, or `select = ["ALL"]` alone; enabling preview mode alongside any of these WOULD activate it ([[sources/preview]]).
 
 The stricter `explicit-preview-rules = true` requires each preview rule to be named individually, so that only `--select ALL,HYP001` activates that specific rule ([[sources/preview]]).
 

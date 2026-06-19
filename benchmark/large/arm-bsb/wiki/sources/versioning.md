@@ -2,7 +2,7 @@
 
 - **Citation / URL:** https://docs.astral.sh/ruff/versioning/
 - **Raw file:** `benchmark/large/raw/versioning.md`
-- **Type:** Official documentation — versioning policy
+- **Type:** Official documentation - versioning policy
 
 ## Key claims
 

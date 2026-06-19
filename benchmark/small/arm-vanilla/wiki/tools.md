@@ -1,6 +1,6 @@
 # Tools
 
-Beyond [[projects]], [[index|uv]] can run and install **command-line Python programs** — things like `ruff`, `black`, or `httpie`. This is the role pipx traditionally filled, and uv covers it with the `uvx` and `uv tool` commands.
+Beyond [[projects]], [[index|uv]] can run and install **command-line Python programs** - things like `ruff`, `black`, or `httpie`. This is the role pipx traditionally filled, and uv covers it with the `uvx` and `uv tool` commands.
 
 ## Running a tool once: `uvx`
 
@@ -24,10 +24,10 @@ ruff --version
 
 The difference between the two:
 
-- **`uvx`** — spins up a fresh temporary, isolated environment for each invocation.
-- **`uv tool install`** — places the executable in a `bin` directory that's added to your `PATH` for repeated use.
+- **`uvx`** - spins up a fresh temporary, isolated environment for each invocation.
+- **`uv tool install`** - places the executable in a `bin` directory that's added to your `PATH` for repeated use.
 
-Importantly, installing a tool does **not** expose its modules to your current Python environment (unlike `uv pip install`). That isolation is deliberate — it keeps tool dependencies from clashing with your project's.
+Importantly, installing a tool does **not** expose its modules to your current Python environment (unlike `uv pip install`). That isolation is deliberate - it keeps tool dependencies from clashing with your project's.
 
 ## Picking versions
 

@@ -6,13 +6,13 @@ This GitHub repository houses reference implementations for the Model Context Pr
 
 ## Reference Servers (actively maintained)
 
-- **Everything** — Comprehensive test server featuring prompts, resources, and tools
-- **Fetch** — Web content retrieval and conversion optimized for LLM processing
-- **Filesystem** — File operations with configurable access restrictions
-- **Git** — Repository reading, searching, and manipulation capabilities
-- **Memory** — Persistent knowledge graph-based memory system
-- **Sequential Thinking** — Problem-solving through reflective thought sequences
-- **Time** — Time and timezone conversion tools
+- **Everything** - Comprehensive test server featuring prompts, resources, and tools
+- **Fetch** - Web content retrieval and conversion optimized for LLM processing
+- **Filesystem** - File operations with configurable access restrictions
+- **Git** - Repository reading, searching, and manipulation capabilities
+- **Memory** - Persistent knowledge graph-based memory system
+- **Sequential Thinking** - Problem-solving through reflective thought sequences
+- **Time** - Time and timezone conversion tools
 
 ## Using the Servers
 

@@ -1,6 +1,6 @@
 # Tools
 
-**Tools** are one of the three server [[Primitives]] in the [[Model Context Protocol]]. They let servers expose functions that a language model can invoke to interact with external systems — querying databases, calling APIs, performing computations, and so on. Each tool has a unique name and metadata describing its schema.
+**Tools** are one of the three server [[Primitives]] in the [[Model Context Protocol]]. They let servers expose functions that a language model can invoke to interact with external systems - querying databases, calling APIs, performing computations, and so on. Each tool has a unique name and metadata describing its schema.
 
 ## Model-controlled, human-supervised
 
@@ -14,18 +14,18 @@ A server that supports tools must declare the `tools` capability, optionally wit
 
 A tool definition includes:
 
-- `name` — unique identifier
-- `title` — optional human-readable display name
-- `description` — what the tool does
-- `inputSchema` — JSON Schema for the expected parameters
-- `outputSchema` — optional JSON Schema for the output structure
-- `annotations` — optional properties describing behavior (clients must treat these as untrusted unless they come from a trusted server)
+- `name` - unique identifier
+- `title` - optional human-readable display name
+- `description` - what the tool does
+- `inputSchema` - JSON Schema for the expected parameters
+- `outputSchema` - optional JSON Schema for the output structure
+- `annotations` - optional properties describing behavior (clients must treat these as untrusted unless they come from a trusted server)
 
 ## Results and errors
 
 Tool results can be **unstructured** (a `content` array of text, image, audio, resource-link, or embedded-resource items) or **structured** (a JSON object in `structuredContent` that conforms to the tool's output schema). For backward compatibility, structured results should also be serialized into a text block.
 
-There are two error channels. **Protocol errors** are standard JSON-RPC errors for things like an unknown tool or invalid arguments (e.g. `-32602`). **Tool execution errors** — API failures, bad input, business-logic problems — are reported inside the result with `isError: true`, so the model can see and reason about them.
+There are two error channels. **Protocol errors** are standard JSON-RPC errors for things like an unknown tool or invalid arguments (e.g. `-32602`). **Tool execution errors** - API failures, bad input, business-logic problems - are reported inside the result with `isError: true`, so the model can see and reason about them.
 
 ## Safety
 

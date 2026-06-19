@@ -1,4 +1,4 @@
-# Source: Ruff — GitHub README (astral-sh/ruff)
+# Source: Ruff - GitHub README (astral-sh/ruff)
 
 - **Citation / URL:** https://github.com/astral-sh/ruff
 - **Raw file:** `benchmark/large/raw/github-astral-sh-ruff.md`
@@ -8,7 +8,7 @@
 
 - Ruff is an exceptionally fast Python linter and code formatter implemented in Rust.
 - Maintained by **Astral**, "the company behind the uv package manager and ty type checker."
-- Performance: 10–100x faster than existing tools like Flake8 and Black; benchmarked on CPython codebase. One maintainer noted analysis in **0.4 seconds versus 2.5 minutes with Pylint** on a 250k-line codebase.
+- Performance: 10-100x faster than existing tools like Flake8 and Black; benchmarked on CPython codebase. One maintainer noted analysis in **0.4 seconds versus 2.5 minutes with Pylint** on a 250k-line codebase.
 - Installation via pip, uv, pipx, Homebrew, Conda, and standalone installers.
 - Configuration files: `pyproject.toml`, `ruff.toml`, `.ruff.toml`.
 - Python 3.14 compatibility; 900+ built-in rules; drop-in parity with Flake8, isort, Black.
@@ -62,4 +62,4 @@ FastAPI, Pandas, SciPy, Hugging Face Transformers, Apache Airflow, "and 100+ org
 
 ## Prose summary
 
-The README restates the docs-landing positioning but adds repository-level facts: the maintaining organization (Astral, also responsible for `uv` and the `ty` type checker), the MIT license, language breakdown, and concrete repo statistics including a pinned latest release of 0.15.18. It contributes the most vivid performance anecdote in the corpus — 0.4s vs 2.5 minutes against Pylint on a 250k-line codebase — and broadens the installation matrix (adding uv, Homebrew, Conda, and standalone installers).
+The README restates the docs-landing positioning but adds repository-level facts: the maintaining organization (Astral, also responsible for `uv` and the `ty` type checker), the MIT license, language breakdown, and concrete repo statistics including a pinned latest release of 0.15.18. It contributes the most vivid performance anecdote in the corpus - 0.4s vs 2.5 minutes against Pylint on a 250k-line codebase - and broadens the installation matrix (adding uv, Homebrew, Conda, and standalone installers).

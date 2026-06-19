@@ -33,7 +33,7 @@ Obsidian is a desktop and mobile personal knowledge management (PKM) application
 
 ## Sources
 
-- Obsidian Bases (help): https://obsidian.md/help/bases — primary, fetchable.
-- Bases syntax: https://obsidian.md/help/bases/syntax — primary.
-- Obsidian 1.9 desktop changelog (Bases shipped as core plugin, 2025-05-21): https://obsidian.md/changelog/2025-05-21-desktop-v1.9.0/ — primary.
+- Obsidian Bases (help): https://obsidian.md/help/bases - primary, fetchable.
+- Bases syntax: https://obsidian.md/help/bases/syntax - primary.
+- Obsidian 1.9 desktop changelog (Bases shipped as core plugin, 2025-05-21): https://obsidian.md/changelog/2025-05-21-desktop-v1.9.0/ - primary.
 - See [[wiki/sources/obsidian-bases]].

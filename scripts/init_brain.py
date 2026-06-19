@@ -11,7 +11,7 @@ What it does:
   - optionally sets the wikilink style in bsb.config.md
   - with --fresh: clears wiki/ seed pages, resets index.md / log.md / roadmap.md to
     empty skeletons, and removes the demo benchmark/ (keep it with --keep-benchmark)
-  - git init (unless --no-git or already a repo) — never auto-commits
+  - git init (unless --no-git or already a repo) - never auto-commits
   - writes FIRST-RUN.md with the next steps
 
 Examples:
@@ -76,10 +76,10 @@ def set_link_style(text: str, style: str) -> tuple[str, bool]:
 def fresh_index(domain: str, today: str) -> str:
     return (
         "# Index\n\n"
-        "The content catalog — *what exists* in this brain. Read this first on any query, then drill into pages.\n"
+        "The content catalog - *what exists* in this brain. Read this first on any query, then drill into pages.\n"
         "Grouped by category. (`log.md` = what happened; `roadmap.md` = what's next.)\n\n"
         "## Overview\n\n"
-        f"_Empty — this brain was initialized {today} for: **{domain}**. "
+        f"_Empty - this brain was initialized {today} for: **{domain}**. "
         "Drop sources into `raw/` and say \"ingest\"._\n\n"
         "## Sources\n\n## Concepts\n\n## Entities\n\n## Cheatsheets\n\n## Syntheses\n\n## Maps of Content\n\n"
         "## Stats\n\n"
@@ -91,7 +91,7 @@ def fresh_log(domain: str, today: str) -> str:
     return (
         "# Log\n\n"
         "Append-only chronological record of every operation. Newest entries at the **bottom**.\n"
-        "Greppable prefix — recent activity: `grep \"^## \\[\" log.md | tail -10`.\n\n"
+        "Greppable prefix - recent activity: `grep \"^## \\[\" log.md | tail -10`.\n\n"
         "Ops: `ingest` · `query` · `lint` · `graph` · `improve` · `heal` · `schema`.\n\n---\n\n"
         f"## [{today}] schema | Initialized brain from the BSB template\n\n"
         f"Domain set to: {domain}. Bootstrap seed content cleared. Ready for the first ingest.\n"
@@ -102,26 +102,26 @@ def fresh_roadmap(domain: str, today: str) -> str:
     return (
         "# Roadmap\n\n"
         "What's next for this brain. `index.md` = what exists, `log.md` = what happened, **this** = what's next.\n\n"
-        "---\n\n## In Progress\n\n- (nothing yet)\n\n## Backlog — High\n\n"
+        "---\n\n## In Progress\n\n- (nothing yet)\n\n## Backlog - High\n\n"
         "- [ ] **Ingest**: add your first sources to `raw/` and ingest them\n"
         "- [ ] **Schema**: refine `CLAUDE.md` §0 (IN / OUT / litmus) for your domain\n\n"
         "## Open Questions\n\n## Recently Done\n\n"
-        f"- {today} — initialized from the BSB template for **{domain}**.\n"
+        f"- {today} - initialized from the BSB template for **{domain}**.\n"
     )
 
 
 def first_run(domain: str, litmus: str | None, layers: list[str], today: str) -> str:
-    layer_line = ", ".join(layers) if layers else "none (all optional layers off — enable later)"
+    layer_line = ", ".join(layers) if layers else "none (all optional layers off - enable later)"
     lit = litmus or "(set your litmus test in CLAUDE.md §0)"
     return (
-        "# First run — your Better Second Brain is ready\n\n"
+        "# First run - your Better Second Brain is ready\n\n"
         f"- **Domain:** {domain}\n- **Litmus:** {lit}\n- **Layers chosen:** {layer_line}\n"
         f"- **Initialized:** {today}\n\n"
         "## Next steps\n\n"
         "1. Open this folder **as a vault in Obsidian** and **in Claude Code / Codex** (the agent reads `CLAUDE.md`).\n"
         "2. Double-check `CLAUDE.md` §0 (IN / OUT / litmus) and `bsb.config.md` fit your topic.\n"
-        "3. **Add a source** — drop a file into `raw/`, or tell the agent *\"ingest https://…\"*.\n"
-        "4. **Ask** — *\"what does the wiki say about X?\"* — and let good answers be filed back as pages.\n"
+        "3. **Add a source** - drop a file into `raw/`, or tell the agent *\"ingest https://…\"*.\n"
+        "4. **Ask** - *\"what does the wiki say about X?\"* - and let good answers be filed back as pages.\n"
         "5. Periodically say **\"lint\"**; run `python scripts/lint_sources.py --summary` and `verify_wikilinks.py`.\n\n"
         "## Optional layers\n\n"
         "- **graphify** (graph): `uv tool install graphifyy`, then use the `/graphify` skill. See `docs/graphify-integration.md`.\n"
@@ -202,7 +202,7 @@ def main(argv: list[str] | None = None) -> int:
                 planner.do(f"update DOMAIN/LITMUS in {rel} ({nchg} line(s))",
                            lambda p=p, new=new: p.write_text(new, encoding="utf-8"))
             else:
-                planner.note(f"WARNING: no DOMAIN/LITMUS lines matched in {rel} — set §0 by hand")
+                planner.note(f"WARNING: no DOMAIN/LITMUS lines matched in {rel} - set §0 by hand")
     if args.link_style:
         p = root / "bsb.config.md"
         if p.is_file():
@@ -248,7 +248,7 @@ def main(argv: list[str] | None = None) -> int:
     for i, a in enumerate(planner.actions, 1):
         print(f"  {i:>2}. {a}")
     if not planner.actions:
-        print("  (nothing to do — pass --domain/--litmus/--fresh)")
+        print("  (nothing to do - pass --domain/--litmus/--fresh)")
     if args.dry_run:
         print("\nRe-run without --dry-run (add --yes for --fresh) to apply.")
     else:

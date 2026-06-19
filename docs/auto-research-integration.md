@@ -1,6 +1,6 @@
 # auto-research Integration (BSB §3.5)
 
-How the `auto-research` skill makes the Brain's *method* improve over time. Karpathy's wiki pattern keeps the synthesis fresh but leaves the *schema* — the conventions in [[CLAUDE]], the page templates, the lint rules — static. `auto-research` is the loop that closes that gap: it researches authoritative best-practice sources, proposes a cited rewrite of a target markdown file, and validates the rewrite with an automatic eval loop before anything is accepted. Running it periodically against the Brain's own rulebook is what lets the method compound instead of ossifying.
+How the `auto-research` skill makes the Brain's *method* improve over time. Karpathy's wiki pattern keeps the synthesis fresh but leaves the *schema* - the conventions in [[CLAUDE]], the page templates, the lint rules - static. `auto-research` is the loop that closes that gap: it researches authoritative best-practice sources, proposes a cited rewrite of a target markdown file, and validates the rewrite with an automatic eval loop before anything is accepted. Running it periodically against the Brain's own rulebook is what lets the method compound instead of ossifying.
 
 ## What auto-research does, at a high level
 
@@ -13,11 +13,11 @@ How the `auto-research` skill makes the Brain's *method* improve over time. Karp
 
 ## BSB usage
 
-### 1. Improve the SCHEMA — run it against CLAUDE.md
+### 1. Improve the SCHEMA - run it against CLAUDE.md
 
 Periodically point `auto-research` at [[CLAUDE]] to fold in newer PKM, Obsidian, and LLM-wiki best practices (for example, changes in Obsidian Bases syntax, new Zettelkasten/PARA guidance, or refinements to Karpathy's wiki pattern). The proposed diff is **not** applied automatically: it goes through the §7 approval gate, and once accepted you add a `schema` entry to [[log]] recording what changed and why. This keeps the rulebook evolving on evidence, with a paper trail.
 
-### 2. Improve PAGE FORMATS — run it against templates/
+### 2. Improve PAGE FORMATS - run it against templates/
 
 Point it at `templates/` and at the page-format section of [[CLAUDE]] to refine the frontmatter keys, section ordering, and the required `## Sources` discipline as best practices shift. Same flow: cited rewrite -> eval loop -> approval -> log entry.
 
@@ -42,18 +42,18 @@ Or, in natural language inside a Claude Code session: "use auto-research to impr
 
 At the gate, `auto-research` reports a before score and an after score from its binary eval loop (the fraction of eval criteria the file passes), plus the source list behind the rewrite. Read it like this:
 
-- **After clearly higher than before:** the rewrite genuinely satisfies more criteria — a candidate worth merging, pending your review of the actual diff.
+- **After clearly higher than before:** the rewrite genuinely satisfies more criteria - a candidate worth merging, pending your review of the actual diff.
 - **After roughly equal to before:** the rewrite is cosmetic; decline it to avoid churn.
-- **After lower, or sources thin/uncited:** reject. A drop or weak sourcing means the proposal failed its own eval or was not properly grounded — exactly the case §1.5 exists to catch.
+- **After lower, or sources thin/uncited:** reject. A drop or weak sourcing means the proposal failed its own eval or was not properly grounded - exactly the case §1.5 exists to catch.
 
 The score is a signal, not a verdict. The diff and its sources are what you approve.
 
 ## Why this is the compounding loop
 
-Karpathy's wiki pattern compounds *knowledge*: every new source improves the synthesis. `auto-research` compounds *method*: every pass improves the conventions that govern how that synthesis is written. Together they mean the Brain gets better at *being a brain*, not just fuller — and the §1.5 gate guarantees that improvement never comes at the cost of grounding.
+Karpathy's wiki pattern compounds *knowledge*: every new source improves the synthesis. `auto-research` compounds *method*: every pass improves the conventions that govern how that synthesis is written. Together they mean the Brain gets better at *being a brain*, not just fuller - and the §1.5 gate guarantees that improvement never comes at the cost of grounding.
 
 ## Sources
 
-- `auto-research` skill (installed; loop, sub-agents, binary eval, trigger-eval, confirmation gate) — local skill definition
-- Andrej Karpathy, "LLM Wiki" gist (the wiki pattern whose method this loop keeps current) — https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f
-- Andrej Karpathy, "LLM Knowledge Bases" (X post, primary announcement; not directly fetchable behind login) — https://x.com/karpathy/status/2039805659525644595
+- `auto-research` skill (installed; loop, sub-agents, binary eval, trigger-eval, confirmation gate) - local skill definition
+- Andrej Karpathy, "LLM Wiki" gist (the wiki pattern whose method this loop keeps current) - https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f
+- Andrej Karpathy, "LLM Knowledge Bases" (X post, primary announcement; not directly fetchable behind login) - https://x.com/karpathy/status/2039805659525644595

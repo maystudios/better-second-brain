@@ -32,21 +32,21 @@ The rules reference maps each prefix to its source ([[sources/rules]]). Core che
 | NPY | NumPy-specific |
 | PD | pandas-vet |
 
-The full table — over 60 prefixes spanning core checkers, 40+ re-implemented Flake8 plugins, framework-specific sets (Airflow, FastAPI, Django, NumPy, pandas), and Ruff's own `RUF` rules — is preserved verbatim in [[sources/rules]]. The linter reference repeats a shorter subset of these prefixes ([[sources/linter]]).
+The full table - over 60 prefixes spanning core checkers, 40+ re-implemented Flake8 plugins, framework-specific sets (Airflow, FastAPI, Django, NumPy, pandas), and Ruff's own `RUF` rules - is preserved verbatim in [[sources/rules]]. The linter reference repeats a shorter subset of these prefixes ([[sources/linter]]).
 
 ## Status markers
 
 The rule catalog annotates rules with status markers ([[sources/rules]]):
-- 🧪 **Preview** — unstable rules still in evaluation (see [[concepts/preview-mode]]).
-- ⚠️ **Deprecated** — scheduled for future removal.
-- ❌ **Removed** — no longer active.
-- 🛠️ **Automatic fix available** — supports `--fix` (see [[concepts/fix-safety]]).
+- 🧪 **Preview** - unstable rules still in evaluation (see [[concepts/preview-mode]]).
+- ⚠️ **Deprecated** - scheduled for future removal.
+- ❌ **Removed** - no longer active.
+- 🛠️ **Automatic fix available** - supports `--fix` (see [[concepts/fix-safety]]).
 
 Rules without markers are stable / production-ready ([[sources/rules]]).
 
 ## Selection and defaults
 
-Rules are enabled/disabled with `select`, `extend-select`, `ignore`, `extend-ignore`, and `per-file-ignores` ([[sources/linter]]), and the `ALL` meta-selector enables everything while auto-disabling conflicting rules ([[sources/linter]]). The default selection is `["E4", "E7", "E9", "F"]` ([[sources/settings]]; [[sources/configuration]]) — Pyflakes `F` rules plus a curated subset of pycodestyle `E` rules, excluding stylistic rules that overlap with formatters ([[sources/rules]]; [[sources/tutorial]]). This relationship is detailed in [[concepts/default-settings]] and [[concepts/formatter-lint-conflicts]].
+Rules are enabled/disabled with `select`, `extend-select`, `ignore`, `extend-ignore`, and `per-file-ignores` ([[sources/linter]]), and the `ALL` meta-selector enables everything while auto-disabling conflicting rules ([[sources/linter]]). The default selection is `["E4", "E7", "E9", "F"]` ([[sources/settings]]; [[sources/configuration]]) - Pyflakes `F` rules plus a curated subset of pycodestyle `E` rules, excluding stylistic rules that overlap with formatters ([[sources/rules]]; [[sources/tutorial]]). This relationship is detailed in [[concepts/default-settings]] and [[concepts/formatter-lint-conflicts]].
 
 ## Open questions
 

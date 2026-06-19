@@ -2,7 +2,7 @@
 
 - **Citation / URL:** https://docs.astral.sh/ruff/linter/ (includes #rule-selection)
 - **Raw file:** `benchmark/large/raw/linter.md`
-- **Type:** Official documentation — linter reference
+- **Type:** Official documentation - linter reference
 
 ## Key claims
 
@@ -16,7 +16,7 @@ ruff check path/to/code/      # Lint a specific directory
 
 ### Rule selection
 - `lint.select`, `lint.extend-select`, `lint.ignore`, `lint.extend-ignore`, `lint.per-file-ignores`.
-- **Rule code format:** Ruff mirrors Flake8 — a one-to-three-letter prefix plus three digits (e.g., `F401`). Examples: `F`=Pyflakes, `E`=pycodestyle, `ANN`=flake8-annotations, `UP`=pyupgrade, `B`=flake8-bugbear, `SIM`=flake8-simplify, `I`=isort.
+- **Rule code format:** Ruff mirrors Flake8 - a one-to-three-letter prefix plus three digits (e.g., `F401`). Examples: `F`=Pyflakes, `E`=pycodestyle, `ANN`=flake8-annotations, `UP`=pyupgrade, `B`=flake8-bugbear, `SIM`=flake8-simplify, `I`=isort.
 - **`ALL`** enables all rules; Ruff auto-disables conflicting rules (like `D203`/`D211`).
 - **Precedence:** CLI options override `pyproject.toml`, which overrides inherited config files.
 - Recommended baseline: `select = ["E", "F", "UP", "B", "SIM", "I"]`.
@@ -31,7 +31,7 @@ ruff check path/to/code/      # Lint a specific directory
 
 ### Error suppression
 - Line-level `# noqa`: `# noqa: F841`, multiple codes `# noqa: E741, F841`, or bare `# noqa` (all codes).
-- File-level: `# ruff: noqa` or `# ruff: noqa: F841` — must be on their own line. Ruff respects Flake8's `# flake8: noqa`.
+- File-level: `# ruff: noqa` or `# ruff: noqa: F841` - must be on their own line. Ruff respects Flake8's `# flake8: noqa`.
 - **`RUF100` (`unused-noqa`)** flags suppressions that don't suppress anything; usable with `--fix`.
 - `--add-noqa` adds suppression comments.
 - **isort action comments:** `# isort: skip_file`, `# isort: on` / `# isort: off`, `# isort: skip`, `# isort: split`.

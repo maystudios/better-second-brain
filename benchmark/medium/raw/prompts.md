@@ -56,10 +56,10 @@ Messages in a prompt can contain:
 `{ "type": "text", "text": "..." }`
 
 #### Image Content
-`{ "type": "image", "data": "base64...", "mimeType": "image/png" }` — image data MUST be base64-encoded with a valid MIME type.
+`{ "type": "image", "data": "base64...", "mimeType": "image/png" }` - image data MUST be base64-encoded with a valid MIME type.
 
 #### Audio Content
-`{ "type": "audio", "data": "base64...", "mimeType": "audio/wav" }` — audio data MUST be base64-encoded with a valid MIME type.
+`{ "type": "audio", "data": "base64...", "mimeType": "audio/wav" }` - audio data MUST be base64-encoded with a valid MIME type.
 
 #### Embedded Resources
 `{ "type": "resource", "resource": { "uri": "...", "mimeType": "...", "text": "..." } }`. Resources can contain either text or binary (blob) data and MUST include a valid resource URI, appropriate MIME type, and either text content or base64-encoded blob data.

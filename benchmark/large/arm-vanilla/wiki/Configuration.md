@@ -6,9 +6,9 @@
 
 Three filenames are recognized:
 
-- `pyproject.toml` — settings under a `[tool.ruff]` header
-- `ruff.toml` — same schema, no `[tool.ruff]` prefix
-- `.ruff.toml` — same schema, no prefix
+- `pyproject.toml` - settings under a `[tool.ruff]` header
+- `ruff.toml` - same schema, no `[tool.ruff]` prefix
+- `.ruff.toml` - same schema, no prefix
 
 When several sit in one directory, precedence is `.ruff.toml` > `ruff.toml` > `pyproject.toml`. If no config is found, Ruff falls back to a user-level file (`~/.config/ruff/ruff.toml` on Linux/macOS, `~\AppData\Roaming\ruff\ruff.toml` on Windows). CLI arguments override everything.
 
@@ -50,7 +50,7 @@ docstring-code-line-length = "dynamic"
 
 ## Hierarchical configuration
 
-Ruff uses a **closest-configuration-first** approach, similar to ESLint: the nearest config file applies to each file. Unlike ESLint, Ruff does **not** merge settings across files — the closest one wins outright. A `pyproject.toml` without a `[tool.ruff]` section is simply ignored. This is what makes Ruff monorepo-friendly.
+Ruff uses a **closest-configuration-first** approach, similar to ESLint: the nearest config file applies to each file. Unlike ESLint, Ruff does **not** merge settings across files - the closest one wins outright. A `pyproject.toml` without a `[tool.ruff]` section is simply ignored. This is what makes Ruff monorepo-friendly.
 
 To share a base explicitly, use `extend`:
 
@@ -100,6 +100,6 @@ The CLI exposes `check`, `format`, `rule`, `config`, `linter`, `clean`, `server`
 
 ## See also
 
-- [[Linter]] and [[Formatter]] — the commands these settings control
-- [[Rules]] — what `select`/`ignore` refer to
-- [[Preview]] — the `preview` flag and how unstable features are gated
+- [[Linter]] and [[Formatter]] - the commands these settings control
+- [[Rules]] - what `select`/`ignore` refer to
+- [[Preview]] - the `preview` flag and how unstable features are gated

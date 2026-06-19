@@ -2,7 +2,7 @@
 
 - **Citation / URL:** https://docs.astral.sh/ruff/tutorial/
 - **Raw file:** `benchmark/large/raw/tutorial.md`
-- **Type:** Official documentation — tutorial
+- **Type:** Official documentation - tutorial
 
 ## Key claims
 

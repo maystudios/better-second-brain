@@ -2,7 +2,7 @@
 
 - **Citation / URL:** https://docs.astral.sh/ruff/faq/
 - **Raw file:** `benchmark/large/raw/faq.md`
-- **Type:** Official documentation — FAQ
+- **Type:** Official documentation - FAQ
 
 ## Key claims
 
@@ -37,4 +37,4 @@
 
 ## Prose summary
 
-The FAQ clarifies scope and compatibility boundaries. It states precisely what Ruff replaces (Black, isort, yesqa, eradicate, most pyupgrade rules, and 50+ Flake8 plugins) and what it does not (it is not a type checker — Mypy/Pyright/Pyre remain complementary). It pins the supported lint targets at Python 3.7–3.13 with no Python 2 support and no Rust toolchain requirement (prebuilt PyPI wheels). It details how Ruff's import sorting differs from isort's "black" profile, documents Jupyter/nbQA support, lists the three pydocstyle conventions, and gives the user-level config-file locations per OS.
+The FAQ clarifies scope and compatibility boundaries. It states precisely what Ruff replaces (Black, isort, yesqa, eradicate, most pyupgrade rules, and 50+ Flake8 plugins) and what it does not (it is not a type checker - Mypy/Pyright/Pyre remain complementary). It pins the supported lint targets at Python 3.7-3.13 with no Python 2 support and no Rust toolchain requirement (prebuilt PyPI wheels). It details how Ruff's import sorting differs from isort's "black" profile, documents Jupyter/nbQA support, lists the three pydocstyle conventions, and gives the user-level config-file locations per OS.

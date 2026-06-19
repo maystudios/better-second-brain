@@ -1,4 +1,4 @@
-# Judgment Report — Ruff (Astral Python linter & formatter)
+# Judgment Report - Ruff (Astral Python linter & formatter)
 
 Three knowledge-base arms (vanilla, bsb, bsb_lean) scored vs a 14-question gold set.
 Each answer scored 0-2 on correctness, citation, faithfulness. Total = sum (0-6).

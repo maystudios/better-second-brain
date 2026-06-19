@@ -1,4 +1,4 @@
-# Source: GitHub — modelcontextprotocol/servers
+# Source: GitHub - modelcontextprotocol/servers
 
 - **Raw file:** `benchmark/medium/raw/github-servers.md`
 - **Citation / URL:** https://github.com/modelcontextprotocol/servers

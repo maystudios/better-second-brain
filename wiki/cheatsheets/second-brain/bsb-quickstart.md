@@ -13,7 +13,7 @@ stack-versions:
   graphifyy: "latest"
   node: "for qmd"
 sources:
-  - name: "Karpathy — LLM Wiki gist"
+  - name: "Karpathy - LLM Wiki gist"
     url: "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f"
   - name: "graphify"
     url: "https://github.com/safishamsi/graphify"
@@ -74,20 +74,20 @@ graphify .            # writes graphify-out/graph.html, graph.json, GRAPH_REPORT
 
 The six BSB operations (detail in [[wiki/moc/bsb-architecture]]):
 
-- Ingest — raw source to wiki pages.
-- Query — answer from wiki + graph.
-- Lint — freshness and gate checks.
-- Graph — `graphify .` builds `graphify-out/`.
-- Improve — autonomous research passes.
-- Heal — auto-repair stale/broken pages.
+- Ingest - raw source to wiki pages.
+- Query - answer from wiki + graph.
+- Lint - freshness and gate checks.
+- Graph - `graphify .` builds `graphify-out/`.
+- Improve - autonomous research passes.
+- Heal - auto-repair stale/broken pages.
 
 Key graphify commands:
 
-- `graphify .` — build a graph from the current folder.
-- `graphify add <url>` — save a source to `/raw` and update the graph.
-- `graphify . --obsidian` — also emit Obsidian-friendly output.
-- `graphify . --update` / `--watch` — incremental / continuous rebuild.
-- `graphify . --mcp` — expose the graph over MCP.
+- `graphify .` - build a graph from the current folder.
+- `graphify add <url>` - save a source to `/raw` and update the graph.
+- `graphify . --obsidian` - also emit Obsidian-friendly output.
+- `graphify . --update` / `--watch` - incremental / continuous rebuild.
+- `graphify . --mcp` - expose the graph over MCP.
 
 ## Common pitfalls
 
@@ -105,13 +105,13 @@ Key graphify commands:
 
 ## See also
 
-- [[wiki/moc/bsb-architecture]] — the build-time architecture.
-- [[wiki/moc/second-brain-pattern]] — the topic hub.
-- [[wiki/syntheses/is-bsb-better-than-vanilla-llm-wiki]] — is this worth it?
+- [[wiki/moc/bsb-architecture]] - the build-time architecture.
+- [[wiki/moc/second-brain-pattern]] - the topic hub.
+- [[wiki/syntheses/is-bsb-better-than-vanilla-llm-wiki]] - is this worth it?
 
 ## Sources
 
-- [[wiki/sources/karpathy-llm-wiki]] — LLM Wiki pattern. https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f
-- [[wiki/sources/safishamsi-graphify]] — graphify, including issue #514 caveat. https://github.com/safishamsi/graphify
-- [[wiki/sources/obsidian-bases]] — Bases views (Obsidian 1.9+). https://obsidian.md/help/bases
-- [[wiki/sources/tobi-qmd]] — qmd local search. https://github.com/tobi/qmd
+- [[wiki/sources/karpathy-llm-wiki]] - LLM Wiki pattern. https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f
+- [[wiki/sources/safishamsi-graphify]] - graphify, including issue #514 caveat. https://github.com/safishamsi/graphify
+- [[wiki/sources/obsidian-bases]] - Bases views (Obsidian 1.9+). https://obsidian.md/help/bases
+- [[wiki/sources/tobi-qmd]] - qmd local search. https://github.com/tobi/qmd

@@ -8,7 +8,7 @@ uv is "an extremely fast Python package and project manager, written in Rust." I
 
 ## Key Highlights
 
-uv replaces numerous tools including pip, pip-tools, pipx, poetry, pyenv, twine, and virtualenv. The project delivers substantial performance improvements—claimed to be 10-100x faster than pip. It offers comprehensive project management with universal lockfiles, script execution with inline dependency declarations, Python version installation and management, and tool execution similar to pipx. The tool supports Cargo-style workspaces and maintains a global cache for efficient disk usage.
+uv replaces numerous tools including pip, pip-tools, pipx, poetry, pyenv, twine, and virtualenv. The project delivers substantial performance improvements-claimed to be 10-100x faster than pip. It offers comprehensive project management with universal lockfiles, script execution with inline dependency declarations, Python version installation and management, and tool execution similar to pipx. The tool supports Cargo-style workspaces and maintains a global cache for efficient disk usage.
 
 ## Installation
 

@@ -1,4 +1,4 @@
-# Source: GitHub — modelcontextprotocol/python-sdk
+# Source: GitHub - modelcontextprotocol/python-sdk
 
 - **Raw file:** `benchmark/medium/raw/github-python-sdk.md`
 - **Citation / URL:** https://github.com/modelcontextprotocol/python-sdk

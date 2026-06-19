@@ -2,7 +2,7 @@
 
 - **Citation / URL:** https://docs.astral.sh/ruff/rules/
 - **Raw file:** `benchmark/large/raw/rules.md`
-- **Type:** Official documentation — rules reference
+- **Type:** Official documentation - rules reference
 
 ## Key claims
 

@@ -12,7 +12,7 @@ uv run ruff check --fix
 uv run ruff format
 ```
 
-On the first `ruff check`, Ruff highlights problems such as unused imports. Many of these are fixable — re-run with `--fix` and they vanish. Then `ruff format` tidies the layout. See the [[Linter]] and [[Formatter]] pages for the full behavior of each command.
+On the first `ruff check`, Ruff highlights problems such as unused imports. Many of these are fixable - re-run with `--fix` and they vanish. Then `ruff format` tidies the layout. See the [[Linter]] and [[Formatter]] pages for the full behavior of each command.
 
 ## Where config lives
 
