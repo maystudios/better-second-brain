@@ -454,10 +454,17 @@ def print_summary(pages: list[Page]) -> None:
 
 
 def evaluate_strict(pages: list[Page], min_tier: str) -> list[Page]:
-    """Return gated pages that fall below min_tier (worse rank)."""
+    """Return gated pages that fall below min_tier (worse rank).
+
+    Operational report pages (``lint-*`` / ``heal-*`` under ``syntheses/``) are
+    excluded — they are activity records, not source-grounded reference content.
+    """
     threshold = TIER_RANK[min_tier]
     failing = []
     for p in pages:
+        slug = os.path.splitext(os.path.basename(p.rel_path))[0]
+        if slug.startswith("lint-") or slug.startswith("heal-"):
+            continue
         if p.ptype in GATED_TYPES and TIER_RANK[p.tier] > threshold:
             failing.append(p)
     return failing

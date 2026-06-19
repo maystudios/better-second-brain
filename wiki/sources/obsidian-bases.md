@@ -20,7 +20,7 @@ Obsidian Bases is a core plugin that turns any set of notes into a database-like
 
 - Bases is a core plugin that "lets you create database-like views of your notes" — view, edit, sort, and filter files and their properties.
 - All data lives in local Markdown files and their properties (frontmatter); Bases does not create a separate database.
-- A configuration is written in YAML and can be saved as a `.base` file or embedded in a code block inside a Markdown note. The syntax covers filters, formulas, properties, and views (see the syntax reference).
+- A configuration is written in YAML and can be saved as a `.base` file or embedded in a code block inside a Markdown note. The syntax covers filters, formulas, properties, views, and summaries (aggregations) — see the syntax reference.
 - View types include Table (rows/columns of file properties), List, Cards (gallery/grid, image-capable), and Map (pins).
 - Introduced as a new core plugin in Obsidian 1.9.0 desktop, released 2025-05-21.
 - Dataview is the older community alternative that reads the same note frontmatter; Bases is the built-in, performance-oriented successor and is reported to stay fast even at very large vault sizes (~50k notes).
@@ -45,3 +45,5 @@ Obsidian Bases is a core plugin that turns any set of notes into a database-like
 - https://obsidian.md/help/bases (primary documentation; fetched 2026-06-19)
 - https://obsidian.md/help/bases/syntax (primary; YAML syntax reference)
 - https://obsidian.md/changelog/2025-05-21-desktop-v1.9.0/ (primary; core-plugin release announcement, fetched 2026-06-19)
+
+_Healed 2026-06-19: added the `summaries` syntax section (present on the live syntax page). The performance/version facts are sourced from the changelog URL above, not the help page. See [[wiki/syntheses/heal-2026-06-19]]._

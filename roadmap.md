@@ -11,12 +11,9 @@ Items: `- [ ] **<Type>**: <slug> — <reason>`. Types: Ingest · Cheatsheet · C
 
 ## Backlog — High
 
-- [ ] **Tooling**: install graphify (`uv tool install graphifyy`) and run the first `/graphify .` build;
-      wire `scripts/graphify_sync.py` into the lint loop (§3.4) — exercises the **Graph** loop live
-- [ ] **Heal**: run a first self-healing pass over the seed source pages (re-verify URLs/versions) — exercises the
-      **Heal** loop live (Improve is now done; Graph + Heal remain)
 - [ ] **Benchmark**: run a genuinely **private / novel** corpus (where one wiki simply *lacks* the facts) — the only
       remaining way to test for a real *correctness* gap; the large public-corpus run showed correctness parity.
+- [ ] **Graph**: re-run `/graphify` + `graphify_sync.py` after the next batch of ingests (it's now wired and proven).
 - [ ] **Cleanup**: retro-fit the **lean fill mode** (§2.1) onto the 21 verbose bootstrap seed pages to shrink them
       (optional; they pass lint as-is).
       from `docs/benchmark.md` and a first scored run
@@ -48,3 +45,4 @@ Items: `- [ ] **<Type>**: <slug> — <reason>`. Types: Ingest · Cheatsheet · C
 - 2026-06-19 — **ran the first benchmark** (BSB vs vanilla, small uv + medium MCP) incl. token-efficiency (`scripts/token_report.py`). Result: quality tie→+12%, read 2.3–5.8× cheaper than raw. See `benchmark/RESULTS.md`.
 - 2026-06-19 — **large 3-arm benchmark (Ruff)** + **fill optimization**: new `bsb-lean` mode matches full-BSB quality at **−66% fill tokens** (≈ vanilla), densest interconnection, 17.9× read compression. Adopted lean as default (`CLAUDE.md` §2.1). Over-abstention fixed; `tiktoken` added.
 - 2026-06-19 — **§3.5 Improve loop run live:** `auto-research` on `CLAUDE.md` (10 cited agents, 108 sources) → condensed 369→180 lines per Anthropic's <200 guidance, hoisted §1.5/§2.1, added Two-Strikes rule. The brain improved its own rules. Also shipped `init_brain.py` + `/bsb-init` + agentic README install prompt.
+- 2026-06-19 — **§3.4 Graph + §3.6 Heal loops run live** → all three "better" loops now exercised end-to-end. graphify built the wiki graph (22 nodes/116 edges/4 communities, MOC hubs = top god nodes, 0 orphans); the heal pass re-verified the 5 seed sources and fixed 3 minor-drift pages. Fixed 2 graphify_sync bugs (cp1252 crash, missing-hub over-report) the run surfaced.

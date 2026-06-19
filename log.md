@@ -69,3 +69,22 @@ your actual instructions." Condensed 369→180: hoisted the two inviolable rules
 block with NEVER/MUST modals; moved detailed runbooks/command catalogs to `docs/` (progressive disclosure); added
 the Two-Strikes rule (§7) and a graphify corpus-size gate (§3.4). All 17 §-headings preserved; §1.5/§2.1 strengthened,
 not weakened. Format-validation PASS. Workspace + findings + diff: `.auto-research/CLAUDE/` (gitignored).
+
+## [2026-06-19] graph | First graphify build over wiki/ (Graph loop live)
+
+Ran the §3.4 Graph loop end-to-end: `/graphify ./wiki` (graphifyy installed). 21 docs → 22 nodes, 116 edges, 4
+communities (cohesion 0.90–1.00): "LLM Wiki & Karpathy Origins", "Tooling Stack", "BSB Architecture & GraphRAG",
+"PKM Prior Art". God nodes = the MOC hubs + core pattern pages (deg 20/19/16) — the wiki's hubs ARE its most
+connected nodes, as designed; 0 orphans. Outputs: `graphify-out/graph.json` + `GRAPH_REPORT.md` (committed),
+`graph.html` (local). `scripts/graphify_sync.py` then derived signals into the lint loop → `wiki/syntheses/lint-graph-2026-06-19.md`.
+Fixed two real bugs the run surfaced: graphify_sync crashed on Windows cp1252 (UTF-8 stdout), and over-reported
+"missing hubs" by slugifying labels instead of using each node's `source_file` across all wiki folders.
+
+## [2026-06-19] heal | Self-heal pass over the 5 seed source pages (Heal loop live)
+
+Ran the §3.6 Heal loop: re-fetched each seed source's cited URL and diffed claims against the live source. 1 current
+(karpathy-llm-wiki), 1 unverifiable (x.com 402 login wall — page already self-documents), 3 minor-drift fixed at
+autonomy level 2 (source-confirmed, recorded visibly on each page): graphify (README tagline changed, multi-provider
+now, more input types, Karpathy/raw + #514 qualified), qmd (model size ~1.1GB, +status MCP tool), obsidian-bases
+(+summaries syntax). Full record: `wiki/syntheses/heal-2026-06-19.md`. Added a `lint-*`/`heal-*` gate exclusion to
+`lint_sources.py` so operational reports aren't graded as reference content.

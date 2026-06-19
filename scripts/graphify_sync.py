@@ -43,6 +43,14 @@ import os
 import re
 import sys
 
+# The graph report contains arrows (->) and other non-ASCII; on a Windows
+# cp1252 console a bare print() would crash. Force UTF-8 on stdout/stderr.
+for _stream in (sys.stdout, sys.stderr):
+    try:
+        _stream.reconfigure(encoding="utf-8", errors="replace")
+    except (AttributeError, ValueError):
+        pass
+
 GRAPHIFY_DIR = "graphify-out"
 GRAPH_JSON = "graph.json"
 GRAPH_REPORT = "GRAPH_REPORT.md"
@@ -126,12 +134,16 @@ def extract_nodes_edges(graph: dict):
 
     labels: dict[str, str] = {}
     declared_degree: dict[str, int] = {}
+    source_files: dict[str, str] = {}
     for node in raw_nodes:
         nid = _node_id(node)
         if nid is None:
             continue
         labels[nid] = _node_label(node)
         if isinstance(node, dict):
+            sf = node.get("source_file") or node.get("source-file") or node.get("file")
+            if sf:
+                source_files[nid] = str(sf).replace("\\", "/")
             for dk in ("degree", "deg", "connections"):
                 if isinstance(node.get(dk), (int, float)):
                     declared_degree[nid] = int(node[dk])
@@ -154,19 +166,23 @@ def extract_nodes_edges(graph: dict):
         else:
             degree[nid] = computed_degree.get(nid, 0)
 
-    return labels, degree
+    return labels, degree, source_files
 
 
-def existing_page_slugs(repo_root: str) -> set[str]:
-    slugs: set[str] = set()
-    for sub in ("concepts", "entities"):
-        d = os.path.join(repo_root, "wiki", sub)
-        if not os.path.isdir(d):
-            continue
-        for fn in os.listdir(d):
-            if fn.lower().endswith(".md"):
-                slugs.add(os.path.splitext(fn)[0])
-    return slugs
+def existing_pages(repo_root: str) -> dict[str, str]:
+    """Map every wiki page's filename slug -> its repo-relative wikilink target
+    (path without .md), across ALL wiki subfolders (not just concepts/entities).
+    A god node "has a page" if its source_file resolves OR its label slug matches
+    one of these — so MOC/source/cheatsheet pages are no longer false 'missing'."""
+    out: dict[str, str] = {}
+    wiki = os.path.join(repo_root, "wiki")
+    for dirpath, _dirs, files in os.walk(wiki):
+        for fn in files:
+            if not fn.lower().endswith(".md"):
+                continue
+            rel = os.path.relpath(os.path.join(dirpath, fn), repo_root).replace("\\", "/")
+            out.setdefault(os.path.splitext(fn)[0], rel[:-3])
+    return out
 
 
 def extract_report_sections(report_text: str) -> dict[str, str]:
@@ -222,10 +238,11 @@ def build_report(repo_root: str, top_n: int) -> tuple[str, dict]:
 
     labels: dict[str, str] = {}
     degree: dict[str, int] = {}
+    source_files: dict[str, str] = {}
     if graph is not None:
-        labels, degree = extract_nodes_edges(graph)
+        labels, degree, source_files = extract_nodes_edges(graph)
 
-    existing = existing_page_slugs(repo_root)
+    pages = existing_pages(repo_root)  # slug -> wiki/folder/slug
 
     # God/hub nodes: top-N by degree (desc), tie-break by label.
     ranked = sorted(
@@ -236,11 +253,19 @@ def build_report(repo_root: str, top_n: int) -> tuple[str, dict]:
     missing_hubs = []
     present_hubs = []
     for nid in hubs:
-        slug = slugify(labels[nid])
-        if slug and slug in existing:
-            present_hubs.append((labels[nid], slug, degree.get(nid, 0)))
+        label = labels[nid]
+        target = None
+        sf = source_files.get(nid)
+        if sf and os.path.isfile(os.path.join(repo_root, sf)):
+            target = sf[:-3] if sf.lower().endswith(".md") else sf
+        if target is None:
+            slug = slugify(label)
+            if slug in pages:
+                target = pages[slug]
+        if target:
+            present_hubs.append((label, target, degree.get(nid, 0)))
         else:
-            missing_hubs.append((labels[nid], slug, degree.get(nid, 0)))
+            missing_hubs.append((label, slugify(label), degree.get(nid, 0)))
 
     orphans = sorted(
         (labels[nid] for nid in labels if degree.get(nid, 0) == 0),
@@ -274,8 +299,8 @@ def build_report(repo_root: str, top_n: int) -> tuple[str, dict]:
         lines.append("")
         lines.append("### Existing hub pages")
         if present_hubs:
-            for label, slug, deg in present_hubs:
-                lines.append(f"- {label} (degree {deg}) -> [[wiki/concepts/{slug}]]")
+            for label, target, deg in present_hubs:
+                lines.append(f"- {label} (degree {deg}) -> [[{target}]]")
         else:
             lines.append("- none.")
     lines.append("")

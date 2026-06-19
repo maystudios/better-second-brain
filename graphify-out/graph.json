@@ -1,0 +1,1543 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {
+    "hyperedges": [
+      {
+        "id": "bsb_stack_tooling",
+        "label": "BSB tool stack (graphify + qmd + Obsidian over the LLM wiki)",
+        "nodes": [
+          "entities_graphify_graphify",
+          "entities_qmd_qmd",
+          "entities_obsidian_obsidian",
+          "concepts_llm_wiki_pattern_llm_wiki_pattern"
+        ],
+        "relation": "participate_in",
+        "confidence": "EXTRACTED",
+        "confidence_score": 0.85,
+        "source_file": "wiki/moc/bsb-architecture.md"
+      },
+      {
+        "id": "second_brain_prior_art_lineage",
+        "label": "Knowledge-management prior-art lineage feeding the LLM wiki pattern",
+        "nodes": [
+          "concepts_memex_memex",
+          "concepts_zettelkasten_zettelkasten",
+          "concepts_llm_wiki_pattern_llm_wiki_pattern"
+        ],
+        "relation": "participate_in",
+        "confidence": "INFERRED",
+        "confidence_score": 0.85,
+        "source_file": "wiki/concepts/memex.md"
+      },
+      {
+        "id": "rag_vs_wiki_tradeoff_cluster",
+        "label": "Compile-time wiki vs query-time RAG trade-off and its grounding gate",
+        "nodes": [
+          "concepts_rag_vs_llm_wiki_rag_vs_llm_wiki",
+          "concepts_llm_wiki_pattern_llm_wiki_pattern",
+          "concepts_research_discipline_research_discipline",
+          "concepts_knowledge_graph_graphrag_knowledge_graph_graphrag"
+        ],
+        "relation": "participate_in",
+        "confidence": "INFERRED",
+        "confidence_score": 0.75,
+        "source_file": "wiki/concepts/rag-vs-llm-wiki.md"
+      }
+    ]
+  },
+  "nodes": [
+    {
+      "label": "BSB Quickstart",
+      "file_type": "document",
+      "source_file": "wiki/cheatsheets/second-brain/bsb-quickstart.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": "2026-06-19",
+      "author": null,
+      "contributor": null,
+      "id": "second_brain_bsb_quickstart_bsb_quickstart",
+      "community": 1,
+      "norm_label": "bsb quickstart"
+    },
+    {
+      "label": "Knowledge Graph and GraphRAG",
+      "file_type": "concept",
+      "source_file": "wiki/concepts/knowledge-graph-graphrag.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": "2026-06-19",
+      "author": null,
+      "contributor": null,
+      "id": "concepts_knowledge_graph_graphrag_knowledge_graph_graphrag",
+      "community": 2,
+      "norm_label": "knowledge graph and graphrag"
+    },
+    {
+      "label": "LLM Wiki Pattern",
+      "file_type": "concept",
+      "source_file": "wiki/concepts/llm-wiki-pattern.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": "2026-06-19",
+      "author": null,
+      "contributor": null,
+      "id": "concepts_llm_wiki_pattern_llm_wiki_pattern",
+      "community": 0,
+      "norm_label": "llm wiki pattern"
+    },
+    {
+      "label": "Maps of Content",
+      "file_type": "concept",
+      "source_file": "wiki/concepts/maps-of-content.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": "2026-06-19",
+      "author": null,
+      "contributor": null,
+      "id": "concepts_maps_of_content_maps_of_content",
+      "community": 3,
+      "norm_label": "maps of content"
+    },
+    {
+      "label": "Memex",
+      "file_type": "concept",
+      "source_file": "wiki/concepts/memex.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": "2026-06-19",
+      "author": null,
+      "contributor": null,
+      "id": "concepts_memex_memex",
+      "community": 0,
+      "norm_label": "memex"
+    },
+    {
+      "label": "RAG vs LLM Wiki",
+      "file_type": "concept",
+      "source_file": "wiki/concepts/rag-vs-llm-wiki.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": "2026-06-19",
+      "author": null,
+      "contributor": null,
+      "id": "concepts_rag_vs_llm_wiki_rag_vs_llm_wiki",
+      "community": 0,
+      "norm_label": "rag vs llm wiki"
+    },
+    {
+      "label": "Research Discipline",
+      "file_type": "rationale",
+      "source_file": "wiki/concepts/research-discipline.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": "2026-06-19",
+      "author": null,
+      "contributor": null,
+      "id": "concepts_research_discipline_research_discipline",
+      "community": 2,
+      "norm_label": "research discipline"
+    },
+    {
+      "label": "Zettelkasten",
+      "file_type": "concept",
+      "source_file": "wiki/concepts/zettelkasten.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": "2026-06-19",
+      "author": null,
+      "contributor": null,
+      "id": "concepts_zettelkasten_zettelkasten",
+      "community": 3,
+      "norm_label": "zettelkasten"
+    },
+    {
+      "label": "Andrej Karpathy",
+      "file_type": "concept",
+      "source_file": "wiki/entities/andrej-karpathy.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": "2026-06-19",
+      "author": null,
+      "contributor": null,
+      "id": "entities_andrej_karpathy_andrej_karpathy",
+      "community": 0,
+      "norm_label": "andrej karpathy"
+    },
+    {
+      "label": "graphify",
+      "file_type": "concept",
+      "source_file": "wiki/entities/graphify.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": "2026-06-19",
+      "author": null,
+      "contributor": null,
+      "id": "entities_graphify_graphify",
+      "community": 1,
+      "norm_label": "graphify"
+    },
+    {
+      "label": "Obsidian",
+      "file_type": "concept",
+      "source_file": "wiki/entities/obsidian.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": "2026-06-19",
+      "author": null,
+      "contributor": null,
+      "id": "entities_obsidian_obsidian",
+      "community": 1,
+      "norm_label": "obsidian"
+    },
+    {
+      "label": "qmd",
+      "file_type": "concept",
+      "source_file": "wiki/entities/qmd.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": "2026-06-19",
+      "author": null,
+      "contributor": null,
+      "id": "entities_qmd_qmd",
+      "community": 1,
+      "norm_label": "qmd"
+    },
+    {
+      "label": "Tiago Forte",
+      "file_type": "concept",
+      "source_file": "wiki/entities/tiago-forte.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": "2026-06-19",
+      "author": null,
+      "contributor": null,
+      "id": "entities_tiago_forte_tiago_forte",
+      "community": 3,
+      "norm_label": "tiago forte"
+    },
+    {
+      "label": "PARA Method",
+      "file_type": "concept",
+      "source_file": "wiki/entities/tiago-forte.md",
+      "source_location": null,
+      "source_url": "https://fortelabs.com/blog/para/",
+      "captured_at": "2026-06-19",
+      "author": "Tiago Forte",
+      "contributor": null,
+      "id": "concepts_maps_of_content_para_method",
+      "community": 3,
+      "norm_label": "para method"
+    },
+    {
+      "label": "BSB Architecture (Map of Content)",
+      "file_type": "document",
+      "source_file": "wiki/moc/bsb-architecture.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": "2026-06-19",
+      "author": null,
+      "contributor": null,
+      "id": "moc_bsb_architecture_bsb_architecture",
+      "community": 2,
+      "norm_label": "bsb architecture (map of content)"
+    },
+    {
+      "label": "Second Brain Pattern (Map of Content)",
+      "file_type": "document",
+      "source_file": "wiki/moc/second-brain-pattern.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": "2026-06-19",
+      "author": null,
+      "contributor": null,
+      "id": "moc_second_brain_pattern_second_brain_pattern",
+      "community": 0,
+      "norm_label": "second brain pattern (map of content)"
+    },
+    {
+      "label": "Andrej Karpathy \u2014 LLM Knowledge Bases (X post)",
+      "file_type": "document",
+      "source_file": "wiki/sources/karpathy-llm-knowledge-bases.md",
+      "source_location": null,
+      "source_url": "https://x.com/karpathy/status/2039805659525644595",
+      "captured_at": "2026-06-19",
+      "author": "Andrej Karpathy",
+      "contributor": null,
+      "id": "sources_karpathy_llm_knowledge_bases_karpathy_llm_knowledge_bases",
+      "community": 0,
+      "norm_label": "andrej karpathy \u2014 llm knowledge bases (x post)"
+    },
+    {
+      "label": "Andrej Karpathy \u2014 LLM Wiki (gist)",
+      "file_type": "document",
+      "source_file": "wiki/sources/karpathy-llm-wiki.md",
+      "source_location": null,
+      "source_url": "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f",
+      "captured_at": "2026-06-19",
+      "author": "Andrej Karpathy",
+      "contributor": null,
+      "id": "sources_karpathy_llm_wiki_karpathy_llm_wiki",
+      "community": 0,
+      "norm_label": "andrej karpathy \u2014 llm wiki (gist)"
+    },
+    {
+      "label": "Obsidian Bases \u2014 documentation",
+      "file_type": "document",
+      "source_file": "wiki/sources/obsidian-bases.md",
+      "source_location": null,
+      "source_url": "https://obsidian.md/help/bases",
+      "captured_at": "2026-06-19",
+      "author": "Obsidian",
+      "contributor": null,
+      "id": "sources_obsidian_bases_obsidian_bases",
+      "community": 1,
+      "norm_label": "obsidian bases \u2014 documentation"
+    },
+    {
+      "label": "graphify \u2014 repository and README (safishamsi/graphify)",
+      "file_type": "document",
+      "source_file": "wiki/sources/safishamsi-graphify.md",
+      "source_location": null,
+      "source_url": "https://github.com/safishamsi/graphify",
+      "captured_at": "2026-06-19",
+      "author": "safishamsi",
+      "contributor": null,
+      "id": "sources_safishamsi_graphify_safishamsi_graphify",
+      "community": 2,
+      "norm_label": "graphify \u2014 repository and readme (safishamsi/graphify)"
+    },
+    {
+      "label": "qmd \u2014 repository (tobi/qmd)",
+      "file_type": "document",
+      "source_file": "wiki/sources/tobi-qmd.md",
+      "source_location": null,
+      "source_url": "https://github.com/tobi/qmd",
+      "captured_at": "2026-06-19",
+      "author": "tobi",
+      "contributor": null,
+      "id": "sources_tobi_qmd_tobi_qmd",
+      "community": 1,
+      "norm_label": "qmd \u2014 repository (tobi/qmd)"
+    },
+    {
+      "label": "Is a Better Second Brain better than a vanilla LLM Wiki?",
+      "file_type": "document",
+      "source_file": "wiki/syntheses/is-bsb-better-than-vanilla-llm-wiki.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": "2026-06-19",
+      "author": null,
+      "contributor": null,
+      "id": "syntheses_is_bsb_better_than_vanilla_llm_wiki_is_bsb_better_than_vanilla_llm_wiki",
+      "community": 2,
+      "norm_label": "is a better second brain better than a vanilla llm wiki?"
+    }
+  ],
+  "links": [
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/moc/bsb-architecture.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "moc_bsb_architecture_bsb_architecture",
+      "target": "second_brain_bsb_quickstart_bsb_quickstart"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/cheatsheets/second-brain/bsb-quickstart.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "second_brain_bsb_quickstart_bsb_quickstart",
+      "target": "concepts_knowledge_graph_graphrag_knowledge_graph_graphrag"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/cheatsheets/second-brain/bsb-quickstart.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "second_brain_bsb_quickstart_bsb_quickstart",
+      "target": "concepts_llm_wiki_pattern_llm_wiki_pattern"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/cheatsheets/second-brain/bsb-quickstart.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "second_brain_bsb_quickstart_bsb_quickstart",
+      "target": "concepts_rag_vs_llm_wiki_rag_vs_llm_wiki"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/cheatsheets/second-brain/bsb-quickstart.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "second_brain_bsb_quickstart_bsb_quickstart",
+      "target": "concepts_research_discipline_research_discipline"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/cheatsheets/second-brain/bsb-quickstart.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "second_brain_bsb_quickstart_bsb_quickstart",
+      "target": "entities_graphify_graphify"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/cheatsheets/second-brain/bsb-quickstart.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "second_brain_bsb_quickstart_bsb_quickstart",
+      "target": "entities_obsidian_obsidian"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/cheatsheets/second-brain/bsb-quickstart.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "second_brain_bsb_quickstart_bsb_quickstart",
+      "target": "entities_qmd_qmd"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/cheatsheets/second-brain/bsb-quickstart.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "second_brain_bsb_quickstart_bsb_quickstart",
+      "target": "moc_second_brain_pattern_second_brain_pattern"
+    },
+    {
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/cheatsheets/second-brain/bsb-quickstart.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "second_brain_bsb_quickstart_bsb_quickstart",
+      "target": "sources_karpathy_llm_wiki_karpathy_llm_wiki"
+    },
+    {
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/cheatsheets/second-brain/bsb-quickstart.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "second_brain_bsb_quickstart_bsb_quickstart",
+      "target": "sources_obsidian_bases_obsidian_bases"
+    },
+    {
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/cheatsheets/second-brain/bsb-quickstart.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "second_brain_bsb_quickstart_bsb_quickstart",
+      "target": "sources_safishamsi_graphify_safishamsi_graphify"
+    },
+    {
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/cheatsheets/second-brain/bsb-quickstart.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "second_brain_bsb_quickstart_bsb_quickstart",
+      "target": "sources_tobi_qmd_tobi_qmd"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/cheatsheets/second-brain/bsb-quickstart.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "second_brain_bsb_quickstart_bsb_quickstart",
+      "target": "syntheses_is_bsb_better_than_vanilla_llm_wiki_is_bsb_better_than_vanilla_llm_wiki"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/concepts/knowledge-graph-graphrag.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "concepts_knowledge_graph_graphrag_knowledge_graph_graphrag",
+      "target": "concepts_llm_wiki_pattern_llm_wiki_pattern"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/concepts/knowledge-graph-graphrag.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "concepts_knowledge_graph_graphrag_knowledge_graph_graphrag",
+      "target": "concepts_maps_of_content_maps_of_content"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/concepts/knowledge-graph-graphrag.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "concepts_knowledge_graph_graphrag_knowledge_graph_graphrag",
+      "target": "concepts_rag_vs_llm_wiki_rag_vs_llm_wiki"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/concepts/knowledge-graph-graphrag.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "concepts_knowledge_graph_graphrag_knowledge_graph_graphrag",
+      "target": "moc_bsb_architecture_bsb_architecture"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/concepts/knowledge-graph-graphrag.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "concepts_knowledge_graph_graphrag_knowledge_graph_graphrag",
+      "target": "moc_second_brain_pattern_second_brain_pattern"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/sources/safishamsi-graphify.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "sources_safishamsi_graphify_safishamsi_graphify",
+      "target": "concepts_knowledge_graph_graphrag_knowledge_graph_graphrag"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/concepts/memex.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "concepts_memex_memex",
+      "target": "concepts_knowledge_graph_graphrag_knowledge_graph_graphrag"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/concepts/research-discipline.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "concepts_research_discipline_research_discipline",
+      "target": "concepts_knowledge_graph_graphrag_knowledge_graph_graphrag"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/entities/graphify.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "entities_graphify_graphify",
+      "target": "concepts_knowledge_graph_graphrag_knowledge_graph_graphrag"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/sources/tobi-qmd.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "sources_tobi_qmd_tobi_qmd",
+      "target": "concepts_knowledge_graph_graphrag_knowledge_graph_graphrag"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/syntheses/is-bsb-better-than-vanilla-llm-wiki.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "syntheses_is_bsb_better_than_vanilla_llm_wiki_is_bsb_better_than_vanilla_llm_wiki",
+      "target": "concepts_knowledge_graph_graphrag_knowledge_graph_graphrag"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/concepts/llm-wiki-pattern.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "concepts_llm_wiki_pattern_llm_wiki_pattern",
+      "target": "concepts_maps_of_content_maps_of_content"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/concepts/llm-wiki-pattern.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "concepts_llm_wiki_pattern_llm_wiki_pattern",
+      "target": "concepts_rag_vs_llm_wiki_rag_vs_llm_wiki"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/concepts/research-discipline.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "concepts_research_discipline_research_discipline",
+      "target": "concepts_llm_wiki_pattern_llm_wiki_pattern"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/concepts/llm-wiki-pattern.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "concepts_llm_wiki_pattern_llm_wiki_pattern",
+      "target": "moc_bsb_architecture_bsb_architecture"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/concepts/llm-wiki-pattern.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "concepts_llm_wiki_pattern_llm_wiki_pattern",
+      "target": "moc_second_brain_pattern_second_brain_pattern"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/sources/karpathy-llm-knowledge-bases.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "sources_karpathy_llm_knowledge_bases_karpathy_llm_knowledge_bases",
+      "target": "concepts_llm_wiki_pattern_llm_wiki_pattern"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/sources/karpathy-llm-wiki.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "sources_karpathy_llm_wiki_karpathy_llm_wiki",
+      "target": "concepts_llm_wiki_pattern_llm_wiki_pattern"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/concepts/memex.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "concepts_memex_memex",
+      "target": "concepts_llm_wiki_pattern_llm_wiki_pattern"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/concepts/zettelkasten.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "concepts_zettelkasten_zettelkasten",
+      "target": "concepts_llm_wiki_pattern_llm_wiki_pattern"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/entities/andrej-karpathy.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "entities_andrej_karpathy_andrej_karpathy",
+      "target": "concepts_llm_wiki_pattern_llm_wiki_pattern"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/entities/graphify.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "entities_graphify_graphify",
+      "target": "concepts_llm_wiki_pattern_llm_wiki_pattern"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/entities/obsidian.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "entities_obsidian_obsidian",
+      "target": "concepts_llm_wiki_pattern_llm_wiki_pattern"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/entities/qmd.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "entities_qmd_qmd",
+      "target": "concepts_llm_wiki_pattern_llm_wiki_pattern"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/entities/tiago-forte.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "entities_tiago_forte_tiago_forte",
+      "target": "concepts_llm_wiki_pattern_llm_wiki_pattern"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/sources/obsidian-bases.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "sources_obsidian_bases_obsidian_bases",
+      "target": "concepts_llm_wiki_pattern_llm_wiki_pattern"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/sources/safishamsi-graphify.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "sources_safishamsi_graphify_safishamsi_graphify",
+      "target": "concepts_llm_wiki_pattern_llm_wiki_pattern"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/sources/tobi-qmd.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "sources_tobi_qmd_tobi_qmd",
+      "target": "concepts_llm_wiki_pattern_llm_wiki_pattern"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "wiki/concepts/maps-of-content.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "concepts_maps_of_content_maps_of_content",
+      "target": "concepts_maps_of_content_para_method"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/concepts/maps-of-content.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "concepts_maps_of_content_maps_of_content",
+      "target": "concepts_zettelkasten_zettelkasten"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/concepts/maps-of-content.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "concepts_maps_of_content_maps_of_content",
+      "target": "moc_bsb_architecture_bsb_architecture"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/concepts/maps-of-content.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "concepts_maps_of_content_maps_of_content",
+      "target": "moc_second_brain_pattern_second_brain_pattern"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/sources/obsidian-bases.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "sources_obsidian_bases_obsidian_bases",
+      "target": "concepts_maps_of_content_maps_of_content"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/entities/obsidian.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "entities_obsidian_obsidian",
+      "target": "concepts_maps_of_content_maps_of_content"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/entities/tiago-forte.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "entities_tiago_forte_tiago_forte",
+      "target": "concepts_maps_of_content_maps_of_content"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/concepts/memex.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "concepts_memex_memex",
+      "target": "concepts_zettelkasten_zettelkasten"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/entities/tiago-forte.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "entities_tiago_forte_tiago_forte",
+      "target": "concepts_memex_memex"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/concepts/memex.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "concepts_memex_memex",
+      "target": "moc_second_brain_pattern_second_brain_pattern"
+    },
+    {
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/concepts/memex.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "concepts_memex_memex",
+      "target": "sources_karpathy_llm_wiki_karpathy_llm_wiki"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/entities/andrej-karpathy.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "entities_andrej_karpathy_andrej_karpathy",
+      "target": "concepts_memex_memex"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/concepts/rag-vs-llm-wiki.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "concepts_rag_vs_llm_wiki_rag_vs_llm_wiki",
+      "target": "concepts_research_discipline_research_discipline"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/concepts/rag-vs-llm-wiki.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "concepts_rag_vs_llm_wiki_rag_vs_llm_wiki",
+      "target": "moc_second_brain_pattern_second_brain_pattern"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/sources/karpathy-llm-wiki.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "sources_karpathy_llm_wiki_karpathy_llm_wiki",
+      "target": "concepts_rag_vs_llm_wiki_rag_vs_llm_wiki"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/entities/andrej-karpathy.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "entities_andrej_karpathy_andrej_karpathy",
+      "target": "concepts_rag_vs_llm_wiki_rag_vs_llm_wiki"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/entities/qmd.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "entities_qmd_qmd",
+      "target": "concepts_rag_vs_llm_wiki_rag_vs_llm_wiki"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/moc/bsb-architecture.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "moc_bsb_architecture_bsb_architecture",
+      "target": "concepts_rag_vs_llm_wiki_rag_vs_llm_wiki"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/sources/karpathy-llm-knowledge-bases.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "sources_karpathy_llm_knowledge_bases_karpathy_llm_knowledge_bases",
+      "target": "concepts_rag_vs_llm_wiki_rag_vs_llm_wiki"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/sources/tobi-qmd.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "sources_tobi_qmd_tobi_qmd",
+      "target": "concepts_rag_vs_llm_wiki_rag_vs_llm_wiki"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/concepts/research-discipline.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "concepts_research_discipline_research_discipline",
+      "target": "moc_second_brain_pattern_second_brain_pattern"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/sources/karpathy-llm-wiki.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "sources_karpathy_llm_wiki_karpathy_llm_wiki",
+      "target": "concepts_research_discipline_research_discipline"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/entities/andrej-karpathy.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "entities_andrej_karpathy_andrej_karpathy",
+      "target": "concepts_research_discipline_research_discipline"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/moc/bsb-architecture.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "moc_bsb_architecture_bsb_architecture",
+      "target": "concepts_research_discipline_research_discipline"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/sources/safishamsi-graphify.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "sources_safishamsi_graphify_safishamsi_graphify",
+      "target": "concepts_research_discipline_research_discipline"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/syntheses/is-bsb-better-than-vanilla-llm-wiki.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "syntheses_is_bsb_better_than_vanilla_llm_wiki_is_bsb_better_than_vanilla_llm_wiki",
+      "target": "concepts_research_discipline_research_discipline"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/concepts/zettelkasten.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "concepts_zettelkasten_zettelkasten",
+      "target": "moc_second_brain_pattern_second_brain_pattern"
+    },
+    {
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/concepts/zettelkasten.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "concepts_zettelkasten_zettelkasten",
+      "target": "sources_karpathy_llm_wiki_karpathy_llm_wiki"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/entities/andrej-karpathy.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "entities_andrej_karpathy_andrej_karpathy",
+      "target": "concepts_zettelkasten_zettelkasten"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/entities/tiago-forte.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "entities_tiago_forte_tiago_forte",
+      "target": "concepts_zettelkasten_zettelkasten"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/entities/andrej-karpathy.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "entities_andrej_karpathy_andrej_karpathy",
+      "target": "moc_bsb_architecture_bsb_architecture"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/entities/andrej-karpathy.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "entities_andrej_karpathy_andrej_karpathy",
+      "target": "moc_second_brain_pattern_second_brain_pattern"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/sources/karpathy-llm-knowledge-bases.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "sources_karpathy_llm_knowledge_bases_karpathy_llm_knowledge_bases",
+      "target": "entities_andrej_karpathy_andrej_karpathy"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/sources/karpathy-llm-wiki.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "sources_karpathy_llm_wiki_karpathy_llm_wiki",
+      "target": "entities_andrej_karpathy_andrej_karpathy"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/entities/graphify.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "entities_graphify_graphify",
+      "target": "entities_obsidian_obsidian"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/entities/graphify.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "entities_graphify_graphify",
+      "target": "entities_qmd_qmd"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/entities/graphify.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "entities_graphify_graphify",
+      "target": "moc_bsb_architecture_bsb_architecture"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/sources/safishamsi-graphify.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "sources_safishamsi_graphify_safishamsi_graphify",
+      "target": "entities_graphify_graphify"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/moc/second-brain-pattern.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "moc_second_brain_pattern_second_brain_pattern",
+      "target": "entities_graphify_graphify"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/sources/karpathy-llm-wiki.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "sources_karpathy_llm_wiki_karpathy_llm_wiki",
+      "target": "entities_graphify_graphify"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/sources/obsidian-bases.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "sources_obsidian_bases_obsidian_bases",
+      "target": "entities_graphify_graphify"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/sources/tobi-qmd.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "sources_tobi_qmd_tobi_qmd",
+      "target": "entities_graphify_graphify"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/entities/obsidian.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "entities_obsidian_obsidian",
+      "target": "entities_qmd_qmd"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/entities/obsidian.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "entities_obsidian_obsidian",
+      "target": "moc_bsb_architecture_bsb_architecture"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/entities/obsidian.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "entities_obsidian_obsidian",
+      "target": "moc_second_brain_pattern_second_brain_pattern"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/sources/obsidian-bases.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "sources_obsidian_bases_obsidian_bases",
+      "target": "entities_obsidian_obsidian"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/sources/safishamsi-graphify.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "sources_safishamsi_graphify_safishamsi_graphify",
+      "target": "entities_obsidian_obsidian"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/sources/tobi-qmd.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "sources_tobi_qmd_tobi_qmd",
+      "target": "entities_obsidian_obsidian"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/entities/qmd.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "entities_qmd_qmd",
+      "target": "moc_bsb_architecture_bsb_architecture"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/sources/tobi-qmd.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "sources_tobi_qmd_tobi_qmd",
+      "target": "entities_qmd_qmd"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/moc/second-brain-pattern.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "moc_second_brain_pattern_second_brain_pattern",
+      "target": "entities_qmd_qmd"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/sources/obsidian-bases.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "sources_obsidian_bases_obsidian_bases",
+      "target": "entities_qmd_qmd"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/sources/safishamsi-graphify.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "sources_safishamsi_graphify_safishamsi_graphify",
+      "target": "entities_qmd_qmd"
+    },
+    {
+      "relation": "conceptually_related_to",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/entities/tiago-forte.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "entities_tiago_forte_tiago_forte",
+      "target": "concepts_maps_of_content_para_method"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/entities/tiago-forte.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "entities_tiago_forte_tiago_forte",
+      "target": "moc_second_brain_pattern_second_brain_pattern"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/moc/bsb-architecture.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "moc_bsb_architecture_bsb_architecture",
+      "target": "moc_second_brain_pattern_second_brain_pattern"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/sources/karpathy-llm-wiki.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "sources_karpathy_llm_wiki_karpathy_llm_wiki",
+      "target": "moc_bsb_architecture_bsb_architecture"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/sources/obsidian-bases.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "sources_obsidian_bases_obsidian_bases",
+      "target": "moc_bsb_architecture_bsb_architecture"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/sources/safishamsi-graphify.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "sources_safishamsi_graphify_safishamsi_graphify",
+      "target": "moc_bsb_architecture_bsb_architecture"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/sources/tobi-qmd.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "sources_tobi_qmd_tobi_qmd",
+      "target": "moc_bsb_architecture_bsb_architecture"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/moc/bsb-architecture.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "moc_bsb_architecture_bsb_architecture",
+      "target": "syntheses_is_bsb_better_than_vanilla_llm_wiki_is_bsb_better_than_vanilla_llm_wiki"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/sources/karpathy-llm-knowledge-bases.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "sources_karpathy_llm_knowledge_bases_karpathy_llm_knowledge_bases",
+      "target": "moc_second_brain_pattern_second_brain_pattern"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/sources/karpathy-llm-wiki.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "sources_karpathy_llm_wiki_karpathy_llm_wiki",
+      "target": "moc_second_brain_pattern_second_brain_pattern"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/sources/obsidian-bases.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "sources_obsidian_bases_obsidian_bases",
+      "target": "moc_second_brain_pattern_second_brain_pattern"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/sources/safishamsi-graphify.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "sources_safishamsi_graphify_safishamsi_graphify",
+      "target": "moc_second_brain_pattern_second_brain_pattern"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/sources/tobi-qmd.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "sources_tobi_qmd_tobi_qmd",
+      "target": "moc_second_brain_pattern_second_brain_pattern"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/moc/second-brain-pattern.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "moc_second_brain_pattern_second_brain_pattern",
+      "target": "syntheses_is_bsb_better_than_vanilla_llm_wiki_is_bsb_better_than_vanilla_llm_wiki"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/sources/karpathy-llm-knowledge-bases.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "sources_karpathy_llm_knowledge_bases_karpathy_llm_knowledge_bases",
+      "target": "sources_karpathy_llm_wiki_karpathy_llm_wiki"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/sources/karpathy-llm-wiki.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "sources_karpathy_llm_wiki_karpathy_llm_wiki",
+      "target": "sources_safishamsi_graphify_safishamsi_graphify"
+    },
+    {
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/syntheses/is-bsb-better-than-vanilla-llm-wiki.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "syntheses_is_bsb_better_than_vanilla_llm_wiki_is_bsb_better_than_vanilla_llm_wiki",
+      "target": "sources_karpathy_llm_wiki_karpathy_llm_wiki"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/sources/tobi-qmd.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "sources_tobi_qmd_tobi_qmd",
+      "target": "sources_obsidian_bases_obsidian_bases"
+    },
+    {
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/syntheses/is-bsb-better-than-vanilla-llm-wiki.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "syntheses_is_bsb_better_than_vanilla_llm_wiki_is_bsb_better_than_vanilla_llm_wiki",
+      "target": "sources_obsidian_bases_obsidian_bases"
+    },
+    {
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/syntheses/is-bsb-better-than-vanilla-llm-wiki.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "syntheses_is_bsb_better_than_vanilla_llm_wiki_is_bsb_better_than_vanilla_llm_wiki",
+      "target": "sources_safishamsi_graphify_safishamsi_graphify"
+    },
+    {
+      "relation": "cites",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "wiki/syntheses/is-bsb-better-than-vanilla-llm-wiki.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "syntheses_is_bsb_better_than_vanilla_llm_wiki_is_bsb_better_than_vanilla_llm_wiki",
+      "target": "sources_tobi_qmd_tobi_qmd"
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "bsb_stack_tooling",
+      "label": "BSB tool stack (graphify + qmd + Obsidian over the LLM wiki)",
+      "nodes": [
+        "entities_graphify_graphify",
+        "entities_qmd_qmd",
+        "entities_obsidian_obsidian",
+        "concepts_llm_wiki_pattern_llm_wiki_pattern"
+      ],
+      "relation": "participate_in",
+      "confidence": "EXTRACTED",
+      "confidence_score": 0.85,
+      "source_file": "wiki/moc/bsb-architecture.md"
+    },
+    {
+      "id": "second_brain_prior_art_lineage",
+      "label": "Knowledge-management prior-art lineage feeding the LLM wiki pattern",
+      "nodes": [
+        "concepts_memex_memex",
+        "concepts_zettelkasten_zettelkasten",
+        "concepts_llm_wiki_pattern_llm_wiki_pattern"
+      ],
+      "relation": "participate_in",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "wiki/concepts/memex.md"
+    },
+    {
+      "id": "rag_vs_wiki_tradeoff_cluster",
+      "label": "Compile-time wiki vs query-time RAG trade-off and its grounding gate",
+      "nodes": [
+        "concepts_rag_vs_llm_wiki_rag_vs_llm_wiki",
+        "concepts_llm_wiki_pattern_llm_wiki_pattern",
+        "concepts_research_discipline_research_discipline",
+        "concepts_knowledge_graph_graphrag_knowledge_graph_graphrag"
+      ],
+      "relation": "participate_in",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "wiki/concepts/rag-vs-llm-wiki.md"
+    }
+  ],
+  "built_at_commit": "08b86a73e1bbf4430b355d86f861f1bb08c5b68f"
+}

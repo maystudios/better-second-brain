@@ -44,6 +44,8 @@ graphify / qmd / Obsidian extend it, and the prior art it stands on. Start at th
 ## Syntheses
 
 - [[wiki/syntheses/is-bsb-better-than-vanilla-llm-wiki]] — the thesis + how we test it (draft) *(2026-06-19)*
+- [[wiki/syntheses/heal-2026-06-19]] — first self-heal pass over the seed sources *(2026-06-19)*
+- [[wiki/syntheses/lint-graph-2026-06-19]] — graphify-derived lint signals (god nodes, orphans) *(2026-06-19)*
 
 ## Maps of Content
 
@@ -52,8 +54,8 @@ graphify / qmd / Obsidian extend it, and the prior art it stands on. Start at th
 
 ## Stats
 
-- Pages: 21 wiki (5 sources · 7 concepts · 5 entities · 1 cheatsheet · 1 synthesis · 2 MOCs)
+- Pages: 23 wiki (5 sources · 7 concepts · 5 entities · 1 cheatsheet · 3 syntheses incl. 2 reports · 2 MOCs)
 - Bootstrap commit: 2026-06-19 — all pages grounded in verified primary sources (see each page's `## Sources`).
 - Last lint (2026-06-19): `verify_wikilinks` 0 broken · `find_orphans` 0 wiki orphans · `lint_sources` gated pages Tier A.
 - Benchmark (2026-06-19): 3 runs (uv/MCP/Ruff). BSB +5–12% on citation; **`bsb-lean` = full quality at −66% fill tokens**, reads up to 17.9× cheaper than raw. See `benchmark/RESULTS.md`.
-- Graph: not yet built (run the `/graphify` skill; see `docs/graphify-integration.md`).
+- Graph (2026-06-19): built via `/graphify ./wiki` — 22 nodes, 116 edges, 4 communities; MOC hubs are the top god nodes; 0 orphans. See `graphify-out/GRAPH_REPORT.md`.
