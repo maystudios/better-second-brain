@@ -9,6 +9,7 @@
   <img src="https://img.shields.io/badge/built%20on-Karpathy%20LLM%20Wiki-8A2BE2?style=flat-square" alt="Built on Karpathy's LLM Wiki">
   <img src="https://img.shields.io/badge/Obsidian-vault-7C3AED?style=flat-square&logo=obsidian&logoColor=white" alt="Obsidian vault">
   <img src="https://img.shields.io/badge/graph-graphify-2EA043?style=flat-square" alt="graphify graph layer">
+  <a href="./benchmark/RESULTS.md"><img src="https://img.shields.io/badge/benchmarks-3%20runs%20%C2%B7%20measured-success?style=flat-square" alt="Benchmarks: 3 runs, measured"></a>
 </p>
 
 > An LLM-maintained knowledge base built on Andrej Karpathy's **LLM Wiki** pattern — and measurably *better*.
@@ -85,12 +86,30 @@ Full setup, including the optional layers and git hooks: [`docs/install.md`](./d
 - **self-healing** — runs on the source-grade lint. → [`docs/self-healing.md`](./docs/self-healing.md)
 - **qmd** — local hybrid search when you outgrow `index.md`. → `github.com/tobi/qmd`
 
-## Is it actually better? (the experiment)
+## 📊 Is it actually better? (measured, not asserted)
 
-BSB ships a benchmark to *test* the claim rather than assert it: the same question set answered by a vanilla
-Karpathy wiki vs. a BSB instance, scored on correctness, citation quality, freshness, and token cost.
-See [`docs/benchmark.md`](./docs/benchmark.md). The repo's own bootstrap content (the seed pages under `wiki/`,
-which document the second-brain pattern itself) is the first benchmark corpus.
+BSB ships a benchmark and **runs it**: the same fetched sources built two/three ways — a vanilla Karpathy wiki vs.
+BSB — answered against a gold question set, scored by an objective judge, with deterministic token accounting
+(`scripts/token_report.py`). Three runs so far (`uv`, `MCP`, `Ruff`). **Full data + caveats:
+[`benchmark/RESULTS.md`](./benchmark/RESULTS.md)** · method & how to run your own: [`docs/benchmark.md`](./docs/benchmark.md).
+
+**Headline — large run (Ruff, 15 sources, 14 questions, exact `tiktoken` counts):**
+
+| Arm | Quality /6 | Fill tokens | Links / 1k | Read / query | vs. raw |
+|---|:--:|--:|:--:|--:|:--:|
+| vanilla Karpathy | 5.64 | 7,485 | 12.0 | 1,296 | 6.1× |
+| BSB (full) | **5.93** | 22,366 | 20.8 | 1,042 | 7.6× |
+| **BSB-lean** | **5.93** | **7,648** | **31.0** | **442** | **17.9×** |
+
+- **Quality:** BSB beats a vanilla wiki by **+5–12%** across runs — the margin is **verifiable citation** (BSB cites
+  exact source URLs; vanilla cites bare filenames), not raw correctness.
+- **Reading is cheap and scales:** answering one query costs **2–18× fewer tokens** than reading the raw sources
+  (`bsb-lean` hit 17.9× on the large corpus).
+- **Filling is cheap too:** the **`bsb-lean`** fill mode matches full-BSB quality at **−66% fill tokens** (≈ a vanilla
+  wiki's cost) with the *densest* interconnection — so grounding + traceability cost essentially nothing extra. It's
+  the default ([`CLAUDE.md`](./CLAUDE.md) §2.1).
+- **Honest caveats:** small N (3 topics / 30 Q), not fully blinded, well-documented topics flatter the memory-only
+  arm; the "edge grows with corpus size" idea did *not* hold. A private/novel corpus is the next test.
 
 ## Star history
 

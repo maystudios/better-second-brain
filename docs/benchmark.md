@@ -4,6 +4,12 @@ BSB claims to beat a plain Karpathy-style LLM wiki on cross-linking, freshness, 
 
 The point of writing this down is the same as the research-discipline gate (CLAUDE.md §1.5): a claim that BSB is better is itself a claim, and it must be supported by evidence, not memory.
 
+> **Results so far (2026-06-19).** This benchmark has been run three times (`uv`, `MCP`, `Ruff`), and a third arm —
+> **`bsb-lean`** (the optimized fill mode, CLAUDE.md §2.1) — was added. Headlines: BSB beats a vanilla wiki by
+> **+5–12%**, driven by *citation/verifiability*; reading a wiki is **2–18× cheaper** than reading raw; and
+> **`bsb-lean` matches full-BSB quality at −66% fill tokens**. Full tables + honest caveats:
+> **[`../benchmark/RESULTS.md`](../benchmark/RESULTS.md)**.
+
 ## The two arms
 
 Both arms ingest the **same `raw/` corpus** so the only variable is the system, not the inputs.
