@@ -12,6 +12,10 @@
   <a href="./benchmark/RESULTS.md"><img src="https://img.shields.io/badge/benchmarks-3%20runs%20%C2%B7%20measured-success?style=flat-square" alt="Benchmarks: 3 runs, measured"></a>
 </p>
 
+<p align="center">
+  <img src="assets/demo.gif" alt="Better Second Brain: one-paste install in an empty folder" width="780">
+</p>
+
 > An LLM-maintained knowledge base built on Andrej Karpathy's **LLM Wiki** pattern — and measurably *better*.
 > Karpathy's pattern compiles your sources into a persistent, interlinked wiki instead of re-deriving answers
 > from raw chunks on every query (RAG). **BSB keeps that, then adds three layers that close the gaps the original
