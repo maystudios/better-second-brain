@@ -1,5 +1,16 @@
 # Better Second Brain (BSB)
 
+<p align="center">
+  <a href="https://github.com/maystudios/better-second-brain/stargazers"><img src="https://img.shields.io/github/stars/maystudios/better-second-brain?style=flat-square&logo=github" alt="Stars"></a>
+  <a href="https://github.com/maystudios/better-second-brain/network/members"><img src="https://img.shields.io/github/forks/maystudios/better-second-brain?style=flat-square&logo=github" alt="Forks"></a>
+  <a href="https://github.com/maystudios/better-second-brain/issues"><img src="https://img.shields.io/github/issues/maystudios/better-second-brain?style=flat-square" alt="Issues"></a>
+  <a href="https://github.com/maystudios/better-second-brain/commits/main"><img src="https://img.shields.io/github/last-commit/maystudios/better-second-brain?style=flat-square" alt="Last commit"></a>
+  <a href="./LICENSE"><img src="https://img.shields.io/github/license/maystudios/better-second-brain?style=flat-square" alt="License: MIT"></a>
+  <img src="https://img.shields.io/badge/built%20on-Karpathy%20LLM%20Wiki-8A2BE2?style=flat-square" alt="Built on Karpathy's LLM Wiki">
+  <img src="https://img.shields.io/badge/Obsidian-vault-7C3AED?style=flat-square&logo=obsidian&logoColor=white" alt="Obsidian vault">
+  <img src="https://img.shields.io/badge/graph-graphify-2EA043?style=flat-square" alt="graphify graph layer">
+</p>
+
 > An LLM-maintained knowledge base built on Andrej Karpathy's **LLM Wiki** pattern — and measurably *better*.
 > Karpathy's pattern compiles your sources into a persistent, interlinked wiki instead of re-deriving answers
 > from raw chunks on every query (RAG). **BSB keeps that, then adds three layers that close the gaps the original
@@ -80,6 +91,16 @@ BSB ships a benchmark to *test* the claim rather than assert it: the same questi
 Karpathy wiki vs. a BSB instance, scored on correctness, citation quality, freshness, and token cost.
 See [`docs/benchmark.md`](./docs/benchmark.md). The repo's own bootstrap content (the seed pages under `wiki/`,
 which document the second-brain pattern itself) is the first benchmark corpus.
+
+## Star history
+
+<p align="center">
+  <a href="https://star-history.com/#maystudios/better-second-brain&Date">
+    <img src="https://api.star-history.com/svg?repos=maystudios/better-second-brain&type=Date" alt="Star History Chart" width="600">
+  </a>
+</p>
+
+If BSB is useful to you, a ⭐ helps other people find it.
 
 ## Credit & license
 
