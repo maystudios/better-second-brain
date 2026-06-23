@@ -3,7 +3,7 @@
 Append-only chronological record of every operation. Newest entries at the **bottom**.
 Greppable prefix - recent activity: `grep "^## \[" log.md | tail -10`.
 
-Ops: `ingest` · `query` · `lint` · `graph` · `improve` · `heal` · `schema`.
+Ops: `ingest` · `query` · `lint` · `graph` · `improve` · `heal` · `rsi` · `schema`.
 
 ---
 
@@ -111,3 +111,66 @@ comments on freshly-scaffolded pages; now strips them. Both verified on a throwa
 Also: unified the clone URL + added a Python ≥3.10 note (README + docs/install), added CONTRIBUTING.md,
 benchmark/REAL-BRAIN.md (sanitized validation on a real 368-page brain), a proof-led repo description, and 5
 good-first-issues. First impression is now on point.
+
+## [2026-06-23] rsi | Built the measured multi-objective RSI loop (Karpathy autoresearch applied to BSB)
+
+Goal: apply an autoresearch-style Recursive Self-Improvement loop to optimize three objectives at once - token cost
+down, latency down, research quality up. Ran a 21-agent adversarially-verified research workflow (7 streams x ~2
+skeptic verifiers, 742k tokens) on Karpathy's `autoresearch` repo, RSI systems (ADAS/DGM/STOP/Self-Rewarding/Godel),
+prompt optimizers (GEPA/DSPy/TextGrad/OPRO/APE), multi-objective opt, token/latency levers, and research-quality
+measurement. Verifiers caught real precision errors (autoresearch released 2026-03-07; train.py ~540 lines not 630;
+verified overnight run 89 experiments [15 kept/74 discarded], val_bpb 0.997900->0.977287 on H100; Karpathy draws NO
+link between the LLM-wiki and autoresearch - the RSI-on-schema idea is BSB's synthesis).
+
+Key design result: the correct formulation is **lexicographic constrained optimization** - grounding quality is a hard
+floor (§1.5), only token-cost+latency are minimized inside the feasible region - NOT a weighted sum (which can't reach
+non-convex Pareto regions and would let citations be traded for tokens). Built `scripts/rsi_fitness.py` (the metric:
+KEEP iff grounding Tier-A holds AND quality non-regressing AND cost-or-latency drops with neither rising), the runbook
+`docs/rsi-loop.md`, and 8 grounded wiki pages (4 sources, 3 concepts, 1 Tier-A synthesis [[wiki/syntheses/bsb-rsi-loop]]).
+Validated on real benchmark data (`benchmark/RSI_LOG.tsv`): bsb->bsb-lean KEEP (cost -62.6%, latency -57.6%, quality
++0.0 - the loop autonomously re-derives the human lean-fill decision); vanilla->bsb-lean KEEP (-46%/-66%, quality
++0.286); bsb-lean->vanilla DISCARD (citation 1.929->1.643 regressed - the quality floor bites). Folded the verified
+failure modes into the guardrails: reward hacking (46-74% of steps, rises with depth), the ratchet trap (-> archive +
+parallel levers, the DGM lesson), and judge verbosity bias (which would fight lean fill -> quality stays a floor, not a
+maximand). Lint clean: verify_wikilinks 0 broken, find_orphans 0, lint_sources gated pages Tier A.
+
+## [2026-06-23] schema | Added §3.7 RSI as a first-class operation
+
+Per §7: added `CLAUDE.md §3.7` (RSI - measured self-improvement) after §3.6 Heal, and `rsi` to the `log.md` op enum.
+The loop treats the method (schema + templates + fill/query policy) as the mutable target and the benchmark as the
+locked harness; quality is an inviolable floor; the scorer and floor may never be edited by the loop. CLAUDE.md now
+191 lines (under the ~200 guidance). Guide: `docs/rsi-loop.md`.
+
+## [2026-06-23] rsi | Exploration upgrade - escape the greedy ratchet trap (archive + accept-worse) + forward fleet
+
+The first RSI loop was greedy keep-if-Pareto-better - hill-climbing that rejects any worse-now candidate. Second
+21-agent verified research pass (790k tokens) on the acceptance rule confirmed this is a real failure mode: Karpathy's
+program.md keeps only if val_bpb strictly improves ("else git reset"), and on getting stuck offers only "rewind very
+very sparingly (if ever)" - the community has already forked it (GEAR genetic-search-graph; issue #179) to add
+exploration. Grounded the fix in the literature: DGM always-add archive (admit on a functional gate, NOT performance;
+ablation shows open-ended exploration is necessary, SWE-bench 20->50%), MAP-Elites quality-diversity (keep one elite
+per niche, not one champion), the objective paradox (Stanley & Lehman), the non-elitism valley theorem (elitism
+exponential in valley LENGTH, Metropolis only in DEPTH), LAHC/simulated-annealing accept-worse rules, and bandits
+(UCB/Thompson) for choosing the next lever. Verifiers corrected real errors (DGM parent-sampling is sigmoid(score) x
+1/(1+children) not raw; the SA sharp schedule is Hajek 1988 not Geman-Geman; the SpaceX "test-article acceptance rule"
+was over-extrapolated PR - dropped that framing).
+
+Built it: `scripts/rsi_transforms.py` (deterministic, reproducible method-mutation levers + an external,
+Goodhart-resistant quality proxy = gold-source citation coverage) and `scripts/rsi_archive.py` (KEEP / EXPLORE /
+DISCARD classifier + MAP-Elites grid). EXPLORE = a worse-now candidate that is a big single-axis win or new niche is
+ARCHIVED as a stepping stone (never adopted); the §1.5 floor stays inviolable for the LIVE method but exploration may
+roam off it inside the archive. Ran a 5-lever forward fleet on benchmark/large (logged in `benchmark/RSI_LOG.tsv`,
+Round 2): `drop-links` KEEP (-9.9% tokens, -8.1% latency, coverage intact - a real adoptable win); `strip-frontmatter`
+DISCARD (marginal); `merge-sources` EXPLORE (-59% tokens but coverage 0.00 - a GREEDY LOOP DISCARDS IT, the archive
+keeps it as the highest-ceiling stepping stone); `merge-sources-keep-urls` and `merge-sources-compact` branch from it -
+compact restores full coverage at -49.6% tokens, failing KEEP only by +5.4% per-query latency (closest-to-adoptable).
+Demonstrates the whole point: the stepping stone a greedy loop throws away is the only doorway to a -49.6% win at full
+grounding. 2 new grounded pages ([[wiki/sources/map-elites-quality-diversity]], [[wiki/concepts/quality-diversity-search]]);
+updated recursive-self-improvement, the bsb-rsi-loop synthesis, the MOC, docs/rsi-loop.md (§11). Lint clean.
+
+## [2026-06-23] schema | §3.7 extended with the KEEP/EXPLORE/DISCARD exploration tier
+
+Updated `CLAUDE.md §3.7`: the RSI op now classifies candidates KEEP/EXPLORE/DISCARD and keeps a diverse MAP-Elites
+archive instead of a single greedy champion; worse-now stepping stones are archived (not adopted); the §1.5 floor is
+inviolable for the live method, exploration roams off it only inside the archive. Added `scripts/rsi_archive.py` +
+`scripts/rsi_transforms.py` references. Minimal edit, length-neutral.

@@ -9,7 +9,7 @@ This brain's bootstrap domain is **the Better Second Brain pattern itself**: how
 graphify / qmd / Obsidian extend it, and the prior art it stands on. Start at the two hubs:
 
 - [[wiki/moc/second-brain-pattern]] - the topic hub (sources, concepts, entities).
-- [[wiki/moc/bsb-architecture]] - how BSB is built (the six operations + the enhancement layers).
+- [[wiki/moc/bsb-architecture]] - how BSB is built (the operations + the enhancement layers, incl. the RSI loop).
 
 ## Sources
 
@@ -18,6 +18,11 @@ graphify / qmd / Obsidian extend it, and the prior art it stands on. Start at th
 - [[wiki/sources/safishamsi-graphify]] - graphify repo/README; the knowledge-graph layer *(2026-06-19)*
 - [[wiki/sources/tobi-qmd]] - qmd; local hybrid markdown search *(2026-06-19)*
 - [[wiki/sources/obsidian-bases]] - Obsidian Bases docs; DB views over frontmatter *(2026-06-19)*
+- [[wiki/sources/karpathy-autoresearch]] - Karpathy's autoresearch repo; the RSI anchor loop *(2026-06-23)*
+- [[wiki/sources/darwin-godel-machine]] - Sakana DGM; archive + exploration beats greedy RSI *(2026-06-23)*
+- [[wiki/sources/gepa-reflective-prompt-evolution]] - GEPA; reflective Pareto method optimization *(2026-06-23)*
+- [[wiki/sources/anthropic-context-engineering]] - Anthropic docs; token/latency levers (caching, context editing) *(2026-06-23)*
+- [[wiki/sources/map-elites-quality-diversity]] - Mouret & Clune; MAP-Elites diverse archive (illumination) *(2026-06-23)*
 
 ## Concepts
 
@@ -28,6 +33,10 @@ graphify / qmd / Obsidian extend it, and the prior art it stands on. Start at th
 - [[wiki/concepts/maps-of-content]] - MOC hub notes for navigation and graph health *(2026-06-19)*
 - [[wiki/concepts/zettelkasten]] - Luhmann's slip-box; atomic notes, dense linking (prior art) *(2026-06-19)*
 - [[wiki/concepts/memex]] - Vannevar Bush 1945; associative trails (the ancestor) *(2026-06-19)*
+- [[wiki/concepts/recursive-self-improvement]] - RSI: mutate the method, keep-if-better; failure modes *(2026-06-23)*
+- [[wiki/concepts/multi-objective-optimization]] - tokens/latency/quality; lexicographic, quality as a floor *(2026-06-23)*
+- [[wiki/concepts/llm-as-judge]] - measuring research quality; judge biases; externally-verifiable floor *(2026-06-23)*
+- [[wiki/concepts/quality-diversity-search]] - archive + accept-worse exploration; escaping the greedy ratchet trap *(2026-06-23)*
 
 ## Entities
 
@@ -44,6 +53,7 @@ graphify / qmd / Obsidian extend it, and the prior art it stands on. Start at th
 ## Syntheses
 
 - [[wiki/syntheses/is-bsb-better-than-vanilla-llm-wiki]] - the thesis + how we test it (draft) *(2026-06-19)*
+- [[wiki/syntheses/bsb-rsi-loop]] - applying autoresearch as a multi-objective RSI loop to BSB (stable) *(2026-06-23)*
 - [[wiki/syntheses/heal-2026-06-19]] - first self-heal pass over the seed sources *(2026-06-19)*
 - [[wiki/syntheses/lint-graph-2026-06-19]] - graphify-derived lint signals (god nodes, orphans) *(2026-06-19)*
 
@@ -54,8 +64,10 @@ graphify / qmd / Obsidian extend it, and the prior art it stands on. Start at th
 
 ## Stats
 
-- Pages: 23 wiki (5 sources · 7 concepts · 5 entities · 1 cheatsheet · 3 syntheses incl. 2 reports · 2 MOCs)
+- Pages: 33 wiki (10 sources · 11 concepts · 5 entities · 1 cheatsheet · 4 syntheses incl. 2 reports · 2 MOCs)
 - Bootstrap commit: 2026-06-19 - all pages grounded in verified primary sources (see each page's `## Sources`).
-- Last lint (2026-06-19): `verify_wikilinks` 0 broken · `find_orphans` 0 wiki orphans · `lint_sources` gated pages Tier A.
+- RSI loop (2026-06-23): added the measured multi-objective self-improvement loop (CLAUDE.md §3.7, `docs/rsi-loop.md`, `scripts/rsi_fitness.py`, `benchmark/RSI_LOG.tsv`) grounded in a 21-agent verified research pass. See [[wiki/syntheses/bsb-rsi-loop]].
+- RSI exploration upgrade (2026-06-23): added the archive + accept-worse layer (KEEP/EXPLORE/DISCARD, MAP-Elites) escaping the greedy ratchet trap (`scripts/rsi_archive.py`, `scripts/rsi_transforms.py`, `docs/rsi-loop.md` §11) + ran a 5-lever forward fleet. Second 21-agent verified research pass. See [[wiki/concepts/quality-diversity-search]].
+- Last lint (2026-06-23): `verify_wikilinks` 0 broken · `find_orphans` 0 wiki orphans · `lint_sources` gated pages Tier A.
 - Benchmark (2026-06-19): 3 runs (uv/MCP/Ruff). BSB +5-12% on citation; **`bsb-lean` = full quality at -66% fill tokens**, reads up to 17.9× cheaper than raw. See `benchmark/RESULTS.md`.
 - Graph (2026-06-19): built via `/graphify ./wiki` - 22 nodes, 116 edges, 4 communities; MOC hubs are the top god nodes; 0 orphans. See `graphify-out/GRAPH_REPORT.md`.

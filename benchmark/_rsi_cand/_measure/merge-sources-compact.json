@@ -1,0 +1,12 @@
+{
+  "wiki": "C:\\Users\\conta\\Documents\\Second Brain\\benchmark\\_rsi_cand\\merge-sources-compact\\wiki",
+  "tokenizer": "tiktoken/cl100k_base",
+  "n_pages": 16,
+  "fill_tokens": 3857,
+  "read_per_query": 466,
+  "n_wikilinks": 56,
+  "links_per_1k": 14.52,
+  "gold_questions": 14,
+  "citation_coverage": 0.9286,
+  "citations_present": 13
+}

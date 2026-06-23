@@ -1,0 +1,12 @@
+{
+  "wiki": "C:\\Users\\conta\\Documents\\Second Brain\\benchmark\\_rsi_cand\\drop-links\\wiki",
+  "tokenizer": "tiktoken/cl100k_base",
+  "n_pages": 31,
+  "fill_tokens": 6890,
+  "read_per_query": 406,
+  "n_wikilinks": 130,
+  "links_per_1k": 18.87,
+  "gold_questions": 14,
+  "citation_coverage": 0.9286,
+  "citations_present": 13
+}

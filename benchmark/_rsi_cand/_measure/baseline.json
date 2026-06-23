@@ -1,0 +1,12 @@
+{
+  "wiki": "C:\\Users\\conta\\Documents\\Second Brain\\benchmark\\large\\arm-bsb-lean\\wiki",
+  "tokenizer": "tiktoken/cl100k_base",
+  "n_pages": 31,
+  "fill_tokens": 7648,
+  "read_per_query": 442,
+  "n_wikilinks": 237,
+  "links_per_1k": 30.99,
+  "gold_questions": 14,
+  "citation_coverage": 0.9286,
+  "citations_present": 13
+}

@@ -17,6 +17,10 @@ This hub describes how a Better Second Brain (BSB) is built: the layered concept
 - [[wiki/concepts/rag-vs-llm-wiki]] - the retrieval-vs-persistent-synthesis trade-off.
 - [[wiki/concepts/knowledge-graph-graphrag]] - the graph layer: god nodes, communities, GraphRAG.
 - [[wiki/concepts/research-discipline]] - the gate: real cited sources, primary vs community, stub marking.
+- [[wiki/concepts/recursive-self-improvement]] - the loop that improves the *method* (vs the LLM-wiki, which compounds *knowledge*).
+- [[wiki/concepts/multi-objective-optimization]] - keep-if-better across tokens / latency / quality, quality as a hard floor.
+- [[wiki/concepts/llm-as-judge]] - the quality signal, its biases, and why the floor must be externally verifiable.
+- [[wiki/concepts/quality-diversity-search]] - archive + accept-worse exploration that escapes the greedy ratchet trap.
 
 ## Entities (the tools)
 
@@ -30,7 +34,9 @@ This hub describes how a Better Second Brain (BSB) is built: the layered concept
 - Query - answer a question from the wiki and graph rather than re-reading raw. See [[wiki/concepts/rag-vs-llm-wiki]].
 - Lint - check freshness, broken links, and unsupported claims against the gate. See [[wiki/concepts/research-discipline]], `docs/self-healing.md`.
 - Graph - (re)build the knowledge graph from the corpus. See [[wiki/concepts/knowledge-graph-graphrag]], `docs/graphify-integration.md`.
-- Improve - run autonomous research/optimization passes to deepen pages. See `docs/auto-research-integration.md`.
+- Improve - run autonomous research/optimization passes to deepen pages, and run the **RSI loop** to improve the
+  *method* itself (tokens down, latency down, quality up; keep-if-better). See `docs/auto-research-integration.md`,
+  `docs/rsi-loop.md`, [[wiki/syntheses/bsb-rsi-loop]].
 - Heal - auto-repair stale or broken pages flagged by lint. See `docs/self-healing.md`.
 
 ## Build guides (docs/)
@@ -48,6 +54,11 @@ This hub describes how a Better Second Brain (BSB) is built: the layered concept
 ## Sources
 
 - [[wiki/sources/karpathy-llm-wiki]] - pattern and operations. https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f
+- [[wiki/sources/karpathy-autoresearch]] - the RSI anchor loop. https://github.com/karpathy/autoresearch
+- [[wiki/sources/darwin-godel-machine]] - archive + exploration for RSI. https://arxiv.org/abs/2505.22954
+- [[wiki/sources/gepa-reflective-prompt-evolution]] - Pareto method optimization. https://arxiv.org/abs/2507.19457
+- [[wiki/sources/map-elites-quality-diversity]] - the diverse archive (MAP-Elites). https://arxiv.org/abs/1504.04909
+- [[wiki/sources/anthropic-context-engineering]] - token/latency levers. https://platform.claude.com/docs/en/build-with-claude/context-editing
 - [[wiki/sources/safishamsi-graphify]] - graph layer. https://github.com/safishamsi/graphify
 - [[wiki/sources/tobi-qmd]] - search layer. https://github.com/tobi/qmd
 - [[wiki/sources/obsidian-bases]] - views layer. https://obsidian.md/help/bases

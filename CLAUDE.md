@@ -133,6 +133,18 @@ Re-fetch a page's cited sources, diff, and flag superseded versions / dead URLs 
 (1) report, (2) fix-on-approval [default], (3) autonomous only for high-confidence well-sourced fixes. Never auto-fix
 below the §1.5 floor. Guide: `docs/self-healing.md`.
 
+### §3.7 RSI - measured self-improvement ★
+Close §3.5 into a *measured* cycle (Karpathy `autoresearch`): the **method** (this schema + `templates/` + fill/query
+policy) is the mutable target; the **benchmark** is the locked harness. Mutate a lever, re-measure (`scripts/rsi_fitness.py`),
+and classify **KEEP / EXPLORE / DISCARD** (`scripts/rsi_archive.py`): *KEEP* (adopt) = Pareto-better on token-cost/latency,
+floor held, quality non-regressing; *EXPLORE* = worse-now but a big single-axis win or a new niche -> **archive as a
+stepping stone** (don't adopt) to branch from later - this is what escapes the greedy ratchet trap autoresearch is stuck
+in; *DISCARD* = dominated and not novel (logged - negatives are data). Keep a **diverse archive** (MAP-Elites), not one
+champion. **Quality is a hard floor** (§1.5, `lint_sources` Tier-A on real sources), never a tradeable term: inviolable
+for the *live* method; exploration may only roam off it *inside* the archive. The loop may **never** edit the scorer or
+the floor. Autonomy mirrors §3.6 (default fix-on-approval); ledger `benchmark/RSI_LOG.tsv`. Guide: `docs/rsi-loop.md`,
+[[wiki/syntheses/bsb-rsi-loop]].
+
 ---
 
 ## §4 - Meta-docs
@@ -140,7 +152,7 @@ below the §1.5 floor. Guide: `docs/self-healing.md`.
 - **`index.md`** - catalog grouped by category; one line per page (`- [[…]] - desc *(updated …)*`). Any automated
   rewrite must keep the `[[slug]]` set a **superset** of before (`scripts/diet_index.py`).
 - **`log.md`** - append-only; greppable `## [YYYY-MM-DD] <op> | <subject>`, op ∈ ingest|query|lint|graph|improve|heal|
-  schema. **Never edit past entries.** Recent activity: `grep "^## \[" log.md | tail -10`.
+  rsi|schema. **Never edit past entries.** Recent activity: `grep "^## \[" log.md | tail -10`.
 - **`roadmap.md`** - In Progress · Backlog · Recently Done · Open Questions (graphify-seeded). Keep it tight.
 
 (The session-start protocol is in the top block.)
