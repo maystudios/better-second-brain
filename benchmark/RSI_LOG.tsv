@@ -11,3 +11,12 @@ f2	2026-06-23	large/ruff	strip frontmatter to type/title/url	-1.2	-1.4	+0.000	co
 f3	2026-06-23	large/ruff	merge source pages into concepts (merge-sources)	-59.0	-12.2	-0.929	cov 0.00 BREACH	EXPLORE	0a5c8a8	GREEDY WOULD DISCARD. -59% tokens but citations destroyed; archived as highest-ceiling stepping stone
 f4	2026-06-23	large/ruff	branch f3 + inline source URLs (keep-urls)	-32.7	+43.9	+0.000	cov 0.93 OK	EXPLORE	0a5c8a8	stepping-stone payoff #1: coverage restored, but inlined URLs bloat per-query read +44% -> learn: use compact refs
 f5	2026-06-23	large/ruff	branch f3 + compact per-page refs (compact)	-49.6	+5.4	+0.000	cov 0.93 OK	EXPLORE	0a5c8a8	stepping-stone payoff #2: -49.6% tokens, coverage restored, fails KEEP only by +5.4% latency = CLOSEST-TO-ADOPTABLE
+# Round 3 - RECOMBINATION (combine near-misses: stack the drop-links KEEP onto the compact EXPLORE; FunSearch/crossover idea).
+f6	2026-06-23	large/ruff	compact + drop-links (recombine f5 x f1)	-55.8	-6.8	+0.000	cov 0.93 / links 0!	KEEP*	branch	APPARENT champion: -55.8% tokens AND -6.8% latency at full coverage - reachable ONLY via the f3 stepping stone a greedy loop discarded
+f7	2026-06-23	large/ruff	drop-links + strip-frontmatter (recombine f1 x f2)	-11.1	-10.0	+0.000	cov 0.93 / links 19.1	KEEP	branch	graph-preserving clean win: both axes down, interconnection intact
+f8	2026-06-23	large/ruff	compact + drop-links + frontmatter	-55.8	-6.8	+0.000	cov 0.93 / links 0!	DISCARD	branch	identical to f6 (frontmatter no-op on merged pages); pruned as duplicate
+# Round 4 - LEARN FROM FAILURE: f6 looked like a 55.8% champion but had links/1k=0 - it cut tokens by NUKING the wikilink graph
+# (Goodhart on an unmeasured axis). Fix: added an INTERCONNECTION FLOOR to scripts/rsi_archive.py (links/1k >= 0.5 x baseline = 15.5,
+# per BSB §2/§2.1 graph health). Re-classified -> f6 & f5 demoted to EXPLORE (graph nuked / thinned); HONEST CHAMPION = f7.
+f7b	2026-06-23	large/ruff	re-judge f7 under interconnection floor	-11.1	-10.0	+0.000	cov 0.93 / links 19.1 OK	KEEP	branch	ADOPTED champion: -11.1% tokens, -10.0% latency, coverage + interconnection both held
+PLATEAU	2026-06-23	large/ruff	deterministic-lever search converged	-	-	-	-	PLATEAU	branch	graph-preserving levers plateau at ~-11% tok/-10% lat; bigger wins (f5/f6, -50%) are archived EXPLORE blocked by a real tokens-vs-latency-vs-interconnection tension -> need LLM-judge phase + real-vault validation

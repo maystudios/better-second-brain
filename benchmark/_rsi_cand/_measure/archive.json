@@ -1,7 +1,7 @@
 {
   "baseline": "baseline",
   "min_coverage": 0.9286,
-  "temperature": 0.7,
+  "temperature": 0.5,
   "classifications": [
     {
       "name": "drop-links",
@@ -14,23 +14,9 @@
       "fill_tokens": 6890,
       "read_per_query": 406,
       "coverage": 0.9286,
+      "links_per_1k": 18.87,
       "reasons": [
-        "Pareto-better, floor held, quality non-regressing -> adopt as champion"
-      ]
-    },
-    {
-      "name": "strip-frontmatter",
-      "tier": "DISCARD",
-      "cost_delta_pct": 1.2,
-      "latency_delta_pct": 1.4,
-      "quality_delta": 0.0,
-      "floor_ok": true,
-      "niche": ">30p|cov-high",
-      "fill_tokens": 7560,
-      "read_per_query": 436,
-      "coverage": 0.9286,
-      "reasons": [
-        "neither cost nor latency improved beyond tolerance, and not novel/big -> prune"
+        "Pareto-better, floor held (coverage+links), quality non-regressing -> adopt as champion"
       ]
     },
     {
@@ -44,23 +30,9 @@
       "fill_tokens": 3136,
       "read_per_query": 388,
       "coverage": 0.0,
+      "links_per_1k": 17.86,
       "reasons": [
-        "breaches floor (coverage 0.0 < 0.9286) but big single-axis win 59.0% >= 14.5% (T=0.7) -> archive as stepping stone"
-      ]
-    },
-    {
-      "name": "merge-sources-keep-urls",
-      "tier": "EXPLORE",
-      "cost_delta_pct": 32.7,
-      "latency_delta_pct": -43.9,
-      "quality_delta": 0.0,
-      "floor_ok": true,
-      "niche": "11-20p|cov-high",
-      "fill_tokens": 5146,
-      "read_per_query": 636,
-      "coverage": 0.9286,
-      "reasons": [
-        "big single-axis win 32.7% >= 14.5% (T=0.7) -> archive as stepping stone"
+        "breaches floor (coverage 0.0 < 0.9286) but big single-axis win 59.0% >= 17.5% (T=0.5) -> archive as stepping stone"
       ]
     },
     {
@@ -69,21 +41,54 @@
       "cost_delta_pct": 49.6,
       "latency_delta_pct": -5.4,
       "quality_delta": 0.0,
-      "floor_ok": true,
+      "floor_ok": false,
       "niche": "11-20p|cov-high",
       "fill_tokens": 3857,
       "read_per_query": 466,
       "coverage": 0.9286,
+      "links_per_1k": 14.52,
       "reasons": [
-        "big single-axis win 49.6% >= 14.5% (T=0.7) -> archive as stepping stone"
+        "breaches floor (links/1k 14.52 < 15.5 (interconnection nuked - Goodhart)) but big single-axis win 49.6% >= 17.5% (T=0.5) -> archive as stepping stone"
+      ]
+    },
+    {
+      "name": "compact+drop-links",
+      "tier": "EXPLORE",
+      "cost_delta_pct": 55.8,
+      "latency_delta_pct": 6.8,
+      "quality_delta": 0.0,
+      "floor_ok": false,
+      "niche": "11-20p|cov-high",
+      "fill_tokens": 3379,
+      "read_per_query": 412,
+      "coverage": 0.9286,
+      "links_per_1k": 0.0,
+      "reasons": [
+        "breaches floor (links/1k 0.0 < 15.5 (interconnection nuked - Goodhart)) but big single-axis win 55.8% >= 17.5% (T=0.5) -> archive as stepping stone"
+      ]
+    },
+    {
+      "name": "drop-links+frontmatter",
+      "tier": "KEEP",
+      "cost_delta_pct": 11.1,
+      "latency_delta_pct": 10.0,
+      "quality_delta": 0.0,
+      "floor_ok": true,
+      "niche": ">30p|cov-high",
+      "fill_tokens": 6802,
+      "read_per_query": 398,
+      "coverage": 0.9286,
+      "links_per_1k": 19.11,
+      "reasons": [
+        "Pareto-better, floor held (coverage+links), quality non-regressing -> adopt as champion"
       ]
     }
   ],
   "elite_grid": {
     ">30p|cov-high": {
-      "name": "drop-links",
-      "fill_tokens": 6890,
-      "read_per_query": 406,
+      "name": "drop-links+frontmatter",
+      "fill_tokens": 6802,
+      "read_per_query": 398,
       "coverage": 0.9286
     },
     "11-20p|cov-low": {
@@ -93,12 +98,12 @@
       "coverage": 0.0
     },
     "11-20p|cov-high": {
-      "name": "merge-sources-compact",
-      "fill_tokens": 3857,
-      "read_per_query": 466,
+      "name": "compact+drop-links",
+      "fill_tokens": 3379,
+      "read_per_query": 412,
       "coverage": 0.9286
     }
   },
-  "champion": "drop-links",
+  "champion": "drop-links+frontmatter",
   "branch_next": "merge-sources"
 }

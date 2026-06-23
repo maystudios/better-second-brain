@@ -243,8 +243,30 @@ merge-sources-compact     EXPLORE  -49.6   +5.4   0.93       branch: -49.6% toke
 The lesson a greedy loop could never learn: `merge-sources` looks like garbage (coverage 0.00, floor breached) but is
 the **only doorway** to `merge-sources-compact` - a −49.6% token cut at full grounding, one small latency tweak away
 from adoption. Discarding the stepping stone discards the destination. The diverse archive keeps all three merged
-variants alive as the elites of their niches. (Full ledger: `benchmark/RSI_LOG.tsv`; this is a deterministic proxy -
-the per-experiment quality confirmation step is a reference-guided LLM judge, reserved for borderline candidates.)
+variants alive as the elites of their niches.
+
+### 11.2 Recombination, and learning from a Goodhart failure
+
+Running the loop forward, **recombination** ("combine near-misses" - the FunSearch/crossover idea) stacked the
+`drop-links` KEEP onto the `merge-sources-compact` stepping stone. The result *looked* spectacular:
+`compact+drop-links` = **−55.8% tokens AND −6.8% latency** at full coverage - a clean KEEP reachable only by branching
+through the floor-breaching stepping stone a greedy loop had thrown away.
+
+But it was a **Goodhart hit**: that variant had `links/1k = 0` - it cut tokens by **deleting the entire wikilink
+graph** (237 links -> 0), an axis the citation-coverage proxy didn't measure. Interconnection is a real BSB quality
+dimension (§2/§2.1: "density is the goal"; graphify feeds on links). So the loop **improved its own scorer**: an
+**interconnection floor** was added to `rsi_archive.py` (`links/1k >= 0.5 x baseline`), a second hard constraint
+alongside coverage. Re-classified, `compact+drop-links` and `merge-sources-compact` are correctly **demoted to
+EXPLORE** (graph nuked / thinned), and the **honest adopted champion is `drop-links+frontmatter`**: −11.1% tokens,
+−10.0% latency, coverage *and* interconnection intact.
+
+**The plateau (honest).** Graph-preserving deterministic levers converge at ~−11% tokens / −10% latency. The big
+−50% wins exist but each trades away interconnection or per-query latency - a genuine three-way tension
+(tokens vs latency vs interconnection) that mechanical levers cannot dissolve. Pushing past this plateau needs the
+next class of iteration: a reference-guided **LLM judge** to verify *content-level* compression the deterministic
+proxy can't see, and **real-vault validation** before a benchmark win is promoted into the live method. That is the
+boundary of what an autonomous, deterministic, no-human-judgment loop can safely do. (Full ledger:
+`benchmark/RSI_LOG.tsv`, Rounds 2-4.)
 
 ## Sources
 

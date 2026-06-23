@@ -185,12 +185,17 @@ LEVERS = {
 
 
 def build(lever: str, base: Path, out: Path) -> None:
-    if lever not in LEVERS:
-        raise SystemExit(f"error: unknown lever '{lever}'. Choices: {', '.join(LEVERS)}")
+    # A lever may be a comma-separated CHAIN, applied in order - this is recombination
+    # ("combine near-misses": stack a KEEP onto a big EXPLORE to test a building-block hypothesis).
+    chain = [p.strip() for p in lever.split(",") if p.strip()]
+    unknown = [p for p in chain if p not in LEVERS]
+    if unknown:
+        raise SystemExit(f"error: unknown lever(s) {unknown}. Choices: {', '.join(LEVERS)}")
     _robust_rmtree(out)
     out.parent.mkdir(parents=True, exist_ok=True)
     shutil.copytree(base, out)
-    LEVERS[lever](out)
+    for p in chain:
+        LEVERS[p](out)
 
 
 def measure(wiki: Path, questions: Path) -> dict:
@@ -226,8 +231,8 @@ def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description="Deterministic RSI method-mutation levers + measurement.")
     sub = ap.add_subparsers(dest="cmd", required=True)
 
-    b = sub.add_parser("build", help="apply a lever to a copy of a wiki")
-    b.add_argument("--lever", required=True, choices=sorted(LEVERS))
+    b = sub.add_parser("build", help="apply a lever (or comma-separated chain) to a copy of a wiki")
+    b.add_argument("--lever", required=True, help=f"one of {sorted(LEVERS)} or a comma-separated chain")
     b.add_argument("--base", required=True)
     b.add_argument("--out", required=True)
 

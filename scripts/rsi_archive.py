@@ -69,18 +69,21 @@ def coverage_bucket(c: float | None) -> str:
     return "cov-low"
 
 
-def classify(base: dict, cand: dict, *, min_cov: float, big_win: float,
+def classify(base: dict, cand: dict, *, min_cov: float, min_links: float, big_win: float,
              temperature: float, tol: float) -> dict:
     bf, cf = base["fill_tokens"], cand["fill_tokens"]
     br, cr = base["read_per_query"], cand["read_per_query"]
     bc = base.get("citation_coverage")
     cc = cand.get("citation_coverage")
+    cl = cand.get("links_per_1k")                        # interconnection (BSB §2/§2.1 graph health)
 
     cost_delta = (bf - cf) / bf if bf else 0.0           # >0 = cheaper
     lat_delta = (br - cr) / br if br else 0.0             # >0 = faster
     qual_delta = (cc - bc) if (cc is not None and bc is not None) else 0.0
 
-    floor_ok = (cc is None) or (cc >= min_cov)
+    cov_ok = (cc is None) or (cc >= min_cov)
+    links_ok = (cl is None) or (cl >= min_links)         # a token win that nukes the link graph is Goodhart
+    floor_ok = cov_ok and links_ok
     quality_ok = qual_delta >= -1e-9
     cost_rose = cost_delta < -tol
     lat_rose = lat_delta < -tol
@@ -90,22 +93,28 @@ def classify(base: dict, cand: dict, *, min_cov: float, big_win: float,
     # Temperature lowers the bar for what counts as a "big" win worth exploring.
     explore_threshold = max(0.05, big_win * (1.0 - 0.6 * temperature))
 
+    floor_reason = ""
+    if not cov_ok:
+        floor_reason = f"coverage {cc} < {min_cov}"
+    elif not links_ok:
+        floor_reason = f"links/1k {cl} < {min_links:.1f} (interconnection nuked - Goodhart)"
+
     reasons = []
     if floor_ok and quality_ok and pareto_better:
         tier = "KEEP"
-        reasons.append("Pareto-better, floor held, quality non-regressing -> adopt as champion")
+        reasons.append("Pareto-better, floor held (coverage+links), quality non-regressing -> adopt as champion")
     elif (best_axis >= explore_threshold) or (not floor_ok and best_axis >= explore_threshold):
         tier = "EXPLORE"
         why = []
         if not floor_ok:
-            why.append(f"breaches floor (coverage {cc} < {min_cov}) but ")
+            why.append(f"breaches floor ({floor_reason}) but ")
         why.append(f"big single-axis win {best_axis*100:.1f}% >= {explore_threshold*100:.1f}% "
                    f"(T={temperature}) -> archive as stepping stone")
         reasons.append("".join(why))
     else:
         tier = "DISCARD"
         if not floor_ok:
-            reasons.append(f"floor breached (coverage {cc} < {min_cov}) and not a big enough win to explore")
+            reasons.append(f"floor breached ({floor_reason}) and not a big enough win to explore")
         elif not pareto_better:
             reasons.append("neither cost nor latency improved beyond tolerance, and not novel/big -> prune")
         else:
@@ -122,6 +131,7 @@ def classify(base: dict, cand: dict, *, min_cov: float, big_win: float,
         "fill_tokens": cf,
         "read_per_query": cr,
         "coverage": cc,
+        "links_per_1k": cl,
         "reasons": reasons,
     }
 
@@ -145,6 +155,8 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--baseline", required=True, help="baseline measurement JSON")
     ap.add_argument("--min-coverage", type=float, default=None,
                     help="grounding floor (default = baseline coverage; never adopt below it)")
+    ap.add_argument("--min-links-per-1k", type=float, default=None,
+                    help="interconnection floor, BSB graph-health (default = 0.5 x baseline links/1k)")
     ap.add_argument("--big-win", type=float, default=0.25,
                     help="single-axis improvement that qualifies a regressing/floor-breaking cand for EXPLORE (default 0.25)")
     ap.add_argument("--temperature", type=float, default=0.7,
@@ -156,6 +168,8 @@ def main(argv: list[str] | None = None) -> int:
     base = load(args.baseline)
     base["_name"] = name_of(base, args.baseline)
     min_cov = args.min_coverage if args.min_coverage is not None else (base.get("citation_coverage") or 0.0)
+    base_links = base.get("links_per_1k") or 0.0
+    min_links = args.min_links_per_1k if args.min_links_per_1k is not None else 0.5 * base_links
 
     cands = []
     for c in args.candidates:
@@ -163,7 +177,7 @@ def main(argv: list[str] | None = None) -> int:
         rec["_name"] = name_of(rec, c)
         cands.append(rec)
 
-    results = [classify(base, c, min_cov=min_cov, big_win=args.big_win,
+    results = [classify(base, c, min_cov=min_cov, min_links=min_links, big_win=args.big_win,
                         temperature=args.temperature, tol=args.cost_tolerance) for c in cands]
     for r, c in zip(results, cands):
         r["name"] = c["_name"]
@@ -172,11 +186,12 @@ def main(argv: list[str] | None = None) -> int:
 
     print(f"# RSI archive - exploration-aware acceptance")
     print(f"  baseline '{base['_name']}': fill={base['fill_tokens']:,} read/q={base['read_per_query']:,} "
-          f"coverage={base.get('citation_coverage')}  | floor(min-coverage)={min_cov}  T={args.temperature}")
-    print(f"\n  {'candidate':<26}{'tier':<9}{'cost%':>7}{'lat%':>7}{'qual':>8}  niche")
+          f"coverage={base.get('citation_coverage')} links/1k={base_links}  | floors: coverage>={min_cov} "
+          f"links/1k>={min_links:.1f}  T={args.temperature}")
+    print(f"\n  {'candidate':<28}{'tier':<9}{'cost%':>7}{'lat%':>7}{'qual':>8}{'links/1k':>9}  niche")
     for r in results:
-        print(f"  {r['name']:<26}{r['tier']:<9}{r['cost_delta_pct']:>+7.1f}{r['latency_delta_pct']:>+7.1f}"
-              f"{r['quality_delta']:>+8.3f}  {r['niche']}")
+        print(f"  {r['name']:<28}{r['tier']:<9}{r['cost_delta_pct']:>+7.1f}{r['latency_delta_pct']:>+7.1f}"
+              f"{r['quality_delta']:>+8.3f}{(r['links_per_1k'] or 0):>9.1f}  {r['niche']}")
     for r in results:
         print(f"    - [{r['tier']}] {r['name']}: {r['reasons'][0]}")
 
