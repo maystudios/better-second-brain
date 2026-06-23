@@ -1,0 +1,4 @@
+# RSI forward-experiment candidate wikis are reproducible from scripts/rsi_transforms.py;
+# keep only the small measurement JSONs as evidence.
+benchmark/_rsi_cand/*/
+!benchmark/_rsi_cand/_measure/
