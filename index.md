@@ -23,6 +23,10 @@ graphify / qmd / Obsidian extend it, and the prior art it stands on. Start at th
 - [[wiki/sources/gepa-reflective-prompt-evolution]] - GEPA; reflective Pareto method optimization *(2026-06-23)*
 - [[wiki/sources/anthropic-context-engineering]] - Anthropic docs; token/latency levers (caching, context editing) *(2026-06-23)*
 - [[wiki/sources/map-elites-quality-diversity]] - Mouret & Clune; MAP-Elites diverse archive (illumination) *(2026-06-23)*
+- [[wiki/sources/git-commit-pathspec]] - Git's file-path commit semantics *(2026-09-01)*
+- [[wiki/sources/git-add-patch]] - whole-file staging and interactive hunk staging *(2026-09-01)*
+- [[wiki/sources/git-diff-review]] - working-tree, cached, stat, and patch review modes *(2026-09-01)*
+- [[wiki/sources/maypaintworks-multi-agent-evidence]] - observed shared-worktree sweeps and falsifiable evidence gates *(2026-09-01)*
 
 ## Concepts
 
@@ -37,6 +41,7 @@ graphify / qmd / Obsidian extend it, and the prior art it stands on. Start at th
 - [[wiki/concepts/multi-objective-optimization]] - tokens/latency/quality; lexicographic, quality as a floor *(2026-06-23)*
 - [[wiki/concepts/llm-as-judge]] - measuring research quality; judge biases; externally-verifiable floor *(2026-06-23)*
 - [[wiki/concepts/quality-diversity-search]] - archive + accept-worse exploration; escaping the greedy ratchet trap *(2026-06-23)*
+- [[wiki/concepts/shared-worktree-commit-integrity]] - pathspecs select files, not hunks; review the staged payload, not only its names *(2026-09-01)*
 
 ## Entities
 
@@ -64,10 +69,11 @@ graphify / qmd / Obsidian extend it, and the prior art it stands on. Start at th
 
 ## Stats
 
-- Pages: 33 wiki (10 sources · 11 concepts · 5 entities · 1 cheatsheet · 4 syntheses incl. 2 reports · 2 MOCs)
+- Pages: 38 wiki (14 sources · 12 concepts · 5 entities · 1 cheatsheet · 4 syntheses incl. 2 reports · 2 MOCs)
 - Bootstrap commit: 2026-06-19 - all pages grounded in verified primary sources (see each page's `## Sources`).
 - RSI loop (2026-06-23): added the measured multi-objective self-improvement loop (CLAUDE.md §3.7, `docs/rsi-loop.md`, `scripts/rsi_fitness.py`, `benchmark/RSI_LOG.tsv`) grounded in a 21-agent verified research pass. See [[wiki/syntheses/bsb-rsi-loop]].
 - RSI exploration upgrade (2026-06-23): added the archive + accept-worse layer (KEEP/EXPLORE/DISCARD, MAP-Elites) escaping the greedy ratchet trap (`scripts/rsi_archive.py`, `scripts/rsi_transforms.py`, `docs/rsi-loop.md` §11) + ran a 5-lever forward fleet. Second 21-agent verified research pass. See [[wiki/concepts/quality-diversity-search]].
 - Last lint (2026-06-23): `verify_wikilinks` 0 broken · `find_orphans` 0 wiki orphans · `lint_sources` gated pages Tier A.
 - Benchmark (2026-06-19): 3 runs (uv/MCP/Ruff). BSB +5-12% on citation; **`bsb-lean` = full quality at -66% fill tokens**, reads up to 17.9× cheaper than raw. See `benchmark/RESULTS.md`.
 - Graph (2026-06-19): built via `/graphify ./wiki` - 22 nodes, 116 edges, 4 communities; MOC hubs are the top god nodes; 0 orphans. See `graphify-out/GRAPH_REPORT.md`.
+- Curation (2026-09-01): added the Git-grounded shared-worktree commit-integrity rule from a primary multi-agent failure; four source pages and one concept.

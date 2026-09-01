@@ -51,6 +51,9 @@ Items: `- [ ] **<Type>**: <slug> - <reason>`. Types: Ingest · Cheatsheet · Con
 
 ## Recently Done
 
+- 2026-09-01 - **Curated shared-worktree commit integrity**: grounded the observed multi-agent sweep
+      hazard in Git's current commit/add/diff manuals; added four lean source pages, one concept, and
+      BSB architecture routing. No schema change.
 - 2026-06-23 - **RSI exploration upgrade** (escape the greedy ratchet trap): 2nd 21-agent verified research pass on
       the acceptance rule; built `scripts/rsi_archive.py` (KEEP/EXPLORE/DISCARD + MAP-Elites archive) +
       `scripts/rsi_transforms.py` (deterministic levers). Ran a 5-lever forward fleet (`RSI_LOG.tsv` Round 2):

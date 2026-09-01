@@ -4,7 +4,7 @@ title: "BSB Architecture (Map of Content)"
 covers: [topic/llm, topic/pkm]
 tags: [moc]
 created: 2026-06-19
-updated: 2026-06-19
+updated: 2026-09-01
 ---
 
 # BSB Architecture (Map of Content)
@@ -21,6 +21,7 @@ This hub describes how a Better Second Brain (BSB) is built: the layered concept
 - [[wiki/concepts/multi-objective-optimization]] - keep-if-better across tokens / latency / quality, quality as a hard floor.
 - [[wiki/concepts/llm-as-judge]] - the quality signal, its biases, and why the floor must be externally verifiable.
 - [[wiki/concepts/quality-diversity-search]] - archive + accept-worse exploration that escapes the greedy ratchet trap.
+- [[wiki/concepts/shared-worktree-commit-integrity]] - Git hunk ownership and staged-payload review for multi-agent maintainers.
 
 ## Entities (the tools)
 
@@ -45,6 +46,11 @@ This hub describes how a Better Second Brain (BSB) is built: the layered concept
 - `docs/auto-research-integration.md` - automated ingest and improvement.
 - `docs/self-healing.md` - lint and heal operations.
 - `docs/benchmark.md` - how BSB-vs-vanilla is measured.
+
+## Maintainer integrity
+
+- [[wiki/concepts/shared-worktree-commit-integrity]] - a pathspec selects files, not actors' hunks;
+  stage overlapping edits by hunk and make the cached stat and patch agree with the commit message.
 
 ## Demo and thesis
 

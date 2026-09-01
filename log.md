@@ -174,3 +174,12 @@ Updated `CLAUDE.md §3.7`: the RSI op now classifies candidates KEEP/EXPLORE/DIS
 archive instead of a single greedy champion; worse-now stepping stones are archived (not adopted); the §1.5 floor is
 inviolable for the live method, exploration roams off it only inside the archive. Added `scripts/rsi_archive.py` +
 `scripts/rsi_transforms.py` references. Minimal edit, length-neutral.
+
+## [2026-09-01] ingest | Shared-worktree commit integrity
+
+Grounded a MayPaintworks multi-agent failure against Git's current primary manuals for `commit`,
+`add`, and `diff`. Added four lean source pages plus [[wiki/concepts/shared-worktree-commit-integrity]]:
+pathspecs select files rather than actors' hunks; overlapping edits require hunk staging; filename,
+diffstat, and patch review answer different questions; verify clean committed state so dirty companion
+files cannot mask an incomplete commit. Updated the architecture MOC, index, and roadmap. Verification:
+0 broken links, 0 wiki orphans, and the new concept passes source-grade lint at Tier A.
