@@ -1,0 +1,125 @@
+{
+  "passed": true,
+  "terminal_rows": 70,
+  "main_calls": 112,
+  "selector_calls": 42,
+  "answer_calls": 70,
+  "jev_calls": 254,
+  "unique_jev_receipts": 28,
+  "all_usage_reconciled": true,
+  "source_hashes_verified": true,
+  "no_answer_tools": true,
+  "gold_sha256": "91459cda40cac0eef300ad2edc786be3f8dc2925b7268516cf2f4198dae0327a",
+  "quote_check_failures": [
+    {
+      "task": "full-q01",
+      "path": "wiki/sources/github-astral-sh-ruff.md",
+      "quote_exact": false
+    },
+    {
+      "task": "full-q02",
+      "path": "wiki/concepts/tool-replacement.md",
+      "quote_exact": false
+    },
+    {
+      "task": "full-q02",
+      "path": "wiki/concepts/tool-replacement.md",
+      "quote_exact": false
+    },
+    {
+      "task": "full-q02",
+      "path": "wiki/concepts/tool-replacement.md",
+      "quote_exact": false
+    },
+    {
+      "task": "lean-jev-q04",
+      "path": "wiki/sources/settings.md",
+      "quote_exact": false
+    },
+    {
+      "task": "full-q06",
+      "path": "wiki/sources/configuration.md",
+      "quote_exact": false
+    },
+    {
+      "task": "full-jev-q06",
+      "path": "wiki/concepts/configuration.md",
+      "quote_exact": false
+    },
+    {
+      "task": "full-q07",
+      "path": "wiki/concepts/fix-safety.md",
+      "quote_exact": false
+    },
+    {
+      "task": "full-q07",
+      "path": "wiki/concepts/fix-safety.md",
+      "quote_exact": false
+    },
+    {
+      "task": "lean-q07",
+      "path": "wiki/sources/linter.md",
+      "quote_exact": false
+    },
+    {
+      "task": "full-jev-q08",
+      "path": "wiki/sources/formatter.md",
+      "quote_exact": false
+    },
+    {
+      "task": "full-q09",
+      "path": "wiki/sources/formatter.md",
+      "quote_exact": false
+    },
+    {
+      "task": "vanilla-q09",
+      "path": "wiki/Formatter.md",
+      "quote_exact": false
+    },
+    {
+      "task": "full-jev-q10",
+      "path": "wiki/sources/rules.md",
+      "quote_exact": false
+    },
+    {
+      "task": "full-q11",
+      "path": "wiki/sources/versioning.md",
+      "quote_exact": false
+    },
+    {
+      "task": "full-jev-q11",
+      "path": "wiki/sources/versioning.md",
+      "quote_exact": false
+    },
+    {
+      "task": "vanilla-q11",
+      "path": "wiki/Versioning.md",
+      "quote_exact": false
+    },
+    {
+      "task": "full-jev-q12",
+      "path": "wiki/concepts/preview-mode.md",
+      "quote_exact": false
+    },
+    {
+      "task": "full-jev-q12",
+      "path": "wiki/concepts/preview-mode.md",
+      "quote_exact": false
+    },
+    {
+      "task": "full-q14",
+      "path": "wiki/sources/faq.md",
+      "quote_exact": false
+    },
+    {
+      "task": "vanilla-q14",
+      "path": "wiki/Ruff.md",
+      "quote_exact": false
+    },
+    {
+      "task": "vanilla-q14",
+      "path": "wiki/Ruff.md",
+      "quote_exact": false
+    }
+  ]
+}

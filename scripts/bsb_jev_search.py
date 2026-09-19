@@ -157,7 +157,7 @@ def _blocks(text):
     blocks, current, size, start = [], [], 0, 1
     for number, line in enumerate(text.splitlines(keepends=True), 1):
         n = len(line.encode('utf-8'))
-        if current and (size+n > CHUNK_BYTES or (line.startswith('#') and size > 1000)):
+        if current and size+n > CHUNK_BYTES:
             blocks.append({'start_line': start, 'end_line': number-1, 'text': ''.join(current)})
             current, size, start = [], 0, number
         if n > CHUNK_BYTES:
@@ -500,3 +500,29 @@ def find(query, needs=None, repo_root=None, dry_run=False, transport=None, api_k
         nav._save(session, root)
     result['session_id'] = session['session_id']
     return result
+
+
+def caller_result(result):
+    """Source-complete caller packet; detailed API metrics stay in the receipt.
+
+    Keep self-contained source hashes while omitting per-call accounting and
+    catalog metadata. No source or contrary evidence is trimmed for savings.
+    """
+    pages = [{k:p[k] for k in ('path','file_sha256','text','full_page') if k in p}
+             for p in result['pages']]
+    omitted = [{k:p[k] for k in ('path','file_sha256') if k in p}
+               for p in result.get('omitted_pages', [])]
+
+    def refs(items):
+        output = []
+        for item in items:
+            ref = {k:item[k] for k in ('path','file_sha256','need_id','start_line','end_line','relation') if k in item}
+            output.append(ref)
+        return output
+
+    return {'status': result['status'], 'session_id': result.get('session_id'),
+            'pages': pages, 'evidence_refs': refs(result['evidence_refs']),
+            'conflicts': refs(result['conflicts']), 'omitted_pages': omitted,
+            'needs': result.get('needs', {}), 'unresolved_needs': result['unresolved_needs'],
+            'coverage': result['coverage'], 'global_absence_proven': False,
+            'full_page_read_required': True, 'review_required': True}

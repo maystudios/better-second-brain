@@ -76,14 +76,16 @@ evaluation; request and page budgets bound how far one call can search.
 Read **every returned full-page text** and its actual sources before answering.
 The public response contains `status`, `session_id`, `pages` (path, text,
 `full_page`, `file_sha256`), `evidence_refs`, `conflicts`, `unresolved_needs`,
-`coverage`, `usage` and `api_calls`. Evidence references identify exact source
+and `coverage`. The CLI uses `caller_result()` to omit catalog descriptors and
+per-call billing arrays; detailed Python `find()` results and local receipts retain
+`usage` and `api_calls` for measurement. Evidence references identify exact source
 lines and hashes. They are retrieval evidence, not generated facts or a substitute
 for source checks. Discovered contrary and uncertain evidence remains visible;
 model diagnostics and complete classification distributions stay in ignored
 local receipts.
 
-The service sends up to 8,000 UTF-8 bytes of contiguous page text per evidence
-chunk, and up to 4,000 bytes of prior evidence for cross-page conflict comparison.
+The service packs up to 8,000 UTF-8 bytes of contiguous page text per evidence
+chunk, without splitting at headings, and up to 4,000 bytes of prior evidence for cross-page conflict comparison.
 Omitted comparison context is reported. A single overlarge line is reported as
 unread, rather than silently truncated. The local 24 KiB request cap still applies.
 Default limits are 24 calls, 12 evaluated pages, 120 seconds and 512 KiB of returned
@@ -110,9 +112,12 @@ to expensive-agent search. A follow-up with a narrower question or different
 budgets is a new retrieval attempt, not proof that the earlier search was complete.
 Another retrieval route requires existing task authorization or explicit review.
 
-No measured quality improvement, end-to-end token saving or live host enforcement
-is established by this feature. Mocked behavioral tests, a bounded live TypeSafe
-trial and actual host interception are separate evidence gates.
+The [five-arm query comparison](../benchmark/JEV-COMPARISON-2026-09-19.md)
+reports measured cost, main-model usage and answer quality against both a bounded
+model-guided navigator and free local retrieval. Savings depend on the comparator;
+combined model tokens and main-model tokens are different metrics. This is not
+evidence of universal quality improvement or live host enforcement. Behavioral
+tests, live API measurements and actual host interception are separate gates.
 
 ### Legacy progressive reading (experimental, opt-in)
 

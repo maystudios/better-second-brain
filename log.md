@@ -254,3 +254,19 @@ pass; a real-vault run returned byte/hash-verified originals and correctly marke
 its budget-limited result partial. Enabled Jev locally; strict native hook setup
 is the final activation step, and live Codex interception remains unverified.
 No end-to-end savings claim. Details and limits: [validation report](benchmark/JEV-BRANCHING-2026-09-19.md).
+
+## [2026-09-19] improve | Measured Jev retrieval efficiency
+
+Removed unnecessary heading-driven evidence requests and compacted the caller
+packet while retaining original pages, hashes, conflicts and gaps. All 123 tests
+pass; wiki links, strict tier-A source lint and diff checks pass. The corrected
+70-answer/14-question run reconciles 112 main-model calls and 254 Jev calls.
+Against the bounded model-selector-plus-answer control, Full + Jev uses 44.3%
+fewer main-model tokens and costs 32.3% less, with quality 5.79→5.71/6; Lean + Jev
+uses 47.8% fewer main-model tokens and costs 38.8% less, with quality 4.86→5.57/6.
+These are uncached API-equivalent query costs, not subscription savings or a
+universal product improvement. The preserved free-BM25 comparison remains
+cheaper than corrected Jev. The first failed cost trial is retained. Blind grades,
+per-question dimension regressions, usage audits and grading overhead accompany
+the [five-arm report](benchmark/JEV-COMPARISON-2026-09-19.md). User authorized
+publishing the implementation and measured README results directly to main.

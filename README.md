@@ -118,7 +118,7 @@ Full setup, including the optional layers and git hooks: [`docs/install.md`](./d
 
 ## The optional layers (off by default, degrade gracefully)
 
-- **jev** - optional progressive context reading, exact source lookup and safe mutation review. Jev selects pages per subquestion and explores linked/deferred evidence through a gateway. → [`docs/jev.md`](./docs/jev.md). Measurements: [Gemini](./benchmark/JEV-2026-09-19.md), [Luna max](./benchmark/JEV-LUNA-MAX-2026-09-19.md), [progressive navigation](./benchmark/JEV-NAVIGATION-LUNA-MAX-2026-09-19.md). The current navigation run reduced delivered page bytes by 28.98%, but added adaptive turns; the measured model cost rose. The tables below separate that result from the potential saving when the same context reduction holds without extra turns.
+- **jev** - optional internal branching retrieval: the gateway follows the catalog, evaluates source text, and returns full evidence pages in one caller turn. → [`docs/jev.md`](./docs/jev.md). See the measured five-arm query comparison below; savings depend on the retrieval method it replaces.
 - **graphify** - `uv tool install graphifyy`, then the agent uses the `/graphify` skill. → [`docs/graphify-integration.md`](./docs/graphify-integration.md)
 - **auto-research** - a Claude Code skill that self-improves the schema. → [`docs/auto-research-integration.md`](./docs/auto-research-integration.md)
 - **self-healing** - runs on the source-grade lint. → [`docs/self-healing.md`](./docs/self-healing.md)
@@ -142,69 +142,61 @@ existing populated brain, use [`install_jev.py`](./scripts/install_jev.py), pres
 its notes and domain rules. [`docs/jev.md`](./docs/jev.md) explains upgrading and
 disabling only the strict read/shell gate while retaining Jev.
 
-### Earlier Jev cost and quality measurements
+### Jev: measured query cost and quality
 
-The new branching route has no demonstrated end-to-end savings yet. The earlier
-six-question Luna/max navigation trial is the same frozen comparison described
-in [`benchmark/JEV-NAVIGATION-LUNA-MAX-2026-09-19.md`](./benchmark/JEV-NAVIGATION-LUNA-MAX-2026-09-19.md).
-It measured the following standard API list-price equivalents: Jev at `$0.042/M`
-input tokens with free output, GPT-5.6 Luna at `$0.20/$1.20/M` input/output,
-Claude Opus 5 at `$5/$25/M`, Claude Fable 5.1 at `$10/$50/M`, and GPT-6 Astra at
-`$10/$50/M`. These are planning prices, not Codex/Claude subscription-meter
-charges.
+**2026-09-19 · 14 frozen Ruff questions · GPT-5.6 Luna/max · one run per arm.**
+Without Jev, a model selects up to three evidence pages and a second call answers.
+With Jev, the gateway handles retrieval and one main-model call answers. Both
+search and answer costs are counted, including all Jev calls. This is a bounded
+model-guided pipeline, not unrestricted native-agent search.
 
-| Measured metric | Luna baseline | Luna + Jev navigation | Change |
-|---|---:|---:|---:|
-| Normal-model input tokens | 274,787 | 282,303 | **+2.74%** |
-| Normal-model output tokens | 6,936 | 23,193 | **+234.36%** |
-| Normal-model input + output | 281,723 | 305,496 | **+8.44%** |
-| Jev input + cached input tokens | 0 | 174,726 | **+174,726** |
-| Jev output tokens | 0 | 18,647 | free at published rate |
-| Jev estimated input cost | $0.0000 | $0.0073 | **+$0.0073** |
-| Full-page context bytes | 832,660 | 591,306 | **−28.98%** |
-| Support-path recall | 100% | 91.67% | −8.33 pp |
-| Frozen fact score | 96.67% | 97.62% | **+0.95 pp** |
-| Citation-path coverage | 100% | 91.67% | −8.33 pp |
-| Frozen quality floor | false | false | not passed |
+| Arm | Quality /6 | Solved /14 | Main-model tokens | Jev calls | Query cost, USD |
+|---|---:|---:|---:|---:|---:|
+| Vanilla Karpathy | 5.71 | 11 | 408,298 | 0 | $0.09428 |
+| BSB Full | 5.79 | 12 | 423,905 | 0 | $0.10075 |
+| BSB Lean | 4.86 | 7 | 401,322 | 0 | $0.09775 |
+| BSB Full + Jev | 5.71 | 12 | 236,088 | 124 | $0.06825 |
+| BSB Lean + Jev | 5.57 | 10 | 209,653 | 130 | $0.05979 |
 
-At those observed token counts, the baseline Luna request is about `$0.0633`,
-the navigated Luna request is about `$0.0843`, Jev adds about `$0.0073`, and the
-combined navigated total is about **$0.0916** (**+44.8%** versus the baseline).
-The measured run therefore is not yet an end-to-end saving or an overall quality
-improvement: the fact score rose slightly, while evidence-path recall and citation
-coverage fell.
+Costs are **totals for 14 queries**, at uncached API list prices, not subscription
+charges. Main-model tokens include input and output. Quality uses a fresh blind
+0–6 rubric; “solved” means 6/6. These are different measurements from the
+historical fill/read-footprint table below.
 
-The intended economics become visible in a separate counterfactual: if Jev keeps
-the answer output and quality unchanged while reducing only the baseline input by
-the observed 28.98%, including the same `$0.0073` Jev cost would yield these
-list-price estimates:
+| Jev variant vs its model-guided baseline | Main tokens | Total cost incl. Jev | Paired median cost | Quality delta /6 | Lower-scoring question IDs |
+|---|---:|---:|---:|---:|---|
+| BSB Full + Jev vs BSB Full | -44.3% | -32.3% | -29.9% | -0.07 | 5 |
+| BSB Lean + Jev vs BSB Lean | -47.8% | -38.8% | -37.9% | +0.71 | none |
 
-| Main model | Baseline task | Context-only Jev task | Estimated change |
-|---|---:|---:|---:|
-| GPT-5.6 Luna | $0.0633 | $0.0547 | **−13.6%** |
-| Claude Opus 5 | $1.5473 | $1.1565 | **−25.3%** |
-| Claude Fable 5.1 | $3.0947 | $2.3057 | **−25.5%** |
-| GPT-6 Astra | $3.0947 | $2.3057 | **−25.5%** |
+The initial implementation was wasteful: unnecessary heading splits and verbose
+result packets added overhead. Both were corrected. The first comparison against
+**free local BM25** remains published: v1 Jev increased Full cost by 50.0% and
+Lean cost by 22.2%. The report also compares corrected Jev against that cheap
+alternative, lists every quality regression, and separates main-model tokens
+from combined tokens. There is no universal percentage improvement claim.
+Corrected Jev still costs 25.3% more (Full) and 19.7% more (Lean) than the
+preserved free-BM25 runs. The savings above apply to replacing model-guided
+selection; CLI/system context contributes to its measured cost. Full + Jev's
+slightly lower quality is a cost/quality tradeoff.
 
-That second table is a break-even model, not a measured claim. It is why Jev is
-valuable as a cheap pre-filter for expensive agents, while the production default
-still keeps all candidates and requires full-page verification. The official Jev
-price and billing rule are documented in [TypeSafe's model reference](https://docs.typesafe.ai/models).
+**[Full method, results, limits and reproducible data](./benchmark/JEV-COMPARISON-2026-09-19.md).**
+Older [progressive-navigation measurements](./benchmark/JEV-NAVIGATION-LUNA-MAX-2026-09-19.md)
+describe the earlier implementation and its unsuccessful cost trial.
 
 ## 📊 Is it actually better? (measured, not asserted)
 
 BSB ships a benchmark and **runs it**: the same fetched sources built two/three ways - a vanilla Karpathy wiki vs.
-BSB - answered against a gold question set, scored by an objective judge, with deterministic token accounting
-(`scripts/token_report.py`). Three runs so far (`uv`, `MCP`, `Ruff`). **Full data + caveats:
+BSB - answered against a gold question set, scored against a frozen model-grading rubric, with deterministic token accounting
+(`scripts/token_report.py`). Three historical construction runs (`uv`, `MCP`, `Ruff`). **Full data + caveats:
 [`benchmark/RESULTS.md`](./benchmark/RESULTS.md)** · method & how to run your own: [`docs/benchmark.md`](./docs/benchmark.md).
 
 > **Strongest evidence - applied to a *real, pre-existing* 368-page second brain** (a hand-built game-dev wiki, in a
 > domain BSB knew nothing about): the graph layer answered the same questions at **-23% real tokens / -56%
 > read-footprint**, at equal quality. → [`benchmark/REAL-BRAIN.md`](./benchmark/REAL-BRAIN.md).
 
-**Headline - large run (Ruff, 15 sources, 14 questions, exact `tiktoken` counts):**
+**Historical construction benchmark (Ruff, 15 sources, 14 questions; artifact tokens counted with `tiktoken`):**
 
-| Arm | Quality /6 | Fill tokens | Links / 1k | Read / query | vs. raw |
+| Arm | Quality /6 | Fill tokens | Links / 1k | Estimated read / query | vs. raw |
 |---|:--:|--:|:--:|--:|:--:|
 | vanilla Karpathy | 5.64 | 7,485 | 12.0 | 1,296 | 6.1× |
 | BSB (full) | **5.93** | 22,366 | 20.8 | 1,042 | 7.6× |
@@ -212,7 +204,7 @@ BSB - answered against a gold question set, scored by an objective judge, with d
 
 - **Quality:** BSB beats a vanilla wiki by **+5-12%** across runs - the margin is **verifiable citation** (BSB cites
   exact source URLs; vanilla cites bare filenames), not raw correctness.
-- **Reading is cheap and scales:** answering one query costs **2-18× fewer tokens** than reading the raw sources
+- **Estimated read footprint:** the index-plus-median-page proxy uses **2-18× fewer tokens** than reading the raw sources
   (`bsb-lean` hit 17.9× on the large corpus).
 - **Filling is cheap too:** the **`bsb-lean`** fill mode matches full-BSB quality at **-66% fill tokens** (≈ a vanilla
   wiki's cost) with the *densest* interconnection - so grounding + traceability cost essentially nothing extra. It's

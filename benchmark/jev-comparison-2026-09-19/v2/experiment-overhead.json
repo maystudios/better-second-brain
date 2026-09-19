@@ -1,0 +1,45 @@
+{
+  "query_inference": {
+    "main_input": 1615041,
+    "main_cached_input": 956416,
+    "main_cache_write_input": 0,
+    "main_output": 64225,
+    "main_reasoning_output": 50708,
+    "main_tokens": 1679266,
+    "jev_input": 493861,
+    "jev_cached_input_separate": 0,
+    "jev_output": 44497,
+    "all_model_tokens": 2217624,
+    "jev_usd": 0.020742162,
+    "usd_uncached": 0.420820362,
+    "usd_cache_aware": 0.24866548200000002
+  },
+  "completed_grading_calls": 15,
+  "completed_grading_usage": {
+    "main_input": 270344,
+    "main_cached_input": 138240,
+    "main_cache_write_input": 0,
+    "main_output": 51414,
+    "main_reasoning_output": 47743,
+    "main_tokens": 321758,
+    "jev_input": 0,
+    "jev_cached_input_separate": 0,
+    "jev_output": 0,
+    "all_model_tokens": 321758,
+    "jev_usd": 0.0,
+    "usd_uncached": 0.11576560000000001,
+    "usd_cache_aware": 0.09088239999999999
+  },
+  "incomplete_grading_attempts": [],
+  "total_experiment_cost_known": false,
+  "note": "All query and final grading calls reconciled. Development/orchestration consumption is separate and not measured here; this is not total project spending.",
+  "completed_grading_seconds_sum": 1187.453,
+  "grading_repairs": [
+    {
+      "scope": "q10",
+      "reason": "batch returned four of five required IDs",
+      "action": "retained all four grades; graded only missing answer-044 separately",
+      "all_15_completed_calls_included": true
+    }
+  ]
+}

@@ -1,0 +1,124 @@
+{
+  "passed": true,
+  "terminal_rows": 70,
+  "unique_jev_receipts": 28,
+  "answer_calls": 70,
+  "jev_calls": 397,
+  "source_hashes_verified": true,
+  "no_extra_snapshot_pages": true,
+  "all_usage_reconciled": true,
+  "no_answer_tools": true,
+  "gold_sha256": "91459cda40cac0eef300ad2edc786be3f8dc2925b7268516cf2f4198dae0327a",
+  "runner_sha256": "6a9654937a243b78c35eaca2d8857618a0780acf40c24f0d78afe56a235fe73d",
+  "tokenizer_version": "0.13.0",
+  "quote_check_failures": [
+    {
+      "task": "full-q02",
+      "path": "wiki/concepts/tool-replacement.md",
+      "path_delivered": true,
+      "quote_exact": false
+    },
+    {
+      "task": "full-jev-q02",
+      "path": "wiki/concepts/tool-replacement.md",
+      "path_delivered": true,
+      "quote_exact": false
+    },
+    {
+      "task": "full-q03",
+      "path": "wiki/concepts/rules-and-rule-codes.md",
+      "path_delivered": true,
+      "quote_exact": false
+    },
+    {
+      "task": "lean-jev-q04",
+      "path": "wiki/sources/settings.md",
+      "path_delivered": true,
+      "quote_exact": false
+    },
+    {
+      "task": "full-jev-q06",
+      "path": "wiki/concepts/configuration.md",
+      "path_delivered": true,
+      "quote_exact": false
+    },
+    {
+      "task": "lean-q09",
+      "path": "wiki/sources/formatter.md",
+      "path_delivered": true,
+      "quote_exact": false
+    },
+    {
+      "task": "full-q10",
+      "path": "wiki/sources/rules.md",
+      "path_delivered": true,
+      "quote_exact": false
+    },
+    {
+      "task": "full-jev-q10",
+      "path": "wiki/sources/rules.md",
+      "path_delivered": true,
+      "quote_exact": false
+    },
+    {
+      "task": "vanilla-q10",
+      "path": "wiki/Rules.md",
+      "path_delivered": true,
+      "quote_exact": false
+    },
+    {
+      "task": "full-q11",
+      "path": "wiki/concepts/versioning.md",
+      "path_delivered": true,
+      "quote_exact": false
+    },
+    {
+      "task": "vanilla-q11",
+      "path": "wiki/Versioning.md",
+      "path_delivered": true,
+      "quote_exact": false
+    },
+    {
+      "task": "full-jev-q12",
+      "path": "wiki/concepts/preview-mode.md",
+      "path_delivered": true,
+      "quote_exact": false
+    },
+    {
+      "task": "full-jev-q12",
+      "path": "wiki/concepts/preview-mode.md",
+      "path_delivered": true,
+      "quote_exact": false
+    },
+    {
+      "task": "vanilla-q12",
+      "path": "wiki/Preview.md",
+      "path_delivered": true,
+      "quote_exact": false
+    },
+    {
+      "task": "full-jev-q13",
+      "path": "wiki/sources/editors.md",
+      "path_delivered": true,
+      "quote_exact": false
+    },
+    {
+      "task": "full-jev-q14",
+      "path": "wiki/concepts/tool-replacement.md",
+      "path_delivered": true,
+      "quote_exact": false
+    },
+    {
+      "task": "vanilla-q14",
+      "path": "wiki/Ruff.md",
+      "path_delivered": true,
+      "quote_exact": false
+    },
+    {
+      "task": "vanilla-q14",
+      "path": "wiki/Ruff.md",
+      "path_delivered": true,
+      "quote_exact": false
+    }
+  ]
+}

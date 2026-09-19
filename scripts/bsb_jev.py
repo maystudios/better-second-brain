@@ -981,7 +981,7 @@ def main(argv: Optional[List[str]] = None) -> int:
                 import bsb_jev_search as search
             res = search.find(args.query_text, args.need, root, dry_run=args.dry_run,
                               max_calls=args.max_calls, max_pages=args.max_pages)
-            print(json.dumps(res, indent=2, ensure_ascii=False))
+            print(json.dumps(search.caller_result(res), ensure_ascii=False))
             return 0 if res['status'] not in {'unavailable', 'stale'} else 1
 
         elif args.command in {'navigate', 'source', 'read', 'next'}:

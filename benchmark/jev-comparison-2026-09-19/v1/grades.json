@@ -1,0 +1,492 @@
+[
+  {
+    "id": "answer-011",
+    "correctness": 1,
+    "citation": 1,
+    "faithfulness": 2,
+    "reason": "Correctly identifies the LSP as Rust-based, but does not answer Ruff’s overall implementation language or identify Astral, so its support is incomplete; its explicit limitation is faithful."
+  },
+  {
+    "id": "answer-016",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "Covers Ruff’s purpose, Rust implementation, and Astral maintenance, with relevant quotations supporting each material fact."
+  },
+  {
+    "id": "answer-018",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "Accurately states all requested facts, and the cited quotations directly support Ruff’s role, Rust implementation, and Astral maintenance."
+  },
+  {
+    "id": "answer-049",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "Correctly identifies Ruff, Rust, and Astral; the supplied citation directly supports all requested facts."
+  },
+  {
+    "id": "answer-058",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "Correctly states Ruff’s purpose, Rust implementation, and Astral maintenance, with direct supporting quotations."
+  },
+  {
+    "id": "answer-012",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "Matches all six gold tools exactly; the cited quotations directly support the list and accurately characterize Pylint as a performance comparison."
+  },
+  {
+    "id": "answer-015",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "Includes the complete gold list, with source text supporting the added yesqa, eradicate, pandas-vet, pep8-naming, and source-variation details."
+  },
+  {
+    "id": "answer-066",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "Contains every gold tool; the exact citations support both the six-item list and the added FAQ references to yesqa and eradicate."
+  },
+  {
+    "id": "answer-067",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "Contains every gold tool, and both the list and the additional yesqa/eradicate claims are directly supported by the cited quotations."
+  },
+  {
+    "id": "answer-070",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "Provides the complete gold list and accurately cites the FAQ limits on pyupgrade, Flake8 plugins, and type-checker replacement."
+  },
+  {
+    "id": "answer-005",
+    "correctness": 1,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "It omits the required exact list [\"E4\", \"E7\", \"E9\", \"F\"], but its citation supports the stated broader F-plus-curated-E description."
+  },
+  {
+    "id": "answer-029",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "It gives the exact default list, supported directly by two checkable quotations."
+  },
+  {
+    "id": "answer-056",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "It gives the exact default list, supported directly by the cited configuration quotation."
+  },
+  {
+    "id": "answer-060",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "It gives the exact default list, and both cited tables directly support it."
+  },
+  {
+    "id": "answer-069",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "It gives the exact default list; although quote_exact is false, the supplied full source contains the same statement and supports the claim."
+  },
+  {
+    "id": "answer-019",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "Correctly states 88 and 4; both values are directly supported by the cited tables and surrounding text."
+  },
+  {
+    "id": "answer-020",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "Correctly provides both requested defaults, with separate exact citations supporting line-length 88 and indent-width 4."
+  },
+  {
+    "id": "answer-039",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "Both requested values are correct and each is directly supported by an exact citation from the defaults table."
+  },
+  {
+    "id": "answer-051",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "Correctly states line-length 88 and indent-width 4; the combined citation explicitly supports both claims."
+  },
+  {
+    "id": "answer-068",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "Correctly answers both values. The first citation exactly supports both; the second has a quote mismatch but its supplied full source confirms the same claims."
+  },
+  {
+    "id": "answer-008",
+    "correctness": 1,
+    "citation": 1,
+    "faithfulness": 2,
+    "reason": "Faithfully abstains, but omits all required semantics; the quoted listings do not directly support the requested distinction."
+  },
+  {
+    "id": "answer-009",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "Correctly states all four rule behaviors, with an exact relevant quotation supporting each."
+  },
+  {
+    "id": "answer-022",
+    "correctness": 1,
+    "citation": 1,
+    "faithfulness": 2,
+    "reason": "Faithfully reports the limitation but does not provide the required select/ignore versus extend-* semantics; its citation only lists the settings."
+  },
+  {
+    "id": "answer-025",
+    "correctness": 1,
+    "citation": 0,
+    "faithfulness": 2,
+    "reason": "It abstains on the required distinction and provides no evidence or citation, though it makes no unsupported factual claim."
+  },
+  {
+    "id": "answer-035",
+    "correctness": 1,
+    "citation": 1,
+    "faithfulness": 2,
+    "reason": "Faithfully abstains, but does not answer the required distinction; the preview-rule quotation offers only partial, indirect support."
+  },
+  {
+    "id": "answer-001",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "Correctly identifies all three formats, the [tool.ruff] header, and the exact same-directory precedence; the supplied citation directly supports each claim."
+  },
+  {
+    "id": "answer-036",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "Correctly states all formats, header usage, and precedence; the cited page directly supports the complete answer."
+  },
+  {
+    "id": "answer-043",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "Matches the gold on all three formats and their precedence, with an exact supporting citation."
+  },
+  {
+    "id": "answer-048",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "Correctly describes the three files, schema/header distinction, and precedence; both citations directly support the claims."
+  },
+  {
+    "id": "answer-055",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "Fully matches the gold. The exact page-2 citation supports all material claims; the additional paraphrased citation is also consistent with the supplied surrounding source."
+  },
+  {
+    "id": "answer-014",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "Correctly states that only safe fixes apply by default and gives both supported enablement methods: `--unsafe-fixes` and `unsafe-fixes = true` in config, with relevant citations."
+  },
+  {
+    "id": "answer-017",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "Correctly answers the default behavior and provides the valid `--unsafe-fixes` CLI method; the cited evidence directly supports both claims."
+  },
+  {
+    "id": "answer-026",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "Correctly states the safe-fixes default and both supported unsafe-fix enablement methods, all directly supported by the supplied quotations."
+  },
+  {
+    "id": "answer-037",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "Correctly states that only safe fixes apply by default and explains the valid `--unsafe-fixes` CLI method, with relevant supporting citations."
+  },
+  {
+    "id": "answer-046",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "Correctly answers the default behavior and gives the valid `--unsafe-fixes` CLI command, directly supported by the cited source text."
+  },
+  {
+    "id": "answer-004",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "Correctly gives double quotes, space indentation, and >99.9% identical formatting on Django/Zulip while citing supporting defaults and Black-compatibility text."
+  },
+  {
+    "id": "answer-032",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "Accurately states both defaults and the >99.9% Black-identical result for Django/Zulip; citations directly support these claims and drop-in compatibility."
+  },
+  {
+    "id": "answer-033",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "Covers the requested defaults and real-world Black comparison, with verified quotations supporting double quotes, spaces, and >99.9% identical formatting."
+  },
+  {
+    "id": "answer-057",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "Fully correct: double/space defaults and >99.9% identical formatting on Black-formatted Django/Zulip projects, with complete relevant support."
+  },
+  {
+    "id": "answer-059",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "Correctly reports double quotes, space indentation, and >99.9% identical formatting on Django/Zulip; citations support every material claim."
+  },
+  {
+    "id": "answer-013",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "Correctly gives the Ruff format setting and the dynamic default with its surrounding-line-length behavior; citations directly support the claims."
+  },
+  {
+    "id": "answer-031",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "Correctly states both requested configuration facts, with exact supporting quotations and no unsupported claims."
+  },
+  {
+    "id": "answer-047",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "Correctly answers the enablement setting and default value; the exact citation supports both stated claims."
+  },
+  {
+    "id": "answer-053",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "Correctly identifies the format section, setting, dynamic default, and its meaning; all are supported by the cited source text."
+  },
+  {
+    "id": "answer-054",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "Correctly states the setting and dynamic default. Although one quote is marked non-exact, the supplied full source clearly supports the claims."
+  },
+  {
+    "id": "answer-006",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "All eight mappings exactly match the gold. The supplied full source supports every mapping despite quote_exact being false."
+  },
+  {
+    "id": "answer-030",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "All eight mappings exactly match the gold, and the supplied full source directly lists each one."
+  },
+  {
+    "id": "answer-040",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "All mappings are correct; bugbear, simplify, and bandit are unambiguous shorthand for the cited Flake8 plugins, and the citations support all claims."
+  },
+  {
+    "id": "answer-044",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "All eight mappings exactly match the gold. The supplied full source directly supports every cited mapping."
+  },
+  {
+    "id": "answer-052",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "All mappings are correct; the shortened names bugbear, simplify, and bandit are semantically complete and directly supported by the cited text."
+  },
+  {
+    "id": "answer-021",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "Correctly states that preview mode and selection are both required, and accurately includes the explicit-preview-rules condition. The supplied source text supports all claims."
+  },
+  {
+    "id": "answer-034",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "Correctly explains both activation methods and that explicit selection or ALL alone is insufficient. The cited and surrounding source text supports the claims."
+  },
+  {
+    "id": "answer-038",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "Covers preview activation, the inability of selection alone to enable the rule, and individual naming under explicit-preview-rules. Citations directly support these points."
+  },
+  {
+    "id": "answer-050",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "Fully matches the gold: preview mode must accompany selection, including for explicit or ALL selection, with the extra explicit-preview-rules detail accurately supported."
+  },
+  {
+    "id": "answer-065",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "Correctly answers the requested activation and selection behavior and appropriately qualifies the illustrative rule syntax. The cited source supports the material claims."
+  },
+  {
+    "id": "answer-007",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "Correctly gives the command, beta and stable versions, and extension ID; each material fact has relevant exact support."
+  },
+  {
+    "id": "answer-024",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "All requested facts are correct and supported by the supplied quotations; the retrieval-status comment does not affect the answer."
+  },
+  {
+    "id": "answer-028",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "Correctly states all requested facts. Although one cited quote is marked non-exact, the supplied full source explicitly supports the claims, so there is no material citation or faithfulness defect."
+  },
+  {
+    "id": "answer-061",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "Correctly states the command, beta and stable versions, and extension ID, with relevant support for every material claim."
+  },
+  {
+    "id": "answer-064",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "All requested facts are correct, directly supported by the delivered quotations, and stated without unsupported additions."
+  },
+  {
+    "id": "answer-003",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "Correctly answers no and cites the exact statements that Ruff is not a type checker and is complementary to Mypy, Pyright, and Pyre."
+  },
+  {
+    "id": "answer-023",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "Correctly concludes Ruff cannot replace the named type checkers, with exact citations for Ruff's role and complementary relationship."
+  },
+  {
+    "id": "answer-041",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "Fully states that Ruff is not a type checker, misses type errors caught by Mypy/Pyright/Pyre, and is complementary; the second citation's wording variation does not undermine support."
+  },
+  {
+    "id": "answer-062",
+    "correctness": 1,
+    "citation": 1,
+    "faithfulness": 2,
+    "reason": "Correctly identifies Ruff as a linter/formatter and ty as separate, but abstains on the requested replacement question and lacks direct support for the Mypy/Pyright complementary relationship."
+  },
+  {
+    "id": "answer-063",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "Fully matches the FAQ's conclusion and directly cites that Ruff misses type errors caught by Mypy/Pyright/Pyre and is complementary."
+  },
+  {
+    "id": "answer-002",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "Correctly states Ruff’s custom non-SemVer policy, unstable 0.x behavior, minor breaking-change bumps, patch bug-fix bumps, and eventual SemVer adoption. The cited excerpts and surrounding source text support these claims, including the detailed examples."
+  },
+  {
+    "id": "answer-010",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "Correctly states Ruff uses a custom pre-1.0 scheme, with breaking changes in minor bumps and bug fixes/non-breaking changes in patch bumps; citations directly support these claims and the listed examples."
+  },
+  {
+    "id": "answer-027",
+    "correctness": 2,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "Correctly states Ruff’s custom non-SemVer policy, including minor bumps for breaking changes, patch bumps for fixes/non-breaking changes, and eventual SemVer after API stability. The cited source directly supports these claims and the examples; quote_exact=false does not undermine the available matching source text."
+  },
+  {
+    "id": "answer-042",
+    "correctness": 1,
+    "citation": 2,
+    "faithfulness": 2,
+    "reason": "Correctly explains Ruff’s pre-1.0 custom scheme and minor/patch meanings, with supporting citations. It omits the gold’s qualification that standard SemVer would apply once a stable API is reached."
+  },
+  {
+    "id": "answer-045",
+    "correctness": 2,
+    "citation": 1,
+    "faithfulness": 1,
+    "reason": "It correctly covers the custom non-SemVer scheme, unstable 0.x API, minor-version breaking changes, patch bug fixes, and eventual SemVer. However, “other non-breaking changes” is not directly supported by the cited quotations, making the support incomplete and a minor overstatement."
+  }
+]

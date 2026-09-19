@@ -1,0 +1,52 @@
+{
+  "query_inference": {
+    "main_input": 1079006,
+    "main_cached_input": 583424,
+    "main_cache_write_input": 0,
+    "main_output": 45337,
+    "main_reasoning_output": 32929,
+    "main_tokens": 1124343,
+    "jev_input": 742657,
+    "jev_cached_input_separate": 0,
+    "jev_output": 60506,
+    "all_model_tokens": 1927506,
+    "jev_usd": 0.031191594,
+    "usd_uncached": 0.30139719400000003,
+    "usd_cache_aware": 0.19638087399999998
+  },
+  "completed_grading_calls": 18,
+  "completed_grading_usage": {
+    "main_input": 304186,
+    "main_cached_input": 60160,
+    "main_cache_write_input": 0,
+    "main_output": 34605,
+    "main_reasoning_output": 30778,
+    "main_tokens": 338791,
+    "jev_input": 0,
+    "jev_cached_input_separate": 0,
+    "jev_output": 0,
+    "all_model_tokens": 338791,
+    "jev_usd": 0.0,
+    "usd_uncached": 0.10236320000000002,
+    "usd_cache_aware": 0.09153439999999999
+  },
+  "incomplete_grading_attempts": [
+    {
+      "scope": "all70answers",
+      "reason": "240second timeout",
+      "usage": null
+    },
+    {
+      "scope": "16 nonexactquote answers",
+      "reason": "no completed receipt after interruption",
+      "usage": null
+    },
+    {
+      "scope": "five q11answers together",
+      "reason": "no completed receipt after interruption",
+      "usage": null
+    }
+  ],
+  "total_experiment_cost_known": false,
+  "note": "Query-arm comparison fully reconciled; incomplete grader and orchestration usage not estimated as zero."
+}
