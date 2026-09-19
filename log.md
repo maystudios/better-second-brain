@@ -218,3 +218,14 @@ Support-path recall and citation coverage were 91.67%, so the frozen quality
 floor was not met and no end-to-end saving is claimed. The path remains optional;
 exact local source lookup costs zero API calls. See
 benchmark/JEV-NAVIGATION-LUNA-MAX-2026-09-19.md and docs/jev.md.
+
+## [2026-09-19] pricing | Jev overhead separated from agent economics
+
+Added standard API list-price accounting to the Jev navigation report and README:
+174,726 Jev input/cached-input tokens add about $0.0073 at TypeSafe's published
+$0.042/M input rate (output free). In the observed Luna trial, Jev's overhead did
+not offset the extra answer turns: the estimated combined total was $0.0916 versus
+$0.0633 for the direct baseline. A separate counterfactual shows the intended
+break-even if the 28.98% input reduction holds without extra turns: roughly
+13.6% cheaper for Luna and 25% cheaper for Opus/Fable/Astra. These are API list
+price equivalents, not subscription invoices; quality remains a measured gate.

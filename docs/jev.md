@@ -39,6 +39,17 @@ sends selected snippets, search questions, or exact mutation diffs plus cited
 source excerpts to `https://api.typesafe.ai/v1/systemone`. It does not upload
 the entire vault. The pinned default model is `jev-1.13.0`.
 
+### Cost accounting
+
+TypeSafe currently lists Jev at `$0.042` per million input tokens; output tokens
+are free. The gateway reports Jev input, cached-input and output usage so a caller
+can calculate its own addition. On the 2026-09-19 Luna navigation trial, 174,726
+reported input/cached-input tokens correspond to about `$0.0073` at that list
+price. The figure is an API list-price estimate, not a subscription or host quota
+charge. Keep the expensive model's input and output usage beside Jev's usage when
+comparing a complete task. See [TypeSafe's model reference](https://docs.typesafe.ai/models)
+for the current price and billing rule.
+
 ## Query and advice
 
 ### Progressive reading (experimental, opt-in)

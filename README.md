@@ -118,7 +118,7 @@ Full setup, including the optional layers and git hooks: [`docs/install.md`](./d
 
 ## The optional layers (off by default, degrade gracefully)
 
-- **jev** - optional progressive context reading, exact source lookup and safe mutation review. Jev selects pages per subquestion and explores linked/deferred evidence through a gateway. → [`docs/jev.md`](./docs/jev.md). Measurements: [Gemini](./benchmark/JEV-2026-09-19.md), [Luna max](./benchmark/JEV-LUNA-MAX-2026-09-19.md), [progressive navigation](./benchmark/JEV-NAVIGATION-LUNA-MAX-2026-09-19.md). The navigation run reduced delivered page bytes by 28.98%, but increased combined measured model tokens by 77.04%; no net saving is claimed.
+- **jev** - optional progressive context reading, exact source lookup and safe mutation review. Jev selects pages per subquestion and explores linked/deferred evidence through a gateway. → [`docs/jev.md`](./docs/jev.md). Measurements: [Gemini](./benchmark/JEV-2026-09-19.md), [Luna max](./benchmark/JEV-LUNA-MAX-2026-09-19.md), [progressive navigation](./benchmark/JEV-NAVIGATION-LUNA-MAX-2026-09-19.md). The current navigation run reduced delivered page bytes by 28.98%, but added adaptive turns; the measured model cost rose. The tables below separate that result from the potential saving when the same context reduction holds without extra turns.
 - **graphify** - `uv tool install graphifyy`, then the agent uses the `/graphify` skill. → [`docs/graphify-integration.md`](./docs/graphify-integration.md)
 - **auto-research** - a Claude Code skill that self-improves the schema. → [`docs/auto-research-integration.md`](./docs/auto-research-integration.md)
 - **self-healing** - runs on the source-grade lint. → [`docs/self-healing.md`](./docs/self-healing.md)
@@ -138,6 +138,54 @@ hook support/trust is required; unsupported tools are outside this guard. For an
 existing populated brain, use [`install_jev.py`](./scripts/install_jev.py), preserving
 its notes and domain rules. [`docs/jev.md`](./docs/jev.md) explains upgrading and
 disabling only the strict read/shell gate while retaining Jev.
+
+### Jev cost and quality, measured
+
+The six-question Luna/max navigation trial is the same frozen comparison described
+in [`benchmark/JEV-NAVIGATION-LUNA-MAX-2026-09-19.md`](./benchmark/JEV-NAVIGATION-LUNA-MAX-2026-09-19.md).
+It measured the following standard API list-price equivalents: Jev at `$0.042/M`
+input tokens with free output, GPT-5.6 Luna at `$0.20/$1.20/M` input/output,
+Claude Opus 5 at `$5/$25/M`, Claude Fable 5.1 at `$10/$50/M`, and GPT-6 Astra at
+`$10/$50/M`. These are planning prices, not Codex/Claude subscription-meter
+charges.
+
+| Measured metric | Luna baseline | Luna + Jev navigation | Change |
+|---|---:|---:|---:|
+| Normal-model input tokens | 274,787 | 282,303 | **+2.74%** |
+| Normal-model output tokens | 6,936 | 23,193 | **+234.36%** |
+| Normal-model input + output | 281,723 | 305,496 | **+8.44%** |
+| Jev input + cached input tokens | 0 | 174,726 | **+174,726** |
+| Jev output tokens | 0 | 18,647 | free at published rate |
+| Jev estimated input cost | $0.0000 | $0.0073 | **+$0.0073** |
+| Full-page context bytes | 832,660 | 591,306 | **−28.98%** |
+| Support-path recall | 100% | 91.67% | −8.33 pp |
+| Frozen fact score | 96.67% | 97.62% | **+0.95 pp** |
+| Citation-path coverage | 100% | 91.67% | −8.33 pp |
+| Frozen quality floor | false | false | not passed |
+
+At those observed token counts, the baseline Luna request is about `$0.0633`,
+the navigated Luna request is about `$0.0843`, Jev adds about `$0.0073`, and the
+combined navigated total is about **$0.0916** (**+44.8%** versus the baseline).
+The measured run therefore is not yet an end-to-end saving or an overall quality
+improvement: the fact score rose slightly, while evidence-path recall and citation
+coverage fell.
+
+The intended economics become visible in a separate counterfactual: if Jev keeps
+the answer output and quality unchanged while reducing only the baseline input by
+the observed 28.98%, including the same `$0.0073` Jev cost would yield these
+list-price estimates:
+
+| Main model | Baseline task | Context-only Jev task | Estimated change |
+|---|---:|---:|---:|
+| GPT-5.6 Luna | $0.0633 | $0.0547 | **−13.6%** |
+| Claude Opus 5 | $1.5473 | $1.1565 | **−25.3%** |
+| Claude Fable 5.1 | $3.0947 | $2.3057 | **−25.5%** |
+| GPT-6 Astra | $3.0947 | $2.3057 | **−25.5%** |
+
+That second table is a break-even model, not a measured claim. It is why Jev is
+valuable as a cheap pre-filter for expensive agents, while the production default
+still keeps all candidates and requires full-page verification. The official Jev
+price and billing rule are documented in [TypeSafe's model reference](https://docs.typesafe.ai/models).
 
 ## 📊 Is it actually better? (measured, not asserted)
 
