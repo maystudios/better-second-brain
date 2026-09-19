@@ -64,6 +64,7 @@ GATEWAY_CODE_FILES = {
     "scripts/bsb_jev_hook.py",
     "scripts/bsb_jev_focus.py",
     "scripts/bsb_jev_navigation.py",
+    "scripts/bsb_jev_search.py",
     "scripts/install_jev.py",
 }
 
@@ -114,6 +115,7 @@ WRITE_TOOL_NAMES = {
 
 READ_ONLY_GATEWAY_COMMANDS = {
     "advise",
+    "find",
     "navigate",
     "next",
     "query",
@@ -340,6 +342,10 @@ def _parse_native_argv(command: Any) -> Optional[List[str]]:
 
     for char in command:
         if quote is not None:
+            # Bash and PowerShell evaluate these even within double quotes.
+            # This parser never attempts to interpret escaping or expansion.
+            if quote == '"' and char in '$`':
+                return None
             if char == quote:
                 quote = None
             else:
@@ -389,6 +395,7 @@ def _is_gateway_script(token: str, root: Path) -> bool:
 def _validate_gateway_args(command: str, args: List[str]) -> bool:
     """Validate one gateway subcommand's small, explicit argv grammar."""
     specs = {
+        "find": (1, 1, {"--dry-run"}, {"--need", "--max-calls", "--max-pages"}, {"--need"}),
         "query": (1, 1, {"--dry-run", "--json", "--prune"}, {"--candidate-limit", "--limit", "--roots"}, set()),
         "navigate": (1, 1, {"--dry-run"}, {"--need"}, {"--need"}),
         "source": (1, 1, {"--dry-run"}, set(), set()),
@@ -423,7 +430,7 @@ def _validate_gateway_args(command: str, args: List[str]) -> bool:
             if index + 1 >= len(args) or not args[index + 1] or args[index + 1].startswith("-"):
                 return False
             value = args[index + 1]
-            if item in {"--limit", "--candidate-limit"} and not re.fullmatch(r"\d+", value):
+            if item in {"--limit", "--candidate-limit", "--max-calls", "--max-pages"} and not re.fullmatch(r"[0-9]+", value):
                 return False
             if item == "--need" and len([x for x in args[:index] if x == "--need"]) >= 6:
                 return False
@@ -581,15 +588,15 @@ def evaluate_tool_call(
         raw_search_path = _first_arg(tool_args, "SearchPath", "search_path", "path", "Path", "directory")
         if strict and raw_search_path is not None and not isinstance(raw_search_path, str):
             return make_deny(
-                "Strict Jev enforcement cannot validate this native search scope. Use the gateway query command."
+                "Strict Jev enforcement cannot validate this native search scope. Use the gateway find command."
             )
         search_path = raw_search_path or ""
         searches_wiki = is_wiki_search(str(search_path), root)
         searches_raw = is_wiki_or_protected_path(str(search_path), root)[1] == "raw"
         if searches_wiki or (strict and searches_raw):
             return make_deny(
-                "Direct wiki search intercepted by bsb-jev gateway. Use 'python scripts/bsb_jev.py query \"<query>\"' "
-                "for deterministic candidate retrieval and Jev semantic reranking."
+                "Direct wiki search intercepted by bsb-jev gateway. Use 'python scripts/bsb_jev.py find \"<query>\"' "
+                "for catalog-first branching retrieval and full selected pages."
             )
 
     # 4. Read tools.  Legacy mode remains permissive so existing Jev installs
@@ -613,7 +620,7 @@ def evaluate_tool_call(
         protected, zone = is_wiki_or_protected_path(target_path, root)
         if protected and zone in {"wiki", "search"}:
             return make_deny(
-                "Strict Jev enforcement blocks direct wiki reads. Use the gateway source/navigate/read command."
+                "Strict Jev enforcement blocks direct wiki reads. Use gateway find for full selected pages, or source/read for literal lookup."
             )
 
     # 5. Shell tools.  Strict mode is intentionally fail-closed: only the

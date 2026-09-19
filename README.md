@@ -132,16 +132,20 @@ python scripts/bsb_jev.py configure --enabled off
 ```
 
 Supply `TYPESAFE_API_KEY` through your environment/secret manager. New installations
-remain off unless chosen. Strict hooks direct the agent through `navigate` → `read`
-→ `next`; `source` handles literal lookups locally with **zero API calls**. Host
+remain off unless chosen. Use `python scripts/bsb_jev.py find "<question>"` for
+catalog-first branching search: Jev selects branches, and the gateway loads pages,
+backtracks and returns complete evidence pages within one call. Optional `--need`
+arguments describe subquestions. `source` handles literal lookups locally with
+**zero API calls**. The legacy `navigate` / `read` / `next` route remains available. Host
 hook support/trust is required; unsupported tools are outside this guard. For an
 existing populated brain, use [`install_jev.py`](./scripts/install_jev.py), preserving
 its notes and domain rules. [`docs/jev.md`](./docs/jev.md) explains upgrading and
 disabling only the strict read/shell gate while retaining Jev.
 
-### Jev cost and quality, measured
+### Earlier Jev cost and quality measurements
 
-The six-question Luna/max navigation trial is the same frozen comparison described
+The new branching route has no demonstrated end-to-end savings yet. The earlier
+six-question Luna/max navigation trial is the same frozen comparison described
 in [`benchmark/JEV-NAVIGATION-LUNA-MAX-2026-09-19.md`](./benchmark/JEV-NAVIGATION-LUNA-MAX-2026-09-19.md).
 It measured the following standard API list-price equivalents: Jev at `$0.042/M`
 input tokens with free output, GPT-5.6 Luna at `$0.20/$1.20/M` input/output,

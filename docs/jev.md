@@ -1,7 +1,7 @@
 # Optional Jev gateway
 
 Jev is a small TypeSafe classification model. This layer uses it to prioritize
-local knowledge candidates and review bounded maintenance diffs. It does not
+local knowledge branches and review bounded maintenance diffs. It does not
 replace the agent, the instance schema, full-page reading, or source checking.
 New installations default to **off**. Disabled queries make no API calls.
 
@@ -35,9 +35,10 @@ Set `TYPESAFE_API_KEY` through your secret manager/environment. On Windows an
 existing per-user DPAPI file at `~/.config/harness-workflow/typesafe-key.dpapi`
 is also supported; `TYPESAFE_KEY_FILE` overrides that encrypted file location.
 Never put keys into tracked config, prompts, requests, or notes. The gateway
-sends selected snippets, search questions, or exact mutation diffs plus cited
-source excerpts to `https://api.typesafe.ai/v1/systemone`. It does not upload
-the entire vault. The pinned default model is `jev-1.13.0`.
+sends catalog descriptors, search questions, bounded full-text page chunks, or
+exact mutation diffs plus cited source excerpts to `https://api.typesafe.ai/v1/systemone`.
+`find` sends descriptors before evaluating selected page text; budgets bound its
+requests and page evaluations. The pinned default model is `jev-1.13.0`.
 
 ### Cost accounting
 
@@ -52,9 +53,71 @@ for the current price and billing rule.
 
 ## Query and advice
 
-### Progressive reading (experimental, opt-in)
+### Catalog-first branching retrieval
 
-The progressive path lets Jev choose which complete pages to read for explicit
+When enabled, call `find` once for a knowledge question. The gateway owns the
+catalog/index traversal, branch selection, text evaluation, link following and
+backtracking within that call. The caller does not need to read the index first
+or alternate `read` / `next` turns to drive this route.
+
+```sh
+python scripts/bsb_jev.py find "Why are replicated updates delayed?" --need "Cause of delay" --need "Exact configuration fix"
+python scripts/bsb_jev.py find "Why are replicated updates delayed?" --max-calls 24 --max-pages 12
+python scripts/bsb_jev.py find "Why are replicated updates delayed?" --dry-run
+```
+
+The bounded catalog includes allowed Markdown pages in configured roots and
+index/MOC relationships, including unindexed and unlinked pages. Admission does
+not require lexical overlap with the question. Jev first selects branches using
+descriptors, then evaluates selected pages using contiguous text chunks. The
+gateway retains unvisited alternatives and prevents cycles and repeated page
+evaluation; request and page budgets bound how far one call can search.
+
+Read **every returned full-page text** and its actual sources before answering.
+The public response contains `status`, `session_id`, `pages` (path, text,
+`full_page`, `file_sha256`), `evidence_refs`, `conflicts`, `unresolved_needs`,
+`coverage`, `usage` and `api_calls`. Evidence references identify exact source
+lines and hashes. They are retrieval evidence, not generated facts or a substitute
+for source checks. Discovered contrary and uncertain evidence remains visible;
+model diagnostics and complete classification distributions stay in ignored
+local receipts.
+
+The service sends up to 8,000 UTF-8 bytes of contiguous page text per evidence
+chunk, and up to 4,000 bytes of prior evidence for cross-page conflict comparison.
+Omitted comparison context is reported. A single overlarge line is reported as
+unread, rather than silently truncated. The local 24 KiB request cap still applies.
+Default limits are 24 calls, 12 evaluated pages, 120 seconds and 512 KiB of returned
+page bodies. `--max-calls` accepts 1..96 and `--max-pages` 1..48.
+The two preferred alternatives per routing question and evidence confidence floor
+of 0.5 are uncalibrated traversal heuristics, never proof of correctness.
+
+If an output limit omits a selected page, `omitted_pages` identifies it by path/hash.
+Known conflict references remain visible even when their body is omitted; use
+`read <session_id> <path>` to obtain that offered page in full before relying on it.
+Invalid optional indexes fall back to the page catalog with incomplete coverage.
+
+`ready` means provisional evidence adequacy for the requested needs, subject to
+reported coverage. Selection confidence cannot establish answer completeness.
+`partial` or `unresolved` results require reporting their gaps; inspect conflicts,
+unresolved needs, incomplete catalog coverage, unread text and unvisited pages.
+All results keep `global_absence_proven: false`, including ready results.
+
+`disabled` and `dry_run` perform zero network calls. Missing/invalid credentials
+or service failures produce explicit `unavailable` or `partial` results. `stale`
+means source freshness could not be maintained; do not use stale evidence as a
+current verified answer. Report these states rather than silently falling back
+to expensive-agent search. A follow-up with a narrower question or different
+budgets is a new retrieval attempt, not proof that the earlier search was complete.
+Another retrieval route requires existing task authorization or explicit review.
+
+No measured quality improvement, end-to-end token saving or live host enforcement
+is established by this feature. Mocked behavioral tests, a bounded live TypeSafe
+trial and actual host interception are separate evidence gates.
+
+### Legacy progressive reading (experimental, opt-in)
+
+The legacy progressive path remains available for existing callers and sessions.
+It lets Jev choose which complete pages to read for explicit
 subquestions. A local scanner supplies bounded candidates; Jev classifies each
 page's question-focused windows as direct, partial, contrary, unrelated or unknown.
 The gateway offers an initial set covering the needs, retaining contrary evidence.
@@ -188,8 +251,9 @@ The basic hook blocks direct protected writes and native wiki searches. With
 `enforce_reads` enabled, supported native wiki reads and arbitrary shell commands
 are also routed through the gateway; narrowly parsed gateway commands remain
 available. New `init_brain.py --jev on` and the existing-brain installer enable
-this stricter mode. Read schema/index/roadmap instructions normally; retrieve wiki
-evidence through session receipts. Turning Jev off makes
+this stricter mode. Read schema/roadmap instructions normally; enabled `find`
+owns index traversal and returns full selected wiki pages. `source` plus receipt
+reads remains available for literal lookup. Turning Jev off makes
 the hook neutral; `configure --uninstall-hooks` removes only this integration.
 Other handlers are preserved. Codex must trust/review the repository hooks in
 its host UI before they run. Host support and trust settings matter: installed

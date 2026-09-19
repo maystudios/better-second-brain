@@ -37,7 +37,7 @@ def install(target: Path, *, enabled=False, hooks=False, roots=None, dry_run=Fal
         if Path(name).is_absolute() or '..' in Path(name).parts or not p.is_dir() or not p.resolve().is_relative_to(target):
             raise ValueError('Search roots must be existing directories inside target')
     files = ['scripts/bsb_jev.py','scripts/bsb_jev_hook.py','scripts/bsb_jev_focus.py',
-             'scripts/bsb_jev_navigation.py','scripts/install_jev.py','docs/jev.md',
+             'scripts/bsb_jev_navigation.py','scripts/bsb_jev_search.py','scripts/install_jev.py','docs/jev.md',
              'benchmark/JEV-2026-09-19.md','benchmark/JEV-LUNA-MAX-2026-09-19.md',
              'benchmark/JEV-NAVIGATION-LUNA-MAX-2026-09-19.md']
     for name in files:
@@ -69,16 +69,20 @@ def install(target: Path, *, enabled=False, hooks=False, roots=None, dry_run=Fal
             if dst.resolve() != (source/name).resolve():shutil.copyfile(source/name,dst)
         rule=(f'{BEGIN}\n## Optional Jev assistance\n'
               'Read `docs/jev.md` when using the optional gateway. Check `python scripts/bsb_jev.py configure --status`.\n'
-              'When enabled, use `python scripts/bsb_jev.py navigate "<question>" --need "<subquestion>"` for knowledge search,\n'
-              'and `advise` / `plan` for placement or changes. Read the shortlisted pages fully; preserve source,\n'
-              'domain and linking rules above. Jev ranks candidates; it cannot establish truth or global absence.\n'
-              'Use `read <session> <path>` for offered full pages, `next <session>` for missing evidence/links, and\n'
-              '`source "<literal>"` for exact local lookup. Deferred candidates remain reachable; no hard top-K pruning.\n'
+              'When enabled, call `python scripts/bsb_jev.py find "<question>"` once for knowledge search; add repeatable\n'
+              '`--need "<subquestion>"` when useful, and `advise` / `plan` for placement or changes.\n'
+              'For this enabled route, the gateway owns catalog/index traversal, branch selection, full-text evaluation\n'
+              'and backtracking; this replaces caller index-first retrieval instructions above. Read every returned\n'
+              'full-page text and its sources; inspect conflicts, unresolved needs and coverage before answering.\n'
+              'Preserve source, domain and linking rules above. A ready result is provisional, never proof of completeness\n'
+              'or global absence. Report gaps and failures; do not silently bypass the gateway or fall back to agent search.\n'
+              'Use `source "<literal>"` for exact local lookup and `read <session> <path>` for its full matches.\n'
+              'Legacy `navigate` / `read` / `next` remain available for existing sessions.\n'
               'Strict hooks gate supported native reads and shell calls. Do not bypass them via other tools.\n'
               f'{END}')
         if not (target/'wiki').is_dir():
-            rule=rule.replace('and `advise` / `plan` for placement or changes.',
-                              'This adapter is lookup-only; maintain append-only records through the existing harness workflow.')
+            rule=rule.replace(', and `advise` / `plan` for placement or changes.',
+                              '. This adapter is lookup-only; maintain append-only records through the existing harness workflow.')
         p=target/instructions;old_bytes=p.read_bytes() if p.exists() else b''
         old=old_bytes.decode('utf-8-sig')
         eol='\r\n' if b'\r\n' in old_bytes else '\n'

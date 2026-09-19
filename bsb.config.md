@@ -34,7 +34,7 @@ LITMUS:   "Does this help someone build software, or build/understand a better s
 
 | layer | status | enable with |
 |-------|--------|-------------|
-| jev (semantic gateway) | disabled (opt-in) | `python scripts/bsb_jev.py configure --enabled on --install-hooks`; see `docs/install.md` |
+| jev (semantic gateway) | local opt-in; default off — check `configure --status` | `python scripts/bsb_jev.py configure --enabled on --install-hooks`; see `docs/install.md` |
 | graphify (graph) | available as `/graphify` skill | `uv tool install graphifyy` for the CLI; see `docs/graphify-integration.md` |
 | auto-research (improve) | available as skill | see `docs/auto-research-integration.md` |
 | qmd (retrieval) | not installed | `npm i -g @tobilu/qmd`; add when > ~100 sources |

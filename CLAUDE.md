@@ -40,7 +40,7 @@ Three layers + a temporal triad, on three loading tiers (the always-loaded layer
 1. **`raw/`** - immutable curated sources. **You only read** (except `raw/assets/`, where the clipper drops images).
 2. **`wiki/`** - markdown pages **you own** (create/edit/rename/split/merge/delete). Folders: `sources/ concepts/
    entities/ cheatsheets/<area>/ syntheses/ moc/`.
-3. **Temporal triad** - `index.md` (*what exists*; read first on query; shard into MOCs past ~500 lines / one
+3. **Temporal triad** - `index.md` (*what exists*; query entry unless Jev is enabled, see §3.2; shard into MOCs past ~500 lines / one
    context window), `log.md` (*what happened*; append-only), `roadmap.md` (*what's next*).
 
 Plus `CLAUDE.md` (this schema) + `AGENTS.md` (`@CLAUDE.md`, for Codex/OpenCode). Generated graph in `graphify-out/`.
@@ -103,10 +103,12 @@ Source into `raw/` (or `graphify add <url>`) → read it fully → surface 3-5 t
 Touching < 3 pages means you missed connections. Writing any page **is** an ingest - there is no write-without-ingesting path.
 
 ### §3.2 Query
-Read `index.md` first → read candidate pages in full (not frontmatter alone) → answer with `[[…]]` citations → offer
-to file substantive answers as a `synthesis` page so they compound → log one line. Use graphify/qmd for multi-hop or
+When Jev is enabled, call `python scripts/bsb_jev.py find "<question>"` once (optional repeated `--need`); the gateway
+owns catalog/index traversal and branch backtracking. Read all returned full-page text and sources; inspect conflicts,
+unresolved needs and coverage. Otherwise read `index.md` first, then candidate pages in full. Answer with `[[…]]` citations → offer
+to file substantive answers as a `synthesis` page so they compound → log one line. Without Jev, use graphify/qmd for multi-hop or
 fuzzy lookups, index + wikilinks for specific ones. **Scale read-depth to task breadth:** for broad/design questions,
-query the graph per sub-topic and use `graphify explain`/`path` to pull each concept's *exemplar* pages, then a
+include explicit needs in `find`, or without Jev query the graph per sub-topic and use `graphify explain`/`path` for *exemplar* pages, then a
 completeness check before answering - don't over-prune (`docs/graphify-integration.md`). Never fabricate - name the
 gap and suggest sources to ingest.
 
@@ -173,7 +175,8 @@ Obsidian is the human reader (graph, backlinks, **Bases**); the `.obsidian/` bas
 to `raw/assets/`. **`scripts/`** (Python, run with `--help`): `init_brain.py`, `bsb_jev.py`, `new_page.py`,
 `find_orphans.py`, `verify_wikilinks.py`, `lint_sources.py`, `graphify_sync.py`, `token_report.py`. **jev** is optional
 semantic gateway/review; **graphify** (§3.4) is graph; **qmd** is search.
-When Jev is enabled, use `navigate` with explicit `--need` subquestions, `read` for offered full pages and `next` for gaps/links (`docs/jev.md`).
+When Jev is enabled, use `find` (§3.2); `ready` is provisional, not proof of completeness. Report failures/gaps, never silently fall back (`docs/jev.md`).
+Legacy `navigate` / `read` / `next` remain available for existing sessions.
 Use `source` for literal lookup; `advise` / `plan` for changes. Keep deferred/contrary evidence reachable and source gates intact. Do not bypass hooks.
 Optional git gates: `git config core.hooksPath .githooks`. **Commit/push only when asked; branch first on the default branch; sub-agents never run git.**
 

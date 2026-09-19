@@ -229,3 +229,28 @@ $0.0633 for the direct baseline. A separate counterfactual shows the intended
 break-even if the 28.98% input reduction holds without extra turns: roughly
 13.6% cheaper for Luna and 25% cheaper for Opus/Fable/Astra. These are API list
 price equivalents, not subscription invoices; quality remains a measured gate.
+
+## [2026-09-19] improve | Jev retrieval architecture review
+
+Reviewed current navigation, focus, advice and host gates against freshly fetched
+TypeSafe documentation. Recorded code-backed limits, a catalog-first internal search
+service proposal, placement/link contracts and quality/cost acceptance criteria in
+[the architecture review](docs/jev-architecture-review-2026-09-19.md). All 88 existing
+Jev tests passed; isolated checks reproduced lexical/need admission gaps and retained
+probability diagnostics. No runtime behavior or Jev configuration changed; savings
+remain unmeasured. Independent review caught the disabled status command's misleading
+credential display; a boolean-only check confirmed local credential availability.
+
+## [2026-09-19] improve | Internal Jev branching retrieval
+
+Implemented the approved index-to-branch-to-full-text retrieval service behind
+`bsb_jev.py find`. Jev chooses paths internally with backtracking and explicit
+budgets; callers receive original pages, source references, conflicts and gaps.
+Integrated the strict host allowlist, installers and enabled-agent instructions.
+The complete 114-test suite passes. Independent review's three findings were
+fixed and independently regression-tested with GPT-5.6 Luna at max following the
+user's correction of unnecessary Astra delegation. Three bounded live API cases
+pass; a real-vault run returned byte/hash-verified originals and correctly marked
+its budget-limited result partial. Enabled Jev locally; strict native hook setup
+is the final activation step, and live Codex interception remains unverified.
+No end-to-end savings claim. Details and limits: [validation report](benchmark/JEV-BRANCHING-2026-09-19.md).

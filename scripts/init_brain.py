@@ -76,7 +76,8 @@ def set_link_style(text: str, style: str) -> tuple[str, bool]:
 def fresh_index(domain: str, today: str) -> str:
     return (
         "# Index\n\n"
-        "The content catalog - *what exists* in this brain. Read this first on any query, then drill into pages.\n"
+        "The content catalog - *what exists* in this brain. Read this first on queries unless Jev is enabled;\n"
+        "then use find and let the gateway traverse the catalog. Read returned full pages before answering.\n"
         "Grouped by category. (`log.md` = what happened; `roadmap.md` = what's next.)\n\n"
         "## Overview\n\n"
         f"_Empty - this brain was initialized {today} for: **{domain}**. "
@@ -125,6 +126,10 @@ def first_run(domain: str, litmus: str | None, layers: list[str], today: str) ->
         "5. Periodically say **\"lint\"**; run `python scripts/lint_sources.py --summary` and `verify_wikilinks.py`.\n\n"
         "## Optional layers\n\n"
         "- **jev** (semantic gateway): `python scripts/bsb_jev.py configure --enabled on --install-hooks`. See `docs/install.md`.\n"
+        "  When enabled, call `python scripts/bsb_jev.py find \"<question>\"` once (optional repeatable `--need`).\n"
+        "  The gateway owns catalog/index traversal and backtracking. Read all returned full-page text and sources;\n"
+        "  inspect conflicts, unresolved needs and coverage. Ready is provisional; report gaps or unavailable results.\n"
+        "  Use `source \"<literal>\"` for exact lookup; legacy `navigate` / `read` / `next` remain available. See `docs/jev.md`.\n"
         "- **graphify** (graph): `uv tool install graphifyy`, then use the `/graphify` skill. See `docs/graphify-integration.md`.\n"
         "- **qmd** (search): `npm i -g @tobilu/qmd`. See README.\n"
         "- **git hooks** (gate): `git config core.hooksPath .githooks`.\n\n"

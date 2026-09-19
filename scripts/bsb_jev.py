@@ -331,7 +331,7 @@ def execute_typesafe_call(
     timeout: float = DEFAULT_TIMEOUT_SECONDS,
 ) -> Dict[str, Any]:
     """Sends HTTPS POST request to TypeSafe System One endpoint."""
-    data = json.dumps(payload).encode("utf-8")
+    data = _jsonbytes(payload)
     if len(data) > MAX_PAYLOAD_SIZE_BYTES:
         raise ValueError(f"Payload size ({len(data)} bytes) exceeds limit of {MAX_PAYLOAD_SIZE_BYTES}")
 
@@ -886,6 +886,12 @@ def build_cli_parser() -> argparse.ArgumentParser:
     p_source = sub.add_parser('source', help='Exact local source/title/alias/literal occurrence lookup; no API')
     p_source.add_argument('literal')
     p_source.add_argument('--dry-run', action='store_true')
+    p_find = sub.add_parser('find', help='Jev navigates catalog branches and reads evidence internally')
+    p_find.add_argument('query_text')
+    p_find.add_argument('--need', action='append', help='Optional explicit evidence needs (1..6)')
+    p_find.add_argument('--max-calls', type=int, default=24, help='Hard Jev request budget (1..96)')
+    p_find.add_argument('--max-pages', type=int, default=12, help='Hard evaluated-page budget (1..48)')
+    p_find.add_argument('--dry-run', action='store_true')
     p_nav = sub.add_parser('navigate', help='Let Jev plan full-page reads for explicit subquestions')
     p_nav.add_argument('query_text')
     p_nav.add_argument('--need', action='append', required=True, help='Repeat for 1..6 subquestions')
@@ -957,14 +963,26 @@ def main(argv: Optional[List[str]] = None) -> int:
                 uninstall_hooks=args.uninstall_hooks,
                 enforce_reads=None if args.enforce_reads is None else args.enforce_reads == 'on',
             )
-            key_loaded = bool(load_api_key()) if cfg['enabled'] else False
+            key_loaded = bool(load_api_key()) if cfg['enabled'] else None
             print("BSB Jev Gateway Configuration:")
             print(f"  Enabled:      {cfg.get('enabled', False)}")
             print(f"  Strict reads: {cfg.get('enforce_reads', False)}")
             print(f"  Search roots: {cfg.get('search_roots', ['wiki'])}")
             print(f"  Model:        {cfg.get('model', DEFAULT_MODEL)}")
-            print(f"  API Key:      {'Available' if key_loaded else 'Missing (TYPESAFE_API_KEY / DPAPI)'}")
+            key_status = 'Not checked (gateway disabled)' if key_loaded is None else (
+                'Available' if key_loaded else 'Missing (TYPESAFE_API_KEY / DPAPI)')
+            print(f"  API Key:      {key_status}")
             return 0
+
+        elif args.command == 'find':
+            try:
+                from scripts import bsb_jev_search as search
+            except ImportError:
+                import bsb_jev_search as search
+            res = search.find(args.query_text, args.need, root, dry_run=args.dry_run,
+                              max_calls=args.max_calls, max_pages=args.max_pages)
+            print(json.dumps(res, indent=2, ensure_ascii=False))
+            return 0 if res['status'] not in {'unavailable', 'stale'} else 1
 
         elif args.command in {'navigate', 'source', 'read', 'next'}:
             try:
