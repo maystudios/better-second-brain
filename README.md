@@ -41,8 +41,9 @@ Set up a "Better Second Brain" (BSB) in the CURRENT folder, following these step
    (If this folder is NOT empty, instead run:
     git clone https://github.com/maystudios/better-second-brain bsb && cd bsb)
 2. Read CLAUDE.md - that file is now your operating schema; follow it for everything below.
-3. Ask me for my DOMAIN (what this brain is about) and a one-line LITMUS test, then initialize a fresh, empty brain:
-   python scripts/init_brain.py --domain "<MY DOMAIN>" --litmus "<MY LITMUS>" --fresh --yes
+3. Ask me for my DOMAIN (what this brain is about) and a one-line LITMUS test, and whether to enable optional Jev (semantic gateway, default off), then initialize a fresh, empty brain:
+   python scripts/init_brain.py --domain "<MY DOMAIN>" --litmus "<MY LITMUS>" --jev <on-or-off> --fresh --yes
+   (Add --jev on if Jev semantic gateway is desired)
 4. Verify it is clean:
    python scripts/verify_wikilinks.py   and   python scripts/lint_sources.py --summary
 5. Tell me the brain is ready and ask for my first source (a URL or file) to ingest into raw/.
@@ -117,6 +118,7 @@ Full setup, including the optional layers and git hooks: [`docs/install.md`](./d
 
 ## The optional layers (off by default, degrade gracefully)
 
+- **jev** - TypeSafe Jev semantic gateway and safe mutation review. → [`docs/install.md`](./docs/install.md)
 - **graphify** - `uv tool install graphifyy`, then the agent uses the `/graphify` skill. → [`docs/graphify-integration.md`](./docs/graphify-integration.md)
 - **auto-research** - a Claude Code skill that self-improves the schema. → [`docs/auto-research-integration.md`](./docs/auto-research-integration.md)
 - **self-healing** - runs on the source-grade lint. → [`docs/self-healing.md`](./docs/self-healing.md)

@@ -46,3 +46,8 @@ venv/
 # auto-research scratch workspace
 .auto-research/
 FIRST-RUN.md
+
+# bsb-jev gateway audit, plans, backups, and local config
+.bsb-jev/
+.agents/hooks.json
+.codex/hooks.json

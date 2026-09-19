@@ -39,6 +39,40 @@ The research-discipline gate (CLAUDE.md §1.5) applies from the very first inges
 
 These are off by default. Enable the ones you want.
 
+### jev - semantic gateway and safe mutation review
+
+BSB integrates with TypeSafe's Jev System One (`jev-1.13.0`) as an optional semantic gateway. When enabled, it provides:
+1. **Bounded semantic query search**: Local lexical extraction followed by Jev prioritization, with source paths, lines and hashes. The default retains all generated candidates; hard pruning failed the [initial quality experiment](../benchmark/JEV-2026-09-19.md).
+2. **Advisory recommendations**: Placement advice for new notes across wiki directories, cross-linking suggestions, and deletion evaluation.
+3. **Safe reversible mutation gateway**: Enforces that `raw/` and schema files are immutable, requires caller citations, checks stale file hashes, strictly refuses deletions when active backlinks exist, creates atomic backups under `.bsb-jev/backups/`, rolls back on errors, and maintains an append-only audit log under `.bsb-jev/audit.jsonl`.
+4. **Native host hooks**: Antigravity (`.agents/hooks.json`), Claude Code (`.claude/settings.json`) and Codex (`.codex/hooks.json`) intercept supported native edits/searches. Reading selected pages remains available. Codex requires the generated hook to be reviewed/trusted by the host before it runs.
+
+**Enable or disable:**
+```powershell
+# Enable and install native host hooks
+python scripts/bsb_jev.py configure --enabled on --install-hooks
+
+# Check status
+python scripts/bsb_jev.py configure --status
+
+# Disable (makes zero network calls)
+python scripts/bsb_jev.py configure --enabled off
+```
+
+**Credentials:**
+Set `TYPESAFE_API_KEY` in your environment, or provide a DPAPI-encrypted file via `TYPESAFE_KEY_FILE` (or `~/.config/harness-workflow/typesafe-key.dpapi` on Windows). Keys are never printed in outputs or stored in git configs. If missing, query searches fail open to deterministic lexical candidates, while mutations fail closed.
+
+**Security boundary & shell bypass:**
+Host shell commands remain a bypass boundary. Hooks block supported native tools such as `write_to_file`, `Edit`, `Write`, `apply_patch`, `grep_search` and `Grep`; they are workflow enforcement, not an OS sandbox. See [Jev operations and limits](jev.md).
+
+**Upgrade an existing brain without reinitializing:** run from a current BSB checkout:
+
+```powershell
+python scripts/install_jev.py --target "C:/path/to/existing-brain" --enabled on --hooks
+```
+
+This backs up existing managed files, copies the standalone tools and adds a small instruction block. It preserves wiki content and instance conventions. Use `--dry-run` to inspect the target first. Never use `init_brain.py --fresh` to upgrade a populated brain.
+
 ### graphify - the knowledge graph
 
 [[wiki/sources/graphify|graphify]] turns your `raw/` folder into a persistent knowledge graph (god nodes, communities, surprising connections). It needs Python >= 3.10. The PyPI package is `graphifyy` (double-y); the CLI it installs is `graphify`.

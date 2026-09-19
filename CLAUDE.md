@@ -170,11 +170,12 @@ language; **frontmatter keys stay English.** Pair every prohibition with its rea
 ## §6 - Tooling
 
 Obsidian is the human reader (graph, backlinks, **Bases**); the `.obsidian/` baseline is committed and attachments go
-to `raw/assets/`. **`scripts/`** (Python, run with `--help`): `init_brain.py`, `new_page.py`, `find_orphans.py`,
-`verify_wikilinks.py`, `lint_sources.py`, `graphify_sync.py`, `token_report.py`. **graphify** (§3.4) is the graph
-layer; **qmd** is optional local search past ~100 sources (qmd finds the note → wiki gives the answer → graphify shows
-the connections). git is in use; optional gates via `git config core.hooksPath .githooks`. **Commit/push only when
-asked; branch first on the default branch; sub-agents never run git.**
+to `raw/assets/`. **`scripts/`** (Python, run with `--help`): `init_brain.py`, `bsb_jev.py`, `new_page.py`,
+`find_orphans.py`, `verify_wikilinks.py`, `lint_sources.py`, `graphify_sync.py`, `token_report.py`. **jev** is optional
+semantic gateway/review; **graphify** (§3.4) is graph; **qmd** is search.
+When Jev is enabled, use its `query` / `advise` / `plan` gateway before substantial retrieval or changes (`docs/jev.md`).
+Retain all candidates by default; read full pages, preserve contrary evidence and source gates. Do not bypass hooks.
+Optional git gates: `git config core.hooksPath .githooks`. **Commit/push only when asked; branch first on the default branch; sub-agents never run git.**
 
 ---
 
@@ -191,5 +192,5 @@ entry. `auto-research` (§3.5) is the automated path to the same end. Review thi
 
 Fastest start: `/bsb-init`, or `python scripts/init_brain.py --domain "…" --litmus "…" --fresh --yes`, or paste the
 README install prompt into your agent. Then edit §0 + `bsb.config.md`, drop your first sources in `raw/`, and say
-"ingest". graphify and qmd are optional and off by default. Only §0 and the seed content are domain-specific -
+"ingest". graphify, qmd, and jev are optional and off by default. Only §0 and the seed content are domain-specific -
 everything else is reusable.

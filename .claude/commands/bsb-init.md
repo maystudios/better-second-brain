@@ -12,11 +12,11 @@ only for what is missing. Be concise.
 - **Litmus** - a one-line in/out test (e.g. "Does this help build a game engine in Rust?"). Ask if not given.
 
 Also confirm (with sensible defaults): clear the demo seed pages? (**`--fresh` = yes, recommended** for a real
-brain) and which optional layers to note - graphify / qmd / none.
+brain) and which optional layers to note - jev (semantic gateway) / graphify / qmd / none (all default off).
 
 ## 2. Run the scaffolder
 Optionally show `--dry-run` first if the user is unsure. Then run (substitute the answers; include `--fresh --yes`
-only when starting an empty brain):
+only when starting an empty brain, and `--jev on` if Jev semantic gateway is desired):
 
     python scripts/init_brain.py --domain "<DOMAIN>" --litmus "<LITMUS>" --link-style full-path --layers <layers> --fresh --yes
 

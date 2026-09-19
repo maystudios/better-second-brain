@@ -124,6 +124,7 @@ def first_run(domain: str, litmus: str | None, layers: list[str], today: str) ->
         "4. **Ask** - *\"what does the wiki say about X?\"* - and let good answers be filed back as pages.\n"
         "5. Periodically say **\"lint\"**; run `python scripts/lint_sources.py --summary` and `verify_wikilinks.py`.\n\n"
         "## Optional layers\n\n"
+        "- **jev** (semantic gateway): `python scripts/bsb_jev.py configure --enabled on --install-hooks`. See `docs/install.md`.\n"
         "- **graphify** (graph): `uv tool install graphifyy`, then use the `/graphify` skill. See `docs/graphify-integration.md`.\n"
         "- **qmd** (search): `npm i -g @tobilu/qmd`. See README.\n"
         "- **git hooks** (gate): `git config core.hooksPath .githooks`.\n\n"
@@ -159,7 +160,8 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--litmus", help='One-line in/out test, e.g. "Does this help build a game engine?".')
     ap.add_argument("--name", help="Optional display name (informational).")
     ap.add_argument("--link-style", choices=["full-path", "bare-slug"], help="Wikilink style for bsb.config.md.")
-    ap.add_argument("--layers", default="", help="Comma list of optional layers to note as chosen (graphify,qmd).")
+    ap.add_argument("--layers", default="", help="Comma list of optional layers to note as chosen (graphify,qmd,jev).")
+    ap.add_argument("--jev", choices=["on", "off"], default=None, help="Enable optional Jev gateway; omitted preserves existing setting, fresh default off.")
     ap.add_argument("--fresh", action="store_true", help="Clear bootstrap seed content for an empty brain.")
     ap.add_argument("--keep-benchmark", action="store_true", help="With --fresh, keep the demo benchmark/ dir.")
     ap.add_argument("--no-git", action="store_true", help="Do not run git init.")
@@ -234,9 +236,29 @@ def main(argv: list[str] | None = None) -> int:
                                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
             except (OSError, FileNotFoundError):
                 pass
-        planner.do("git init -b main (no commit)", _git_init)
+        planner.do("git init (main branch)", _git_init)
 
-    # 4) First-run checklist.
+    # 4) Configure Jev if chosen.
+    if args.jev == "on" or (args.jev is None and "jev" in layers):
+        if "jev" not in layers:
+            layers.append("jev")
+        def _enable_jev():
+            try:
+                from scripts.bsb_jev import configure_gateway
+            except ImportError:
+                from bsb_jev import configure_gateway
+            configure_gateway(root, enabled=True, install_hooks=True)
+        planner.do("configure Jev semantic gateway (enabled) and install native hooks", _enable_jev)
+    elif args.jev == "off" or args.fresh or not (root / ".bsb-jev" / "config.json").is_file():
+        def _disable_jev():
+            try:
+                from scripts.bsb_jev import configure_gateway
+            except ImportError:
+                from bsb_jev import configure_gateway
+            configure_gateway(root, enabled=False)
+        planner.do("configure Jev semantic gateway (disabled default)", _disable_jev)
+
+    # 5) First-run checklist.
     domain = args.domain or "your domain"
     planner.do("write FIRST-RUN.md",
                lambda: (root / "FIRST-RUN.md").write_text(

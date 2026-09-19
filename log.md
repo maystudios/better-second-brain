@@ -183,3 +183,16 @@ pathspecs select files rather than actors' hunks; overlapping edits require hunk
 diffstat, and patch review answer different questions; verify clean committed state so dirty companion
 files cannot mask an incomplete commit. Updated the architecture MOC, index, and roadmap. Verification:
 0 broken links, 0 wiki orphans, and the new concept passes source-grade lint at Tier A.
+
+## [2026-09-19] schema | Optional Jev gateway and preservation-first retrieval
+
+Added opt-in Jev setup (default off), bounded document retrieval and advisory ranking,
+source-grounded reversible maintenance plans, and native Antigravity/Claude/Codex hook
+configuration. Existing-brain upgrades preserve domain rules and notes. Raw sources
+and schema remain protected; active backlinks and stale target/evidence hashes block
+unsafe mutations. Caller source/schema checks remain required. Two frozen-oracle
+Gemini experiments rejected hard pruning: fewer context bytes did not establish
+quality-preserving end-to-end savings. Retain all candidates by default. 52 automated
+tests, four live synthetic mutation/rollback scenarios, native Antigravity denial and
+an independent code review validate the bounded integration. See docs/jev.md and
+benchmark/JEV-2026-09-19.md; private corpora and credentials are not published.
