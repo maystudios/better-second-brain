@@ -16,10 +16,16 @@ Enforcement scope:
 - Guards against direct native wiki edits (write_to_file, replace_file_content, Edit, Write, apply_patch)
 - Guards against immutable raw/ and schema modifications (CLAUDE.md, bsb.config.md, log.md)
 - Routes wiki searches (grep_search, Grep) through the BSB Jev semantic query gateway
-- Permissive for reading files (view_file, View, ReadLocalFile) so shortlisted pages are never locked out
-- Unrestricted shell bypass: shell commands (run_command, Bash) cannot be securely parsed
-  without risking false positives on legitimate commands (such as running python scripts/bsb_jev.py);
-  this limitation is documented and acknowledged.
+- In the opt-in ``enforce_reads`` mode, blocks native reads of wiki content and
+  arbitrary native shell commands, allowing only exact argv forms for the gateway
+- Immutable ``raw/`` evidence reads remain available as a narrowly scoped
+  source-grounding exception; native raw searches and writes remain blocked
+- Keeps schema/roadmap bootstrap reads and outside-brain reads available
+
+The strict mode is a host guard, not an OS sandbox.  It can only inspect native
+PreToolUse events delivered by a configured host.  An outer wrapper such as
+``functions.exec`` is outside this hook's event contract and is intentionally not
+claimed as covered here.
 """
 
 from __future__ import annotations
@@ -37,16 +43,93 @@ if str(_REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(_REPO_ROOT))
 
 try:
-    from scripts.bsb_jev import is_enabled, resolve_repo_root
+    from scripts.bsb_jev import get_config, is_enabled, resolve_repo_root
 except ImportError:
-    from bsb_jev import is_enabled, resolve_repo_root
+    from bsb_jev import get_config, is_enabled, resolve_repo_root
 
 IMMUTABLE_ROOTS = {"raw"}
 IMMUTABLE_FILES = {"claude.md", "bsb.config.md", "agents.md", "log.md", "index.md", "roadmap.md"}
 
+# Strict mode protects the gateway's own state and host hook configuration as
+# well as the knowledge inputs.  Without this, a native Write could simply
+# flip enabled/enforce_reads off or remove the hook before making a change.
+GATEWAY_STATE_ROOTS = {".bsb-jev"}
+HOST_CONFIG_FILES = {
+    ".agents/hooks.json",
+    ".claude/settings.json",
+    ".codex/hooks.json",
+}
+GATEWAY_CODE_FILES = {
+    "scripts/bsb_jev.py",
+    "scripts/bsb_jev_hook.py",
+    "scripts/bsb_jev_focus.py",
+    "scripts/bsb_jev_navigation.py",
+    "scripts/install_jev.py",
+}
+
+READ_TOOL_NAMES = {
+    "read",
+    "read_file",
+    "readfile",
+    "readlocalfile",
+    "read_local_file",
+    "read_text",
+    "view",
+    "view_file",
+    "open_file",
+}
+SEARCH_TOOL_NAMES = {
+    "find",
+    "grep",
+    "grep_search",
+    "glob",
+    "ripgrep",
+    "search",
+}
+SHELL_TOOL_NAMES = {
+    "bash",
+    "exec_command",
+    "run_command",
+    "shell",
+    "terminal",
+}
+WRITE_TOOL_NAMES = {
+    "delete",
+    "delete_file",
+    "edit",
+    "edit_file",
+    "insert_file",
+    "move",
+    "move_file",
+    "multi_replace_file_content",
+    "notebookeditcell",
+    "remove_file",
+    "rename",
+    "rename_file",
+    "replace_file_content",
+    "write",
+    "write_file",
+    "write_to_file",
+}
+
+READ_ONLY_GATEWAY_COMMANDS = {
+    "advise",
+    "navigate",
+    "next",
+    "query",
+    "read",
+    "source",
+}
+MUTATING_GATEWAY_COMMANDS = {"apply", "plan", "rollback"}
+
+# Native shell syntax is deliberately rejected before argv parsing.  Quoted
+# values can contain punctuation (for example a query with a semicolon); the
+# parser treats that punctuation as data, never as syntax.
+_SHELL_SYNTAX = frozenset(";&|<>`$(){}[]*?!%\n\r\x00")
+
 
 def is_wiki_or_protected_path(target_path_str: str, repo_root: Path) -> Tuple[bool, str]:
-    """Checks if a target file is within wiki/, raw/, or is a protected schema file."""
+    """Checks configured knowledge roots, raw/, or protected schema files."""
     if not target_path_str or not target_path_str.strip():
         return False, ""
 
@@ -65,14 +148,109 @@ def is_wiki_or_protected_path(target_path_str: str, repo_root: Path) -> Tuple[bo
                 return True, 'raw'
             if rel in IMMUTABLE_FILES:
                 return True, 'schema'
+            try:
+                configured = get_config(repo_root).get('search_roots', ['wiki'])
+            except Exception:
+                configured = ['wiki']
+            for search_root in configured:
+                normalized_root = str(search_root).replace('\\', '/').strip('/').lower()
+                if rel == normalized_root or rel.startswith(normalized_root + '/'):
+                    return True, 'search'
 
         return False, ""
     except Exception:
         return False, ""
 
 
+def _repo_relative_paths(target_path_str: str, repo_root: Path) -> Set[str]:
+    """Return safe, normalized repo-relative spellings for a candidate path."""
+    if not target_path_str or not str(target_path_str).strip():
+        return set()
+    try:
+        norm = str(target_path_str).replace("\\", "/").strip().strip('"')
+        p = Path(norm)
+        lexical = Path(os.path.abspath(p if p.is_absolute() else repo_root / p))
+        relative: Set[str] = set()
+        for candidate in (lexical, lexical.resolve()):
+            if candidate.is_relative_to(repo_root):
+                relative.add(candidate.relative_to(repo_root).as_posix().lower())
+        return relative
+    except Exception:
+        return set()
+
+
+def is_strict_control_path(target_path_str: str, repo_root: Path) -> Tuple[bool, str]:
+    """Classify gateway state/code and managed host config paths for strict mode."""
+    relatives = _repo_relative_paths(target_path_str, repo_root)
+    if not relatives:
+        return False, ""
+    for rel in relatives:
+        if rel in HOST_CONFIG_FILES:
+            return True, "host-config"
+        if rel in GATEWAY_CODE_FILES:
+            return True, "gateway-code"
+        if rel in GATEWAY_STATE_ROOTS or any(rel.startswith(root + "/") for root in GATEWAY_STATE_ROOTS):
+            return True, "gateway-state"
+    return False, ""
+
+
+def is_strict_protected_path(target_path_str: str, repo_root: Path) -> Tuple[bool, str]:
+    """Classify all paths strict mode must keep behind the gateway."""
+    protected, zone = is_wiki_or_protected_path(target_path_str, repo_root)
+    if protected:
+        return True, zone
+    return is_strict_control_path(target_path_str, repo_root)
+
+
+def is_enforce_reads_enabled(repo_root: Optional[Path | str] = None) -> bool:
+    """Return true only for the explicit opt-in strict setting while Jev is on."""
+    root = resolve_repo_root(repo_root)
+    if not is_enabled(root):
+        return False
+    # ``get_config`` performs the project's corruption/type checks.  Strict
+    # mode intentionally requires a literal JSON true, just like ``enabled``.
+    return get_config(root).get("enforce_reads") is True
+
+
+def _first_arg(args: Any, *names: str) -> Any:
+    if not isinstance(args, dict):
+        return None
+    for name in names:
+        if name in args:
+            return args[name]
+    return None
+
+
+def _write_target_values(args: Any) -> List[str]:
+    """Extract path-bearing fields used by native write/move/delete tools."""
+    if not isinstance(args, dict):
+        return []
+    names = (
+        "TargetFile",
+        "target_file",
+        "file_path",
+        "filePath",
+        "path",
+        "Path",
+        "source",
+        "source_path",
+        "destination",
+        "destination_path",
+        "from",
+        "to",
+        "old_path",
+        "new_path",
+    )
+    values: List[str] = []
+    for name in names:
+        value = args.get(name)
+        if isinstance(value, str) and value.strip():
+            values.append(value)
+    return values
+
+
 def is_wiki_search(search_path_str: str, repo_root: Path) -> bool:
-    """Checks if a search target path targets the wiki directory."""
+    """Checks if a search target path targets any configured knowledge root."""
     if not search_path_str or not search_path_str.strip():
         search_path_str = "."
 
@@ -86,8 +264,16 @@ def is_wiki_search(search_path_str: str, repo_root: Path) -> bool:
         if not p.is_relative_to(repo_root):
             return False
 
-        rel = p.relative_to(repo_root).as_posix()
-        return rel == "." or rel.lower() == "wiki" or rel.lower().startswith("wiki/")
+        rel = p.relative_to(repo_root).as_posix().lower()
+        if rel == ".":
+            return True
+        try:
+            roots = get_config(repo_root).get('search_roots', ['wiki'])
+        except Exception:
+            roots = ['wiki']
+        return any(rel == str(item).replace('\\', '/').strip('/').lower()
+                   or rel.startswith(str(item).replace('\\', '/').strip('/').lower() + '/')
+                   for item in roots)
     except Exception:
         return False
 
@@ -112,6 +298,184 @@ def check_patch_targets_wiki(patch_content: str, repo_root=None) -> bool:
     return False
 
 
+def check_patch_targets_strict(patch_content: str, repo_root=None) -> bool:
+    """Detect strict-mode edits to knowledge, gateway state, or host config."""
+    if not patch_content:
+        return False
+    root = resolve_repo_root(repo_root)
+    for line in patch_content.splitlines():
+        match = re.match(r'^\*\*\* (?:(?:Add|Update|Delete) File|Move (?:to|from)): (.+)$', line)
+        if match:
+            target = match.group(1)
+        elif line.startswith(('--- ', '+++ ')):
+            target = line[4:].split('\t', 1)[0].strip('"')
+            if target.startswith(('a/', 'b/')):
+                target = target[2:]
+        else:
+            continue
+        if is_strict_protected_path(target, root)[0]:
+            return True
+    return False
+
+
+def _parse_native_argv(command: Any) -> Optional[List[str]]:
+    """Parse a host shell string into argv without invoking shell semantics."""
+    if isinstance(command, (list, tuple)):
+        if not command or not all(isinstance(item, str) and item for item in command):
+            return None
+        if any("\x00" in item for item in command):
+            return None
+        return list(command)
+    if not isinstance(command, str) or not command.strip():
+        return None
+
+    tokens: List[str] = []
+    current: List[str] = []
+    quote: Optional[str] = None
+
+    def flush() -> None:
+        if current:
+            tokens.append("".join(current))
+            current.clear()
+
+    for char in command:
+        if quote is not None:
+            if char == quote:
+                quote = None
+            else:
+                current.append(char)
+            continue
+        if char in ("'", '"'):
+            quote = char
+        elif char.isspace():
+            flush()
+        elif char in _SHELL_SYNTAX:
+            return None
+        else:
+            current.append(char)
+    if quote is not None:
+        return None
+    flush()
+    return tokens or None
+
+
+def _same_path(left: Path | str, right: Path | str) -> bool:
+    try:
+        return os.path.normcase(str(Path(left).resolve(strict=False))) == os.path.normcase(
+            str(Path(right).resolve(strict=False))
+        )
+    except Exception:
+        return False
+
+
+def _is_allowed_python_executable(token: str) -> bool:
+    normalized = token.strip().casefold()
+    if normalized in {"python", "python3", "python.exe", "python3.exe", "py", "py.exe"}:
+        return True
+    return _same_path(token, Path(sys.executable))
+
+
+def _is_gateway_script(token: str, root: Path) -> bool:
+    normalized = token.replace("\\", "/").strip()
+    if not normalized or any(part == ".." for part in normalized.split("/")):
+        return False
+    if normalized.startswith("./"):
+        normalized = normalized[2:]
+    if normalized.casefold() == "scripts/bsb_jev.py":
+        return True
+    return _same_path(token, root / "scripts/bsb_jev.py")
+
+
+def _validate_gateway_args(command: str, args: List[str]) -> bool:
+    """Validate one gateway subcommand's small, explicit argv grammar."""
+    specs = {
+        "query": (1, 1, {"--dry-run", "--json", "--prune"}, {"--candidate-limit", "--limit", "--roots"}, set()),
+        "navigate": (1, 1, {"--dry-run"}, {"--need"}, {"--need"}),
+        "source": (1, 1, {"--dry-run"}, set(), set()),
+        "read": (2, 2, set(), set(), set()),
+        "next": (1, 1, {"--dry-run"}, {"--need"}, {"--need"}),
+        "advise": (2, 2, {"--dry-run", "--json"}, set(), set()),
+        "plan": (1, 1, {"--dry-run"}, {"--out"}, set()),
+        "apply": (1, 1, {"--approve", "--dry-run"}, set(), set()),
+        "rollback": (1, 1, set(), set(), set()),
+        "configure": (0, 0, {"--status"}, set(), set()),
+    }
+    spec = specs.get(command)
+    if spec is None:
+        return False
+    minimum, maximum, flags, valued, repeatable = spec
+    positional: List[str] = []
+    seen: Set[str] = set()
+    index = 0
+    while index < len(args):
+        item = args[index]
+        if item.startswith("-"):
+            if item in flags:
+                if item in seen:
+                    return False
+                seen.add(item)
+                index += 1
+                continue
+            if item not in valued:
+                return False
+            if item not in repeatable and item in seen:
+                return False
+            if index + 1 >= len(args) or not args[index + 1] or args[index + 1].startswith("-"):
+                return False
+            value = args[index + 1]
+            if item in {"--limit", "--candidate-limit"} and not re.fullmatch(r"\d+", value):
+                return False
+            if item == "--need" and len([x for x in args[:index] if x == "--need"]) >= 6:
+                return False
+            seen.add(item)
+            index += 2
+            continue
+        positional.append(item)
+        index += 1
+
+    if not minimum <= len(positional) <= maximum:
+        return False
+    if command == "navigate" and not any(item == "--need" for item in args):
+        return False
+    if command == "apply" and "--approve" not in seen:
+        return False
+    if command == "configure" and "--status" not in seen:
+        return False
+    return True
+
+
+def is_allowed_gateway_command(command: Any, repo_root: Path, cwd: Optional[Path | str] = None) -> bool:
+    """Return whether a native shell argv is an exact approved gateway call."""
+    argv = _parse_native_argv(command)
+    if not argv or len(argv) < 3:
+        return False
+    if not _is_allowed_python_executable(argv[0]) or not _is_gateway_script(argv[1], repo_root):
+        return False
+    # A relative script name is safe only when the host will execute from the
+    # brain root. Otherwise ``scripts/bsb_jev.py`` could resolve to an unrelated
+    # directory even though the argv text looks like an approved gateway call.
+    if cwd is not None and not Path(argv[1]).is_absolute() and not _same_path(cwd, repo_root):
+        return False
+
+    index = 2
+    if argv[index] == "--root":
+        if index + 1 >= len(argv) or not _same_path(argv[index + 1], repo_root):
+            return False
+        index += 2
+    elif argv[index].startswith("--root="):
+        if not _same_path(argv[index][len("--root="):], repo_root):
+            return False
+        index += 1
+    if index >= len(argv):
+        return False
+    subcommand = argv[index].casefold()
+    if subcommand == "configure":
+        return _validate_gateway_args(subcommand, argv[index + 1:])
+    if subcommand not in READ_ONLY_GATEWAY_COMMANDS | MUTATING_GATEWAY_COMMANDS:
+        return False
+    return _validate_gateway_args(subcommand, argv[index + 1:])
+
+
 def evaluate_tool_call(
     input_data: Dict[str, Any],
     host: Optional[str] = None,
@@ -123,6 +487,7 @@ def evaluate_tool_call(
     # If gateway is disabled, return neutral {} immediately
     if not is_enabled(root):
         return {}
+    strict = is_enforce_reads_enabled(root)
 
     # Detect host format
     is_antigravity = "toolCall" in input_data
@@ -159,33 +524,36 @@ def evaluate_tool_call(
     # Antigravity: write_to_file, replace_file_content, multi_replace_file_content
     # Claude Code: Edit, Write, NotebookEditCell
     # Codex: apply_patch, edit, write
-    write_tools = {
-        "write_to_file", "replace_file_content", "multi_replace_file_content",
-        "edit", "write", "notebookeditcell"
-    }
-
-    if t_name_lower in write_tools:
-        target_path = (
-            tool_args.get("TargetFile")
-            or tool_args.get("file_path")
-            or tool_args.get("path")
-            or ""
-        )
-        is_prot, zone = is_wiki_or_protected_path(str(target_path), root)
-        if is_prot:
-            if zone == "raw":
-                return make_deny(
-                    "Direct raw/ edits blocked by BSB schema §1: raw sources are immutable curated inputs."
-                )
-            elif zone == "schema":
-                return make_deny(
-                    "Direct schema/log edits blocked by BSB schema §7: propose changes in roadmap.md or consult §7."
-                )
-            else:
-                return make_deny(
-                    "Direct wiki edits blocked by bsb-jev gateway. Use 'python scripts/bsb_jev.py plan <request.json>' "
-                    "and 'apply <plan.json> --approve' to stage and apply verified, citation-backed mutations."
-                )
+    if t_name_lower in WRITE_TOOL_NAMES:
+        target_paths = _write_target_values(tool_args)
+        if strict and not target_paths:
+            return make_deny(
+                "Strict Jev enforcement cannot identify this native write target. "
+                "Use the gateway CLI for bounded changes."
+            )
+        for target_path in target_paths:
+            is_prot, zone = is_wiki_or_protected_path(str(target_path), root)
+            if is_prot:
+                if zone == "raw":
+                    return make_deny(
+                        "Direct raw/ edits blocked by BSB schema §1: raw sources are immutable curated inputs."
+                    )
+                elif zone == "schema":
+                    return make_deny(
+                        "Direct schema/log edits blocked by BSB schema §7: propose changes in roadmap.md or consult §7."
+                    )
+                else:
+                    return make_deny(
+                        "Direct wiki edits blocked by bsb-jev gateway. Use 'python scripts/bsb_jev.py plan <request.json>' "
+                        "and 'apply <plan.json> --approve' to stage and apply verified, citation-backed mutations."
+                    )
+            if strict:
+                control, control_zone = is_strict_control_path(str(target_path), root)
+                if control:
+                    return make_deny(
+                        f"Strict Jev enforcement blocks direct {control_zone} edits. "
+                        "Use the gateway CLI for knowledge changes and leave gateway state/hooks managed by Jev."
+                    )
 
     # 2. Codex apply_patch tool
     if t_name_lower == "apply_patch":
@@ -200,23 +568,69 @@ def evaluate_tool_call(
                 "Direct patch application to wiki/raw/schema blocked by bsb-jev gateway. "
                 "Use 'python scripts/bsb_jev.py plan <request.json>' and 'apply <plan.json> --approve'."
             )
+        if strict and check_patch_targets_strict(patch_text, root):
+            return make_deny(
+                "Strict Jev enforcement blocks direct patches to knowledge, gateway state, or host hooks. "
+                "Use the gateway CLI for bounded changes."
+            )
 
     # 3. Search Tools (Route wiki search through gateway)
     # Antigravity: grep_search
     # Claude Code / Codex: Grep
-    search_tools = {"grep_search", "grep"}
-    if t_name_lower in search_tools:
-        search_path = tool_args.get("SearchPath") or tool_args.get("path") or ""
-        if is_wiki_search(str(search_path), root):
+    if t_name_lower in SEARCH_TOOL_NAMES:
+        raw_search_path = _first_arg(tool_args, "SearchPath", "search_path", "path", "Path", "directory")
+        if strict and raw_search_path is not None and not isinstance(raw_search_path, str):
+            return make_deny(
+                "Strict Jev enforcement cannot validate this native search scope. Use the gateway query command."
+            )
+        search_path = raw_search_path or ""
+        searches_wiki = is_wiki_search(str(search_path), root)
+        searches_raw = is_wiki_or_protected_path(str(search_path), root)[1] == "raw"
+        if searches_wiki or (strict and searches_raw):
             return make_deny(
                 "Direct wiki search intercepted by bsb-jev gateway. Use 'python scripts/bsb_jev.py query \"<query>\"' "
                 "for deterministic candidate retrieval and Jev semantic reranking."
             )
 
-    # 4. Read tools (view_file, View, ReadLocalFile)
-    # Permitted: reading shortlisted pages must work, no lockout.
-    # 5. Other tools (run_command, etc.)
-    # Return neutral {} (never return allow to avoid unwanted auto-grants)
+    # 4. Read tools.  Legacy mode remains permissive so existing Jev installs
+    # do not lock agents out.  Strict mode routes wiki full-page reads to the
+    # gateway's receipt-backed read command.  Immutable raw reads remain
+    # available for source grounding; raw search and write paths stay guarded.
+    if strict and t_name_lower in READ_TOOL_NAMES:
+        target_path = _first_arg(
+            tool_args,
+            "AbsolutePath",
+            "absolute_path",
+            "file_path",
+            "filePath",
+            "path",
+            "Path",
+        )
+        if not isinstance(target_path, str) or not target_path.strip():
+            return make_deny(
+                "Strict Jev enforcement cannot identify this native read. Use the gateway read command with a receipt."
+            )
+        protected, zone = is_wiki_or_protected_path(target_path, root)
+        if protected and zone in {"wiki", "search"}:
+            return make_deny(
+                "Strict Jev enforcement blocks direct wiki reads. Use the gateway source/navigate/read command."
+            )
+
+    # 5. Shell tools.  Strict mode is intentionally fail-closed: only the
+    # exact gateway executable/script argv grammar is admitted.  This rejects
+    # shell operators, interpreters, alternate scripts, and configure/off.
+    if strict and t_name_lower in SHELL_TOOL_NAMES:
+        command = _first_arg(tool_args, "command", "cmd", "Command", "input", "script")
+        working_dir = _first_arg(tool_args, "cwd", "Cwd", "workdir", "working_directory")
+        if working_dir is None:
+            working_dir = input_data.get("cwd")
+        if not is_allowed_gateway_command(command, root, working_dir):
+            return make_deny(
+                "Strict Jev enforcement blocks arbitrary native shell commands. "
+                "Use an exact python scripts/bsb_jev.py gateway command; only configure --status is permitted."
+            )
+
+    # Return neutral {} (never return allow to avoid unwanted auto-grants).
     return {}
 
 
@@ -273,7 +687,7 @@ def _configure_hooks(repo_root, install):
                 # launcher escapes quotes literally. Relative paths also work
                 # when the vault directory contains spaces.
                 command = f'{executable} ../scripts/bsb_jev_hook.py --host {host}'
-                data["bsb-jev"] = {"PreToolUse": [{"matcher": "write_to_file|replace_file_content|multi_replace_file_content|grep_search", "hooks": [{"type": "command", "command": command, "timeout": 20}]}]}
+                data["bsb-jev"] = {"PreToolUse": [{"matcher": "write_to_file|replace_file_content|multi_replace_file_content|grep_search|view_file|read_file|readfile|Read|ReadLocalFile|delete|delete_file|move|move_file|rename|rename_file|run_command|exec_command|Bash|Shell|terminal", "hooks": [{"type": "command", "command": command, "timeout": 20}]}]}
             else:
                 data.pop("bsb-jev", None)
         else:
@@ -299,7 +713,7 @@ def _configure_hooks(repo_root, install):
                 retained.append(group)
             if install:
                 command = f'{executable} "{(root / "scripts/bsb_jev_hook.py").as_posix()}" --root "{root.as_posix()}" --host {host}'
-                retained.append({"matcher": "Edit|Write|Grep|apply_patch", "hooks": [{"type": "command", "command": command, "timeout": 20}]})
+                retained.append({"matcher": "Edit|Write|WriteFile|NotebookEditCell|Grep|grep|find|search|glob|Read|read_file|readfile|view_file|ReadLocalFile|View|Delete|delete_file|Move|move_file|Rename|rename_file|apply_patch|run_command|exec_command|Bash|Shell|terminal", "hooks": [{"type": "command", "command": command, "timeout": 20}]})
             events["PreToolUse"] = retained
         changes.append((path, old, json.dumps(data, indent=2).encode("utf-8")))
     # Validate every existing host config before mutating any of them.

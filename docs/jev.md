@@ -14,6 +14,7 @@ python scripts/init_brain.py --jev on
 python scripts/bsb_jev.py configure --status
 python scripts/bsb_jev.py configure --enabled off
 python scripts/bsb_jev.py configure --enabled on --install-hooks
+python scripts/bsb_jev.py configure --enforce-reads on --install-hooks
 ```
 
 To upgrade an existing brain without reinitializing its notes or domain rules,
@@ -39,6 +40,43 @@ source excerpts to `https://api.typesafe.ai/v1/systemone`. It does not upload
 the entire vault. The pinned default model is `jev-1.13.0`.
 
 ## Query and advice
+
+### Progressive reading (experimental, opt-in)
+
+The progressive path lets Jev choose which complete pages to read for explicit
+subquestions. A local scanner supplies bounded candidates; Jev classifies each
+page's question-focused windows as direct, partial, contrary, unrelated or unknown.
+The gateway offers an initial set covering the needs, retaining contrary evidence.
+It keeps the remaining descriptors available without returning all their full text.
+
+```sh
+python scripts/bsb_jev.py navigate "Why are replicated updates delayed?" --need "Cause of delay" --need "Exact configuration fix"
+python scripts/bsb_jev.py read nav-<id> wiki/cheatsheets/example.md
+python scripts/bsb_jev.py next nav-<id> --need "Missing configuration detail"
+python scripts/bsb_jev.py source "https://example.org/specific-source"
+```
+
+Use the session ID and offered paths actually returned by the command. `read`
+returns a whole page, verifies its recorded hash, and discovers outgoing wikilinks.
+`next` asks Jev about unread linked pages and deferred candidates. Repeat for
+unanswered needs; do not confuse provisional coverage with a verified answer.
+There are at most four expansion steps per session, sixteen candidates per step
+and eight bounded Jev requests per step. At the bound, narrow the question or use
+an explicitly reviewed alternative retrieval route; do not conclude absence.
+Disabled/API-failure plans offer the full bounded pool. `--dry-run` sends nothing.
+
+`source` performs case-insensitive **literal** occurrence and title/alias lookup
+locally, with zero API calls. It returns scan coverage, matching paths and a
+session ID whose matches can be read in full. A hit means the literal appears,
+not that the surrounding statement is true.
+No hit is scoped to scanned Markdown in configured roots, with explicit exclusions
+and size limits. Neither 10% nor 50% model confidence establishes global absence.
+
+This follows TypeSafe's [hierarchical classification pattern](https://docs.typesafe.ai/cookbooks/hierarchical_classification)
+while retaining alternatives for retrieval. The caller must still verify full
+pages, citations and missing evidence. Classifier diagnostics stay in ignored
+local navigation receipts; the normal command response omits excerpt copies and
+per-choice distributions to avoid loading them into the expensive agent context.
 
 ```sh
 python scripts/bsb_jev.py query "Which pages explain this decision?" --json
@@ -131,24 +169,45 @@ Enabling with `--install-hooks` merges these native configurations:
 
 | Host | Configuration | Gate |
 | --- | --- | --- |
-| Antigravity | `.agents/hooks.json` | Native search/write tools |
-| Claude Code | `.claude/settings.json` | Grep, Edit, Write |
-| Codex | `.codex/hooks.json` | apply_patch and matching native tools |
+| Antigravity | `.agents/hooks.json` | Supported native search/write/read/shell tools |
+| Claude Code | `.claude/settings.json` | Grep, Edit, Write, Read, Bash |
+| Codex | `.codex/hooks.json` | apply_patch and matching native read/search/shell tools |
 
-The hook blocks direct protected writes and native wiki searches, directing
-agents to this gateway. Full-page reads remain available. Turning Jev off makes
+The basic hook blocks direct protected writes and native wiki searches. With
+`enforce_reads` enabled, supported native wiki reads and arbitrary shell commands
+are also routed through the gateway; narrowly parsed gateway commands remain
+available. New `init_brain.py --jev on` and the existing-brain installer enable
+this stricter mode. Read schema/index/roadmap instructions normally; retrieve wiki
+evidence through session receipts. Turning Jev off makes
 the hook neutral; `configure --uninstall-hooks` removes only this integration.
 Other handlers are preserved. Codex must trust/review the repository hooks in
 its host UI before they run. Host support and trust settings matter: installed
 files alone do not prove active interception.
 
+Explicit reads of immutable `raw/` sources remain available for primary-source
+grounding; they are not general wiki search. Schema/index/roadmap and files outside
+the protected brain content also remain readable. Source-count gates still apply.
+
 Antigravity denial was verified with a real Gemini tool call. Claude/Codex
 payloads and installers have process/contract tests; their live model sessions
-were not verified in this pilot. Arbitrary shell commands, external processes
-and specialized tools can bypass native hooks. Instructions prohibit that
+were not verified in this pilot. Unsupported wrappers, external processes and
+specialized tools can bypass native hooks. Instructions prohibit that
 bypass, but this is not an OS sandbox or a guarantee against a malicious agent.
 Local signatures likewise protect against accidental/tampered plan data, not
 an actor that can rewrite the gateway and its local signing key.
+
+Change policy from your **own terminal**, since strict agent shell hooks refuse
+configuration changes that would disable themselves:
+
+```sh
+python scripts/bsb_jev.py configure --enabled off
+python scripts/bsb_jev.py configure --enabled on --enforce-reads on --install-hooks
+python scripts/bsb_jev.py configure --enforce-reads off
+```
+
+The last command keeps Jev enabled with the earlier search/write hooks. Strict
+mode intentionally limits general-purpose shell work in that brain task; switch
+it off for repository administration. This is host enforcement, not an OS sandbox.
 
 Validation: `python -m unittest discover -s tests -p '*jev*.py'`.
 For another brain, freeze questions and evidence before comparing complete

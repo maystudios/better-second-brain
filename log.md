@@ -196,3 +196,25 @@ quality-preserving end-to-end savings. Retain all candidates by default. 52 auto
 tests, four live synthetic mutation/rollback scenarios, native Antigravity denial and
 an independent code review validate the bounded integration. See docs/jev.md and
 benchmark/JEV-2026-09-19.md; private corpora and credentials are not published.
+
+## [2026-09-19] rsi | Luna max repeat of Jev retrieval comparison
+
+Repeated frozen retrieval questions with GPT-5.6 Luna at max in six isolated
+Codex CLI runs. Direct source input avoided a blocked file-reading preflight;
+the transport change and setup overhead are explicit in the report. Jev top-4
+reduced Luna tokens by 53.4% but lost required evidence. Retained-pool ranking
+changed Luna token use by +0.06%, with no demonstrated stable saving. No new
+optimization adopted; hard pruning remains experimental. Frozen oracle intact.
+See benchmark/JEV-LUNA-MAX-2026-09-19.md.
+
+## [2026-09-19] navigation | Jev progressive context navigation with Luna max
+
+Added bounded `navigate`/`read`/`next` traversal, exact local `source` lookup,
+signed stale-session receipts, deferred and contrary evidence retention, and an
+opt-in strict native-read hook. The unchanged six-question Luna/max trial
+reduced delivered full-page context by 28.98% (832,660 to 591,306 bytes), but
+Jev added 193,373 measured model tokens and the combined total increased 77.04%.
+Support-path recall and citation coverage were 91.67%, so the frozen quality
+floor was not met and no end-to-end saving is claimed. The path remains optional;
+exact local source lookup costs zero API calls. See
+benchmark/JEV-NAVIGATION-LUNA-MAX-2026-09-19.md and docs/jev.md.

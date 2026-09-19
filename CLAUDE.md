@@ -173,8 +173,8 @@ Obsidian is the human reader (graph, backlinks, **Bases**); the `.obsidian/` bas
 to `raw/assets/`. **`scripts/`** (Python, run with `--help`): `init_brain.py`, `bsb_jev.py`, `new_page.py`,
 `find_orphans.py`, `verify_wikilinks.py`, `lint_sources.py`, `graphify_sync.py`, `token_report.py`. **jev** is optional
 semantic gateway/review; **graphify** (§3.4) is graph; **qmd** is search.
-When Jev is enabled, use its `query` / `advise` / `plan` gateway before substantial retrieval or changes (`docs/jev.md`).
-Retain all candidates by default; read full pages, preserve contrary evidence and source gates. Do not bypass hooks.
+When Jev is enabled, use `navigate` with explicit `--need` subquestions, `read` for offered full pages and `next` for gaps/links (`docs/jev.md`).
+Use `source` for literal lookup; `advise` / `plan` for changes. Keep deferred/contrary evidence reachable and source gates intact. Do not bypass hooks.
 Optional git gates: `git config core.hooksPath .githooks`. **Commit/push only when asked; branch first on the default branch; sub-agents never run git.**
 
 ---

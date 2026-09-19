@@ -22,7 +22,7 @@ def reject_links(path, root):
             raise ValueError('Linked installation directories are not supported')
 
 
-def install(target: Path, *, enabled=False, hooks=False, roots=None, dry_run=False):
+def install(target: Path, *, enabled=False, hooks=False, roots=None, dry_run=False, enforce_reads=True):
     target = target.resolve(strict=True)
     source = Path(__file__).resolve().parents[1]
     if not target.is_dir():
@@ -30,11 +30,16 @@ def install(target: Path, *, enabled=False, hooks=False, roots=None, dry_run=Fal
     if not ((target/'wiki').is_dir() or roots):
         raise ValueError('Existing wiki/ required, or supply explicit read-only search roots')
     roots = roots or ['wiki']
+    if not enabled:
+        enforce_reads = False
     for name in roots:
         p = target / name
         if Path(name).is_absolute() or '..' in Path(name).parts or not p.is_dir() or not p.resolve().is_relative_to(target):
             raise ValueError('Search roots must be existing directories inside target')
-    files = ['scripts/bsb_jev.py','scripts/bsb_jev_hook.py','scripts/install_jev.py','docs/jev.md','benchmark/JEV-2026-09-19.md']
+    files = ['scripts/bsb_jev.py','scripts/bsb_jev_hook.py','scripts/bsb_jev_focus.py',
+             'scripts/bsb_jev_navigation.py','scripts/install_jev.py','docs/jev.md',
+             'benchmark/JEV-2026-09-19.md','benchmark/JEV-LUNA-MAX-2026-09-19.md',
+             'benchmark/JEV-NAVIGATION-LUNA-MAX-2026-09-19.md']
     for name in files:
         if not (source/name).is_file():
             raise ValueError(f'Missing installation source: {name}')
@@ -64,11 +69,12 @@ def install(target: Path, *, enabled=False, hooks=False, roots=None, dry_run=Fal
             if dst.resolve() != (source/name).resolve():shutil.copyfile(source/name,dst)
         rule=(f'{BEGIN}\n## Optional Jev assistance\n'
               'Read `docs/jev.md` when using the optional gateway. Check `python scripts/bsb_jev.py configure --status`.\n'
-              'When enabled, use `python scripts/bsb_jev.py query "<question>"` before substantial knowledge search,\n'
+              'When enabled, use `python scripts/bsb_jev.py navigate "<question>" --need "<subquestion>"` for knowledge search,\n'
               'and `advise` / `plan` for placement or changes. Read the shortlisted pages fully; preserve source,\n'
               'domain and linking rules above. Jev ranks candidates; it cannot establish truth or global absence.\n'
-              'Default retrieval preserves candidates. Do not use experimental `--prune` as the routine path.\n'
-              'Native hooks cover supported tools, not unrestricted shells. Do not bypass the gateway deliberately.\n'
+              'Use `read <session> <path>` for offered full pages, `next <session>` for missing evidence/links, and\n'
+              '`source "<literal>"` for exact local lookup. Deferred candidates remain reachable; no hard top-K pruning.\n'
+              'Strict hooks gate supported native reads and shell calls. Do not bypass them via other tools.\n'
               f'{END}')
         if not (target/'wiki').is_dir():
             rule=rule.replace('and `advise` / `plan` for placement or changes.',
@@ -91,7 +97,7 @@ def install(target: Path, *, enabled=False, hooks=False, roots=None, dry_run=Fal
             from .bsb_jev import configure_gateway
         except ImportError:
             from bsb_jev import configure_gateway
-        configure_gateway(target,enabled=enabled,roots=roots,install_hooks=hooks)
+        configure_gateway(target,enabled=enabled,roots=roots,install_hooks=hooks,enforce_reads=enforce_reads)
         after={name:hashlib.sha256((target/name).read_bytes()).hexdigest() for name in managed if (target/name).is_file()}
         manifest={'status':'installed','target':str(target),'enabled':enabled,'hooks':hooks,'roots':roots,'backups':str(backups),'hashes':after,'previous_files':{name:hashlib.sha256(data).hexdigest() if data is not None else None for name,data in before.items()}}
         (backups/'manifest.json').write_text(json.dumps(manifest,indent=2),encoding='utf-8')
@@ -109,10 +115,11 @@ def main():
     p.add_argument('--target',type=Path,required=True)
     p.add_argument('--enabled',choices=['on','off'],default='off')
     p.add_argument('--hooks',action='store_true')
+    p.add_argument('--enforce-reads',choices=['on','off'],default='on')
     p.add_argument('--roots',help='Comma-separated explicit read-only search directories (default wiki)')
     p.add_argument('--dry-run',action='store_true')
     a=p.parse_args()
-    print(json.dumps(install(a.target,enabled=a.enabled=='on',hooks=a.hooks,roots=a.roots.split(',') if a.roots else None,dry_run=a.dry_run),indent=2))
+    print(json.dumps(install(a.target,enabled=a.enabled=='on',hooks=a.hooks,roots=a.roots.split(',') if a.roots else None,dry_run=a.dry_run,enforce_reads=a.enforce_reads=='on'),indent=2))
 
 
 if __name__=='__main__':main()

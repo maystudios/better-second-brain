@@ -247,7 +247,7 @@ def main(argv: list[str] | None = None) -> int:
                 from scripts.bsb_jev import configure_gateway
             except ImportError:
                 from bsb_jev import configure_gateway
-            configure_gateway(root, enabled=True, install_hooks=True)
+            configure_gateway(root, enabled=True, install_hooks=True, enforce_reads=True)
         planner.do("configure Jev semantic gateway (enabled) and install native hooks", _enable_jev)
     elif args.jev == "off" or args.fresh or not (root / ".bsb-jev" / "config.json").is_file():
         def _disable_jev():

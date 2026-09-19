@@ -118,11 +118,26 @@ Full setup, including the optional layers and git hooks: [`docs/install.md`](./d
 
 ## The optional layers (off by default, degrade gracefully)
 
-- **jev** - TypeSafe Jev semantic gateway and safe mutation review. → [`docs/install.md`](./docs/install.md)
+- **jev** - optional progressive context reading, exact source lookup and safe mutation review. Jev selects pages per subquestion and explores linked/deferred evidence through a gateway. → [`docs/jev.md`](./docs/jev.md). Measurements: [Gemini](./benchmark/JEV-2026-09-19.md), [Luna max](./benchmark/JEV-LUNA-MAX-2026-09-19.md), [progressive navigation](./benchmark/JEV-NAVIGATION-LUNA-MAX-2026-09-19.md). The navigation run reduced delivered page bytes by 28.98%, but increased combined measured model tokens by 77.04%; no net saving is claimed.
 - **graphify** - `uv tool install graphifyy`, then the agent uses the `/graphify` skill. → [`docs/graphify-integration.md`](./docs/graphify-integration.md)
 - **auto-research** - a Claude Code skill that self-improves the schema. → [`docs/auto-research-integration.md`](./docs/auto-research-integration.md)
 - **self-healing** - runs on the source-grade lint. → [`docs/self-healing.md`](./docs/self-healing.md)
 - **qmd** - local hybrid search when you outgrow `index.md`. → `github.com/tobi/qmd`
+
+Enable Jev and its supported native read/search/write/shell hooks from your terminal:
+
+```sh
+python scripts/bsb_jev.py configure --enabled on --enforce-reads on --install-hooks
+python scripts/bsb_jev.py configure --enabled off
+```
+
+Supply `TYPESAFE_API_KEY` through your environment/secret manager. New installations
+remain off unless chosen. Strict hooks direct the agent through `navigate` → `read`
+→ `next`; `source` handles literal lookups locally with **zero API calls**. Host
+hook support/trust is required; unsupported tools are outside this guard. For an
+existing populated brain, use [`install_jev.py`](./scripts/install_jev.py), preserving
+its notes and domain rules. [`docs/jev.md`](./docs/jev.md) explains upgrading and
+disabling only the strict read/shell gate while retaining Jev.
 
 ## 📊 Is it actually better? (measured, not asserted)
 

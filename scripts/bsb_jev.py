@@ -179,6 +179,7 @@ def get_config(repo_root: Optional[Path | str] = None) -> Dict[str, Any]:
             raise ValueError('Linked configuration refused')
     default_cfg: Dict[str, Any] = {
         "enabled": False,
+        "enforce_reads": False,
         "search_roots": ["wiki"],
         "model": DEFAULT_MODEL,
         "timeout": DEFAULT_TIMEOUT_SECONDS,
@@ -204,6 +205,8 @@ def get_config(repo_root: Optional[Path | str] = None) -> Dict[str, Any]:
                 if not isinstance(t, (int, float)) or isinstance(t, bool) or not math.isfinite(t):
                     raise ValueError(f"Config field 'timeout' must be a finite number, got: {t!r}")
             default_cfg.update(loaded)
+            if type(default_cfg['enforce_reads']) is not bool:
+                raise ValueError('Config enforce_reads must be boolean')
             if not MIN_TIMEOUT_SECONDS <= default_cfg['timeout'] <= MAX_TIMEOUT_SECONDS:
                 raise ValueError('Timeout outside 0.1..30 seconds')
             if not isinstance(default_cfg['model'],str) or not re.fullmatch(r'jev-[a-zA-Z0-9.-]+',default_cfg['model']):
@@ -263,14 +266,22 @@ def configure_gateway(
     model: Optional[str] = None,
     install_hooks: bool = False,
     uninstall_hooks: bool = False,
+    enforce_reads: Optional[bool] = None,
 ) -> Dict[str, Any]:
     """Configures the BSB Jev gateway, updating config, bsb.config.md, and hooks."""
     root = resolve_repo_root(repo_root)
     cfg = get_config(root)
 
+    if enforce_reads is not None:
+        if type(enforce_reads) is not bool:
+            raise ValueError('enforce_reads must be boolean')
+        cfg['enforce_reads'] = enforce_reads
+
     if enabled is not None:
         if type(enabled)!=bool:raise ValueError('Enabled must be boolean')
         cfg["enabled"] = enabled
+        if enabled is False and enforce_reads is None:
+            cfg["enforce_reads"] = False
     if roots is not None:
         if not isinstance(roots,list) or not 1<=len(roots)<=8:raise ValueError('Require 1..8 roots')
         for name in roots:
@@ -870,6 +881,22 @@ def build_cli_parser() -> argparse.ArgumentParser:
     p_cfg.add_argument("--install-hooks", action="store_true", help="Install native hooks")
     p_cfg.add_argument("--uninstall-hooks", action="store_true", help="Uninstall native hooks")
     p_cfg.add_argument("--status", action="store_true", help="Print configuration status")
+    p_cfg.add_argument('--enforce-reads', choices=['on', 'off'], help='Gate supported native reads and shell calls through the gateway')
+
+    p_source = sub.add_parser('source', help='Exact local source/title/alias/literal occurrence lookup; no API')
+    p_source.add_argument('literal')
+    p_source.add_argument('--dry-run', action='store_true')
+    p_nav = sub.add_parser('navigate', help='Let Jev plan full-page reads for explicit subquestions')
+    p_nav.add_argument('query_text')
+    p_nav.add_argument('--need', action='append', required=True, help='Repeat for 1..6 subquestions')
+    p_nav.add_argument('--dry-run', action='store_true')
+    p_read = sub.add_parser('read', help='Read a gateway-offered page in full with stale-hash checks')
+    p_read.add_argument('session_id')
+    p_read.add_argument('path')
+    p_next = sub.add_parser('next', help='Ask Jev to explore unread graph links and deferred candidates')
+    p_next.add_argument('session_id')
+    p_next.add_argument('--need', action='append')
+    p_next.add_argument('--dry-run', action='store_true')
 
     # query
     p_q = sub.add_parser("query", help="Query knowledge base with candidate generation & Jev rerank")
@@ -928,13 +955,31 @@ def main(argv: Optional[List[str]] = None) -> int:
                 model=args.model,
                 install_hooks=args.install_hooks,
                 uninstall_hooks=args.uninstall_hooks,
+                enforce_reads=None if args.enforce_reads is None else args.enforce_reads == 'on',
             )
             key_loaded = bool(load_api_key()) if cfg['enabled'] else False
             print("BSB Jev Gateway Configuration:")
             print(f"  Enabled:      {cfg.get('enabled', False)}")
+            print(f"  Strict reads: {cfg.get('enforce_reads', False)}")
             print(f"  Search roots: {cfg.get('search_roots', ['wiki'])}")
             print(f"  Model:        {cfg.get('model', DEFAULT_MODEL)}")
             print(f"  API Key:      {'Available' if key_loaded else 'Missing (TYPESAFE_API_KEY / DPAPI)'}")
+            return 0
+
+        elif args.command in {'navigate', 'source', 'read', 'next'}:
+            try:
+                from scripts import bsb_jev_navigation as navigation
+            except ImportError:
+                import bsb_jev_navigation as navigation
+            if args.command == 'navigate':
+                res = navigation.navigate(args.query_text, args.need, root, dry_run=args.dry_run)
+            elif args.command == 'source':
+                res = navigation.source(args.literal, root, dry_run=args.dry_run)
+            elif args.command == 'read':
+                res = navigation.read_page(args.session_id, args.path, root)
+            else:
+                res = navigation.next_step(args.session_id, root, needs=args.need, dry_run=args.dry_run)
+            print(json.dumps(res, indent=2))
             return 0
 
         elif args.command == "query":
@@ -981,8 +1026,14 @@ def main(argv: Optional[List[str]] = None) -> int:
 
             plan = create_plan(raw_data, repo_root=root, dry_run=args.dry_run)
             if args.out:
-                Path(args.out).write_text(json.dumps(plan, indent=2), encoding="utf-8")
-                print(f"Plan saved to {args.out}")
+                output = Path(args.out)
+                if output.is_absolute():
+                    output = output.relative_to(root)
+                if len(output.parts) != 1 or not re.fullmatch(r'(?:reviewed-plan|plan-)[A-Za-z0-9_-]*\.json', output.name):
+                    raise ValueError('Plan output must be a root-level reviewed-plan*.json or plan-*.json file')
+                target = _safe_path(root, output.as_posix())
+                _atomic(target, _jsonbytes(plan))
+                print(f"Plan saved to {target}")
             else:
                 print(json.dumps(plan, indent=2))
             return 0

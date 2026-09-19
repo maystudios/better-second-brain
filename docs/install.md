@@ -43,14 +43,15 @@ These are off by default. Enable the ones you want.
 
 BSB integrates with TypeSafe's Jev System One (`jev-1.13.0`) as an optional semantic gateway. When enabled, it provides:
 1. **Bounded semantic query search**: Local lexical extraction followed by Jev prioritization, with source paths, lines and hashes. The default retains all generated candidates; hard pruning failed the [initial quality experiment](../benchmark/JEV-2026-09-19.md).
-2. **Advisory recommendations**: Placement advice for new notes across wiki directories, cross-linking suggestions, and deletion evaluation.
-3. **Safe reversible mutation gateway**: Enforces that `raw/` and schema files are immutable, requires caller citations, checks stale file hashes, strictly refuses deletions when active backlinks exist, creates atomic backups under `.bsb-jev/backups/`, rolls back on errors, and maintains an append-only audit log under `.bsb-jev/audit.jsonl`.
-4. **Native host hooks**: Antigravity (`.agents/hooks.json`), Claude Code (`.claude/settings.json`) and Codex (`.codex/hooks.json`) intercept supported native edits/searches. Reading selected pages remains available. Codex requires the generated hook to be reviewed/trusted by the host before it runs.
+2. **Progressive full-page navigation**: `navigate --need` selects pages per explicit subquestion, `read` returns an offered page in full with a stale hash check, and `next` follows unresolved needs and safe wikilinks. Exact titles, aliases and URLs use the zero-API `source` lookup. The [Luna navigation run](../benchmark/JEV-NAVIGATION-LUNA-MAX-2026-09-19.md) reduced page bytes but increased total measured tokens, so it is optional and not a savings guarantee.
+3. **Advisory recommendations**: Placement advice for new notes across wiki directories, cross-linking suggestions, and deletion evaluation.
+4. **Safe reversible mutation gateway**: Enforces that `raw/` and schema files are immutable, requires caller citations, checks stale file hashes, strictly refuses deletions when active backlinks exist, creates atomic backups under `.bsb-jev/backups/`, rolls back on errors, and maintains an append-only audit log under `.bsb-jev/audit.jsonl`.
+5. **Native host hooks**: Antigravity (`.agents/hooks.json`), Claude Code (`.claude/settings.json`) and Codex (`.codex/hooks.json`) intercept supported native edits/searches. Strict `enforce_reads` additionally gates supported wiki reads and arbitrary shell through exact gateway commands; immutable `raw/` reads remain available for primary-source grounding. Codex requires the generated hook to be reviewed/trusted by the host before it runs.
 
 **Enable or disable:**
 ```powershell
 # Enable and install native host hooks
-python scripts/bsb_jev.py configure --enabled on --install-hooks
+python scripts/bsb_jev.py configure --enabled on --enforce-reads on --install-hooks
 
 # Check status
 python scripts/bsb_jev.py configure --status
@@ -63,7 +64,7 @@ python scripts/bsb_jev.py configure --enabled off
 Set `TYPESAFE_API_KEY` in your environment, or provide a DPAPI-encrypted file via `TYPESAFE_KEY_FILE` (or `~/.config/harness-workflow/typesafe-key.dpapi` on Windows). Keys are never printed in outputs or stored in git configs. If missing, query searches fail open to deterministic lexical candidates, while mutations fail closed.
 
 **Security boundary & shell bypass:**
-Host shell commands remain a bypass boundary. Hooks block supported native tools such as `write_to_file`, `Edit`, `Write`, `apply_patch`, `grep_search` and `Grep`; they are workflow enforcement, not an OS sandbox. See [Jev operations and limits](jev.md).
+Supported host shell commands and protected reads are denied in strict mode unless they are exact gateway invocations. Unsupported wrappers, external processes and host trust settings remain outside the hook's view; this is workflow enforcement, not an OS sandbox. See [Jev operations and limits](jev.md).
 
 **Upgrade an existing brain without reinitializing:** run from a current BSB checkout:
 
