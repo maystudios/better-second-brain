@@ -49,5 +49,7 @@ FIRST-RUN.md
 
 # bsb-jev gateway audit, plans, backups, and local config
 .bsb-jev/
+# optional local retrieval-first index (scripts/bsb_local_search.py)
+.bsb-local/
 .agents/hooks.json
 .codex/hooks.json

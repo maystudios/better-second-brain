@@ -362,8 +362,132 @@ class _Search:
 
 
 def find(query, needs=None, repo_root=None, dry_run=False, transport=None, api_key=None,
-         max_calls=24, max_pages=12):
-    """Navigate index -> branches -> full evidence internally in one caller turn."""
+         max_calls=24, max_pages=12, local_first=None):
+    """Navigate index -> branches -> full evidence internally in one caller turn.
+
+    ``local_first`` None follows the config key ``local_first`` (default off);
+    True/False override it for this call. When on, a confident local search
+    returns its pages with zero API calls and without loading a credential;
+    otherwise the Jev route runs with the local candidates evaluated first.
+    """
+    validated = _validate(query, needs, max_calls, max_pages)
+    if type(dry_run) is not bool:
+        raise ValueError('dry_run must be boolean')
+    if local_first is not None and type(local_first) is not bool:
+        raise ValueError('local_first must be boolean or None')
+    root = core.resolve_repo_root(repo_root)
+    if local_first is None:
+        local_first = core.get_config(root).get('local_first') is True
+    if not local_first:
+        return _jev_find(query, needs, root, dry_run, transport, api_key, max_calls, max_pages)
+    stage =_local_stage(root, core.get_config(root), query, validated, explicit=needs is not None)
+    if stage['result'] is not None:
+        return stage['result']
+    result = _jev_find(query, needs, root, dry_run, transport, api_key, max_calls, max_pages,
+                       seeds=stage['seeds'])
+    result['source'] = 'jev'
+    result['local'] = stage['summary']
+    return result
+
+
+def _round_robin(lists, limit):
+    chosen = []
+    for i in range(max((len(x) for x in lists), default=0)):
+        for items in lists:
+            if i < len(items) and items[i] not in chosen and len(chosen) < limit:
+                chosen.append(items[i])
+    return chosen
+
+
+def _local_stage(root, cfg, query, needs, explicit):
+    """Optional retrieval-first stage. Never loads a credential or calls a transport."""
+    started = time.perf_counter()
+    summary = {'confident': False, 'evidence_judged': False}
+    try:
+        try:
+            from . import bsb_local_search as local
+        except ImportError:
+            import bsb_local_search as local
+        options = local.settings(cfg)
+        depth = max(options['local_pages'], options['local_seeds'], 1)
+        decisions, found = {}, {}
+        with local.LocalSearch(root, roots=cfg['search_roots'], backend=options['local_backend'],
+                               model=options['local_model']) as engine:
+            report = engine.update()
+            for nid, need in needs.items():
+                # Explicit needs are fragments; keep the question as their context.
+                text = f'{query}\n{need}' if explicit else need
+                outcome = engine.search(text, limit=depth, update=False, options=options)
+                decisions[nid] = outcome['confidence']
+                found[nid] = outcome['results']
+            summary.update(engine.backend_info())
+    except Exception as exc:  # the local stage is optional; it must never break find
+        summary.update(reason=f'local_unavailable:{type(exc).__name__}',
+                       latency_ms=round((time.perf_counter() - started) * 1000, 2))
+        return {'result': None, 'seeds': [], 'summary': summary}
+    confident = all(d['confident'] for d in decisions.values())
+    summary.update(confident=confident, decisions=decisions,
+                   candidates={nid: [{k: r[k] for k in ('rank', 'path', 'title', 'score', 'start_line', 'end_line')}
+                                     for r in rows] for nid, rows in found.items()},
+                   index={k: report[k] for k in ('pages', 'chunks', 'added', 'changed', 'removed', 'scan_complete')})
+    seeds = _round_robin([[r['path'] for r in rows] for rows in found.values()], options['local_seeds'])
+
+    def fall_through(reason):
+        summary.update(confident=False, reason=reason,
+                       latency_ms=round((time.perf_counter() - started) * 1000, 2))
+        return {'result': None, 'seeds': seeds, 'summary': summary}
+
+    if not confident:
+        return fall_through('not_confident')
+    indexed = {r['path']: r['file_sha256'] for rows in found.values() for r in rows}
+    chosen = _round_robin([[r['path'] for r in rows[:options['local_pages']]] for rows in found.values()],
+                          options['local_pages'] * len(found))
+    pages, omitted, returned_bytes = [], [], 0
+    for path in chosen:
+        try:
+            descriptor, text, _ = nav._document(root, path)
+        except (ValueError, OSError, UnicodeError):
+            return fall_through('local_page_unreadable')
+        if descriptor['file_sha256'] != indexed[path]:
+            return fall_through('local_page_changed')
+        if returned_bytes + descriptor['bytes'] > MAX_RETURN_BYTES:
+            omitted.append(descriptor)
+            continue
+        pages.append({**descriptor, 'text': text, 'full_page': True})
+        returned_bytes += descriptor['bytes']
+    returned = {p['path'] for p in pages}
+    # Each need was judged confident on its top page; if the byte budget dropped that
+    # page, the need is not resolved by what is returned, so let Jev handle the call.
+    unresolved = [needs[nid] for nid, rows in found.items() if not rows or rows[0]['path'] not in returned]
+    if not pages or unresolved:
+        summary['unresolved_needs'] = unresolved
+        return fall_through('local_output_budget')
+    refs = [{'path': r['path'], 'file_sha256': r['file_sha256'], 'need_id': nid,
+             'start_line': r['start_line'], 'end_line': r['end_line'], 'relation': 'local_match',
+             'provisional': True, 'full_page_returned': r['path'] in returned}
+            for nid, rows in found.items() for r in rows[:options['local_pages']]
+            if r['path'] in returned or any(o['path'] == r['path'] for o in omitted)]
+    summary.update(reason=None, pages_returned=len(pages),
+                   latency_ms=round((time.perf_counter() - started) * 1000, 2),
+                   next_step='Read every returned page in full. Local ranks are not evidence judgments; '
+                             'if these pages do not answer every need, run find again with --no-local.')
+    coverage = {'roots': cfg['search_roots'], 'catalog_pages': report['pages'],
+                'scan_complete': report['scan_complete'], 'evaluated_pages': 0,
+                'unvisited_pages': report['pages'], 'unread_chunks': 0, 'search_complete': False,
+                'stop_reason': 'output_budget' if omitted else 'local_confident',
+                'global_absence_proven': False, 'output_omitted_pages': len(omitted),
+                'returned_bytes': returned_bytes}
+    result = {'status': 'local', 'source': 'local', 'session_id': None, 'pages': pages,
+              'evidence_refs': refs, 'omitted_pages': omitted, 'needs': needs, 'conflicts': [],
+              'unresolved_needs': [], 'coverage': coverage, 'usage': [], 'api_calls': 0,
+              'model': cfg['model'], 'full_page_read_required': True, 'review_required': True,
+              'global_absence_proven': False, 'local': summary}
+    return {'result': result, 'seeds': seeds, 'summary': summary}
+
+
+def _jev_find(query, needs=None, repo_root=None, dry_run=False, transport=None, api_key=None,
+              max_calls=24, max_pages=12, seeds=None):
+    """The Jev catalog route; ``seeds`` are page paths evaluated before the root traversal."""
     needs = _validate(query, needs, max_calls, max_pages)
     if type(dry_run) is not bool:
         raise ValueError('dry_run must be boolean')
@@ -398,7 +522,19 @@ def find(query, needs=None, repo_root=None, dry_run=False, transport=None, api_k
     search = _Search(root, query, needs, cfg, transport, key, max_calls, max_pages)
     stack = [('root', True)]
     unavailable = False
+    seeded = 0
     try:
+        # Optional local candidates are evaluated first; traversal then continues
+        # from the root as usual, skipping re-evaluation of those pages.
+        for path in seeds or ():
+            if path not in pages or path in search.visited:
+                continue
+            if len(search.visited) >= max_pages:
+                search.stop_reason = 'page_budget'
+                break
+            search.visited.add(path)
+            seeded += 1
+            search.evaluate(pages[path])
         while stack:
             if time.monotonic()-search.started >= MAX_SECONDS:
                 search.stop_reason = 'time_budget'
@@ -413,7 +549,7 @@ def find(query, needs=None, repo_root=None, dry_run=False, transport=None, api_k
                     break
                 continue
             node = nodes[node_id]
-            if node['kind'] == 'page':
+            if node['kind'] == 'page' and node['path'] not in search.visited:
                 if len(search.visited) >= max_pages:
                     search.stop_reason = 'page_budget'
                     break
@@ -435,6 +571,8 @@ def find(query, needs=None, repo_root=None, dry_run=False, transport=None, api_k
                     unvisited_pages=len(pages)-len(search.visited),
                     unread_chunks=search.unread_chunks, stop_reason=search.stop_reason,
                     conflict_comparison_truncated=search.comparison_truncated)
+    if seeds is not None:
+        coverage['seeded_pages'] = seeded
     coverage['search_complete'] = bool(scan['scan_complete'] and not coverage['unvisited_pages']
                                        and not search.unread_chunks and not unavailable)
     result.update(api_calls=search.calls, usage=search.usage,
@@ -520,9 +658,14 @@ def caller_result(result):
             output.append(ref)
         return output
 
-    return {'status': result['status'], 'session_id': result.get('session_id'),
-            'pages': pages, 'evidence_refs': refs(result['evidence_refs']),
-            'conflicts': refs(result['conflicts']), 'omitted_pages': omitted,
-            'needs': result.get('needs', {}), 'unresolved_needs': result['unresolved_needs'],
-            'coverage': result['coverage'], 'global_absence_proven': False,
-            'full_page_read_required': True, 'review_required': True}
+    output = {'status': result['status'], 'session_id': result.get('session_id'),
+              'pages': pages, 'evidence_refs': refs(result['evidence_refs']),
+              'conflicts': refs(result['conflicts']), 'omitted_pages': omitted,
+              'needs': result.get('needs', {}), 'unresolved_needs': result['unresolved_needs'],
+              'coverage': result['coverage'], 'global_absence_proven': False,
+              'full_page_read_required': True, 'review_required': True}
+    if 'source' in result:
+        # Only present when the local-first stage ran; the default packet is unchanged.
+        output.update(source=result['source'], api_calls=result.get('api_calls', 0),
+                      local=result.get('local'))
+    return output

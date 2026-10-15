@@ -119,6 +119,7 @@ Full setup, including the optional layers and git hooks: [`docs/install.md`](./d
 ## The optional layers (off by default, degrade gracefully)
 
 - **jev** - optional internal branching retrieval: the gateway follows the catalog, evaluates source text, and returns full evidence pages in one caller turn. → [`docs/jev.md`](./docs/jev.md). See the measured five-arm query comparison below; savings depend on the retrieval method it replaces.
+- **local retrieval-first** - an optional stage in front of `find`: a local search (stdlib SQLite FTS5, optional embeddings) answers with **zero API calls** when it is confident, otherwise Jev runs. → [`docs/local-search.md`](./docs/local-search.md)
 - **graphify** - `uv tool install graphifyy`, then the agent uses the `/graphify` skill. → [`docs/graphify-integration.md`](./docs/graphify-integration.md)
 - **auto-research** - a Claude Code skill that self-improves the schema. → [`docs/auto-research-integration.md`](./docs/auto-research-integration.md)
 - **self-healing** - runs on the source-grade lint. → [`docs/self-healing.md`](./docs/self-healing.md)
@@ -141,6 +142,19 @@ hook support/trust is required; unsupported tools are outside this guard. For an
 existing populated brain, use [`install_jev.py`](./scripts/install_jev.py), preserving
 its notes and domain rules. [`docs/jev.md`](./docs/jev.md) explains upgrading and
 disabling only the strict read/shell gate while retaining Jev.
+
+### Local retrieval-first (optional, off by default)
+
+`python scripts/bsb_jev.py configure --local-first on` (or `find --local-first` per call)
+makes `find` search a local index first. When a documented confidence rule fires
+(exact title/alias match, agreement of keyword and vector routes, or a clear BM25 lead),
+it returns full pages marked `"source": "local"` with `api_calls: 0` and never loads
+the API key; otherwise Jev runs and evaluates the local candidates first. The default
+backend is standard-library SQLite FTS5; `--local-backend hybrid` adds EmbeddingGemma 2
+when `sentence-transformers` and `torch` are installed. On one Vault with 11 questions
+(2026-10-15), local hybrid search put the right page first for 11/11, Jev `find` found
+it for 9/11 at ~53k input tokens per question. Indicative only; details, the rule and
+local timings: [`docs/local-search.md`](./docs/local-search.md).
 
 ### Jev: measured query cost and quality
 

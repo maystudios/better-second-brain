@@ -53,7 +53,7 @@ IMMUTABLE_FILES = {"claude.md", "bsb.config.md", "agents.md", "log.md", "index.m
 # Strict mode protects the gateway's own state and host hook configuration as
 # well as the knowledge inputs.  Without this, a native Write could simply
 # flip enabled/enforce_reads off or remove the hook before making a change.
-GATEWAY_STATE_ROOTS = {".bsb-jev"}
+GATEWAY_STATE_ROOTS = {".bsb-jev", ".bsb-local"}
 HOST_CONFIG_FILES = {
     ".agents/hooks.json",
     ".claude/settings.json",
@@ -65,6 +65,7 @@ GATEWAY_CODE_FILES = {
     "scripts/bsb_jev_focus.py",
     "scripts/bsb_jev_navigation.py",
     "scripts/bsb_jev_search.py",
+    "scripts/bsb_local_search.py",
     "scripts/install_jev.py",
 }
 
@@ -395,7 +396,7 @@ def _is_gateway_script(token: str, root: Path) -> bool:
 def _validate_gateway_args(command: str, args: List[str]) -> bool:
     """Validate one gateway subcommand's small, explicit argv grammar."""
     specs = {
-        "find": (1, 1, {"--dry-run"}, {"--need", "--max-calls", "--max-pages"}, {"--need"}),
+        "find": (1, 1, {"--dry-run", "--local-first", "--no-local"}, {"--need", "--max-calls", "--max-pages"}, {"--need"}),
         "query": (1, 1, {"--dry-run", "--json", "--prune"}, {"--candidate-limit", "--limit", "--roots"}, set()),
         "navigate": (1, 1, {"--dry-run"}, {"--need"}, {"--need"}),
         "source": (1, 1, {"--dry-run"}, set(), set()),
@@ -447,6 +448,8 @@ def _validate_gateway_args(command: str, args: List[str]) -> bool:
     if command == "apply" and "--approve" not in seen:
         return False
     if command == "configure" and "--status" not in seen:
+        return False
+    if command == "find" and {"--local-first", "--no-local"} <= seen:
         return False
     return True
 

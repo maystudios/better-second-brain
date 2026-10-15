@@ -174,7 +174,7 @@ language; **frontmatter keys stay English.** Pair every prohibition with its rea
 Obsidian is the human reader (graph, backlinks, **Bases**); the `.obsidian/` baseline is committed and attachments go
 to `raw/assets/`. **`scripts/`** (Python, run with `--help`): `init_brain.py`, `bsb_jev.py`, `new_page.py`,
 `find_orphans.py`, `verify_wikilinks.py`, `lint_sources.py`, `graphify_sync.py`, `token_report.py`. **jev** is optional
-semantic gateway/review; **graphify** (§3.4) is graph; **qmd** is search.
+semantic gateway/review; **graphify** (§3.4) is graph; **qmd** / `bsb_local_search.py` is search (`find --local-first`: `docs/local-search.md`).
 When Jev is enabled, use `find` (§3.2); `ready` is provisional, not proof of completeness. Report failures/gaps, never silently fall back (`docs/jev.md`).
 Legacy `navigate` / `read` / `next` remain available for existing sessions.
 Use `source` for literal lookup; `advise` / `plan` for changes. Keep deferred/contrary evidence reachable and source gates intact. Do not bypass hooks.
