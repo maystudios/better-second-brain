@@ -270,3 +270,22 @@ cheaper than corrected Jev. The first failed cost trial is retained. Blind grade
 per-question dimension regressions, usage audits and grading overhead accompany
 the [five-arm report](benchmark/JEV-COMPARISON-2026-09-19.md). User authorized
 publishing the implementation and measured README results directly to main.
+
+## [2026-10-15] improve | Optional local retrieval-first stage for find
+
+Added `scripts/bsb_local_search.py`: a standard-library SQLite FTS5 BM25 index over heading
+chunks of the configured roots (incremental by size/mtime/SHA-256 on every search; secrets and
+hidden folders never indexed), an exact title/alias/slug/wikilink-name route, and an optional
+EmbeddingGemma 2 backend (sentence-transformers + torch only when importable) fused by RRF.
+`find --local-first` (or config `local_first`) returns full pages with `source: local` and
+`api_calls: 0` without loading a key when a documented rule fires (exact name, route agreement,
+BM25 margin plus term coverage); otherwise Jev runs and evaluates the local candidates first.
+Default off; the existing route and packet are unchanged. All 152 tests pass (the real-model smoke
+test is opt-in via BSB_LOCAL_SMOKE=1); every new test was first seen red on its assertion.
+An independent review's three findings (excluded roots, Markdown secret-name variants, budget-dropped
+evidence counted as resolved) were fixed with regression tests. Motivation: one Vault, 11 questions (local hybrid 11/11 at rank 1, Jev
+9/11): indicative only. Details: `docs/local-search.md`.
+
+## [2026-10-15] schema | §6 points to the local search stage
+
+§6 now names `bsb_local_search.py` beside qmd as search and links `docs/local-search.md`; one line edited, no rule change.

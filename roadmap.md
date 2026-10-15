@@ -23,7 +23,8 @@ Items: `- [ ] **<Type>**: <slug> - <reason>`. Types: Ingest · Cheatsheet · Con
       and **confirm the `merge-sources-compact` stepping stone** with a reference-guided LLM judge (the deterministic
       coverage proxy says full grounding; verify correctness/faithfulness before promoting it out of the archive).
 - [ ] **RSI**: run more *forward* levers with research-backed mutations - (a) prompt-cache the stable `CLAUDE.md`
-      prefix, (b) server-side tool-result clearing after a source is distilled, (c) retrieval-first query path. Drive
+      prefix, (b) server-side tool-result clearing after a source is distilled, (c) retrieval-first query path (stage
+      built 2026-10-15, opt-in `find --local-first`, `docs/local-search.md`; not yet run as a lever here). Drive
       lever choice with a Thompson/UCB bandit; run candidates *in parallel* (BSB's edge over autoresearch's sequential loop).
 - [ ] **RSI/Benchmark**: grow the gold question set (>~50 Q) and wire `questions-public.json` vs `questions.json` as a
       held-out split - the current ~14-Q set can validate the metric but is too small to *drive* iterations without
@@ -36,7 +37,10 @@ Items: `- [ ] **<Type>**: <slug> - <reason>`. Types: Ingest · Cheatsheet · Con
 
 - [ ] **Ingest**: expand the bootstrap domain - NotebookLM vs wiki (unverified in research), GraphRAG papers,
       more Obsidian-Bases primary docs
-- [ ] **Tooling**: add `qmd` retrieval layer once the brain passes ~100 sources
+- [ ] **Tooling**: `qmd` retrieval layer - a stdlib local layer now exists (`scripts/bsb_local_search.py`, 2026-10-15);
+      add qmd only if it measurably beats that once the brain passes ~100 sources
+- [ ] **Benchmark**: calibrate the local-first confidence thresholds (`local_min_margin`, `local_min_coverage`) on a
+      frozen question set and measure `find --local-first` end-to-end against Jev on this repo's benchmark
 - [ ] **Cheatsheet**: add real software-reference cheatsheets once a target stack is chosen (the shipped domain
       is reference-capable but currently seeded only with second-brain/PKM content)
 - [ ] **Schema**: optional - `.githooks` pre-commit + CI gate are present but opt-in; decide whether to enable
@@ -51,6 +55,9 @@ Items: `- [ ] **<Type>**: <slug> - <reason>`. Types: Ingest · Cheatsheet · Con
 
 ## Recently Done
 
+- 2026-10-15 - **Optional local retrieval-first stage** for `find` (off by default): stdlib SQLite FTS5 BM25 over heading
+      chunks + exact title/alias/link-name route, optional EmbeddingGemma 2 vectors fused by RRF; confident results return
+      full pages with `api_calls: 0`, otherwise Jev runs with local seeds. Evidence: one Vault, 11 questions (indicative).
 - 2026-09-01 - **Curated shared-worktree commit integrity**: grounded the observed multi-agent sweep
       hazard in Git's current commit/add/diff manuals; added four lean source pages, one concept, and
       BSB architecture routing. No schema change.

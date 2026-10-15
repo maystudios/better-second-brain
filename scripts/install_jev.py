@@ -37,7 +37,8 @@ def install(target: Path, *, enabled=False, hooks=False, roots=None, dry_run=Fal
         if Path(name).is_absolute() or '..' in Path(name).parts or not p.is_dir() or not p.resolve().is_relative_to(target):
             raise ValueError('Search roots must be existing directories inside target')
     files = ['scripts/bsb_jev.py','scripts/bsb_jev_hook.py','scripts/bsb_jev_focus.py',
-             'scripts/bsb_jev_navigation.py','scripts/bsb_jev_search.py','scripts/install_jev.py','docs/jev.md',
+             'scripts/bsb_jev_navigation.py','scripts/bsb_jev_search.py','scripts/bsb_local_search.py',
+             'scripts/install_jev.py','docs/jev.md','docs/local-search.md',
              'benchmark/JEV-2026-09-19.md','benchmark/JEV-LUNA-MAX-2026-09-19.md',
              'benchmark/JEV-NAVIGATION-LUNA-MAX-2026-09-19.md']
     for name in files:
@@ -77,6 +78,8 @@ def install(target: Path, *, enabled=False, hooks=False, roots=None, dry_run=Fal
               'Preserve source, domain and linking rules above. A ready result is provisional, never proof of completeness\n'
               'or global absence. Report gaps and failures; do not silently bypass the gateway or fall back to agent search.\n'
               'Use `source "<literal>"` for exact local lookup and `read <session> <path>` for its full matches.\n'
+              'With optional `local_first` (`docs/local-search.md`), `find` may return `source: local` pages (zero\n'
+              'API calls, ranked but not Jev-judged); read them in full and re-run with `--no-local` if they fall short.\n'
               'Legacy `navigate` / `read` / `next` remain available for existing sessions.\n'
               'Strict hooks gate supported native reads and shell calls. Do not bypass them via other tools.\n'
               f'{END}')
@@ -94,7 +97,7 @@ def install(target: Path, *, enabled=False, hooks=False, roots=None, dry_run=Fal
         p.write_text(new,encoding='utf-8-sig' if old_bytes.startswith(b'\xef\xbb\xbf') else 'utf-8',newline='')
         p=target/'.gitignore';old=p.read_text(encoding='utf-8') if p.exists() else ''
         ignore_lines=old.splitlines()
-        for entry in ['.bsb-jev/','.agents/hooks.json','.codex/hooks.json']:
+        for entry in ['.bsb-jev/','.bsb-local/','.agents/hooks.json','.codex/hooks.json']:
             if entry not in ignore_lines:ignore_lines.append(entry)
         p.write_text('\n'.join(ignore_lines)+'\n',encoding='utf-8',newline='')
         try:

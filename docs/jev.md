@@ -112,6 +112,12 @@ to expensive-agent search. A follow-up with a narrower question or different
 budgets is a new retrieval attempt, not proof that the earlier search was complete.
 Another retrieval route requires existing task authorization or explicit review.
 
+Optional retrieval-first: with `local_first` on (or `find --local-first`), `find`
+first searches a local index and, when a documented confidence rule fires, returns
+full pages marked `"source": "local"` with zero API calls and no credential load;
+otherwise this Jev route runs with the local candidates evaluated first. Default
+off; `--no-local` skips it per call. See [local-search.md](local-search.md).
+
 The [five-arm query comparison](../benchmark/JEV-COMPARISON-2026-09-19.md)
 reports measured cost, main-model usage and answer quality against both a bounded
 model-guided navigator and free local retrieval. Savings depend on the comparator;
